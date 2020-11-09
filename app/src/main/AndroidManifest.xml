@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EntertainmentActivity"></activity>
+        <activity android:name=".HealthDataActivity"></activity>
+        <activity android:name=".EntertainmentActivity" />
         <activity android:name=".HealthActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -1,15 +1,19 @@
 <resources>
     <string name="app_name">CovidApp</string>
-    
+
     <!-- Main Activity   -->
     <string name="health_panel">Zdrowie</string>
     <string name="entertainment_panel">Rozrywka</string>
     <string name="emergency_numbers_panel">Numery alarmowe</string>
     <string name="settings_panel">Ustawienia</string>
-    
+
     <!-- Health Activity   -->
     <string name="exercises_set_panel">Zestaw ćwiczeń</string>
     <string name="add_data_panel">Dodaj dane</string>
+    <string name="sleep_measuring_switch">Mierzenie snu</string>
+    <string name="water_drunk_switch">Wypita woda</string>
+    <string name="current_weight_switch">Aktualna waga</string>
+    <string name="step_counter_switch">Licznik kroków</string>
 
     <!-- Entertainment Activity   -->
     <string name="recommended_movies_panel">Polecane filmy</string>
@@ -19,5 +23,5 @@
     <!-- Common   -->
     <string name="preferences_panel">Preferencje</string>
     <string name="notifications_settings_panel">Ustawienia powiadomień</string>
-    
+
 </resources>
