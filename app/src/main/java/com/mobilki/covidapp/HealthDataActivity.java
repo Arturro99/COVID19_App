@@ -88,51 +88,23 @@ public class HealthDataActivity extends AppCompatActivity {
 
     private void start() {
 
-        weightSwitch.setOnCheckedChangeListener((compoundButton, b) -> {
-           changeVisibility(weightGroup, compoundButton);
-        });
-
-        stepSwitch.setOnCheckedChangeListener((compoundButton, b) -> {
-            changeVisibility(stepGroup, compoundButton);
-        });
-
-        sleepSwitch.setOnCheckedChangeListener((compoundButton, b) -> {
-            changeVisibility(sleepGroup, compoundButton);
-        });
-
-        waterSwitch.setOnCheckedChangeListener((compoundButton, b) -> {
-            changeVisibility(waterGroup, compoundButton);
-        });
+        weightSwitch.setOnCheckedChangeListener((compoundButton, b) -> changeVisibility(weightGroup, compoundButton));
+        stepSwitch.setOnCheckedChangeListener((compoundButton, b) -> changeVisibility(stepGroup, compoundButton));
+        sleepSwitch.setOnCheckedChangeListener((compoundButton, b) -> changeVisibility(sleepGroup, compoundButton));
+        waterSwitch.setOnCheckedChangeListener((compoundButton, b) -> changeVisibility(waterGroup, compoundButton));
 
 
-        nextDayWeightBtn.setOnClickListener(view -> {
-            addDays(1, weightDate);
-        });
+        nextDayWeightBtn.setOnClickListener(view -> addDays(1, weightDate));
+        previousDayWeightBtn.setOnClickListener(view -> addDays(-1, weightDate));
 
-        previousDayWeightBtn.setOnClickListener(view -> {
-            addDays(-1, weightDate);
-        });
-        nextDayStepBtn.setOnClickListener(view -> {
-            addDays(1, stepDate);
-        });
+        nextDayStepBtn.setOnClickListener(view -> addDays(1, stepDate));
+        previousDayStepBtn.setOnClickListener(view -> addDays(-1, stepDate));
 
-        previousDayStepBtn.setOnClickListener(view -> {
-            addDays(-1, stepDate);
-        });
-        nextDaySleepBtn.setOnClickListener(view -> {
-            addDays(1, sleepDate);
-        });
+        nextDaySleepBtn.setOnClickListener(view -> addDays(1, sleepDate));
+        previousDaySleepBtn.setOnClickListener(view -> addDays(-1, sleepDate));
 
-        previousDaySleepBtn.setOnClickListener(view -> {
-            addDays(-1, sleepDate);
-        });
-        nextDayWaterBtn.setOnClickListener(view -> {
-            addDays(1, waterDate);
-        });
-
-        previousDayWaterBtn.setOnClickListener(view -> {
-            addDays(-1, waterDate);
-        });
+        nextDayWaterBtn.setOnClickListener(view -> addDays(1, waterDate));
+        previousDayWaterBtn.setOnClickListener(view -> addDays(-1, waterDate));
 
     }
 
