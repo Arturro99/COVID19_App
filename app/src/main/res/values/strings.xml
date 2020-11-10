@@ -14,6 +14,9 @@
     <string name="water_drunk_switch">Wypita woda</string>
     <string name="current_weight_switch">Aktualna waga</string>
     <string name="step_counter_switch">Licznik kroków</string>
+    <string name="desired_weight_txt">Docelowa waga:</string>
+    <string name="desired_sleep_txt">Docelowa ilość snu:</string>
+    <string name="desired_water_txt">Docelowa ilość \nwypitej wody [ml]:</string>
 
     <!-- Entertainment Activity   -->
     <string name="recommended_movies_panel">Polecane filmy</string>
