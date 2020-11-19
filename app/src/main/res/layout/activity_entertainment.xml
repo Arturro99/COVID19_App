@@ -1,94 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EntertainmentActivity">
-
-    <Button
-        android:id="@+id/recommendedMoviesBtn"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/recommended_movies_panel"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.69" />
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/recommendedBooksBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/recommended_books_panel"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.617"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.748" />
+        <TextView
+            android:id="@+id/textViewMovies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filmy"
+            android:textSize="40sp" />
 
-    <Button
-        android:id="@+id/familialGamesBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/familial_games_panel"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.793" />
+        <TextView
+            android:id="@+id/textViewBooks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/moviesScrollView"
+            android:text="Książki"
+            android:textSize="40sp" />
 
-    <Button
-        android:id="@+id/entertainmentNotificationsSettingsBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/notifications_settings_panel"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.882" />
+        <TextView
+            android:id="@+id/textViewGames"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/booksScrollView"
+            android:text="Gry familijne"
+            android:textSize="40sp" />
 
-    <Button
-        android:id="@+id/entertainmentPreferencesBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/preferences_panel"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/entertainmentNotificationsSettingsBtn"
-        app:layout_constraintVertical_bias="0.764" />
-
-    <HorizontalScrollView
-        android:id="@+id/entertainmentScrollView"
+        <HorizontalScrollView
+        android:id="@+id/moviesScrollView"
         android:layout_width="match_parent"
         android:layout_height="350dp"
         android:fillViewport="true"
         android:measureAllChildren="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_below="@+id/textViewMovies">
 
         <LinearLayout
-            android:id="@+id/innerEntertainment"
+            android:id="@+id/moviesScrollViewInner"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/books"
+                android:id="@+id/movie1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -98,11 +57,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <ImageView
+                    <ImageButton
                         android:id="@+id/matrix"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/matrix" />
+                        android:src="@drawable/matrix"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -125,7 +86,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/books2"
+                android:id="@+id/movie2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="200dp"
@@ -136,11 +97,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <ImageView
+                    <ImageButton
                         android:id="@+id/tenet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/tenet" />
+                        android:src="@drawable/tenet"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -164,7 +127,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/books3"
+                android:id="@+id/movie3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="200dp"
@@ -175,16 +138,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent">
 
-                    <ImageView
+                    <ImageButton
                         android:id="@+id/greenMile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/green_mile" />
+                        android:src="@drawable/green_mile"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="GREEN MILE"
+                        android:text="ZIELONA MILA"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@id/greenMile"
                         app:layout_constraintStart_toStartOf="@id/greenMile"
@@ -196,6 +161,7 @@
                         android:text="Reżyseria: Fran Darabont\nOcena: *****\nOpis:.............."
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintVertical_bias="0.1"
                         app:layout_constraintStart_toEndOf="@id/greenMile"
                         app:layout_constraintTop_toTopOf="@id/greenMile" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -203,14 +169,304 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Filmy"
-        app:layout_constraintBottom_toTopOf="@+id/entertainmentScrollView"
-        android:textSize="40dp"
-        app:layout_constraintStart_toStartOf="parent" />
+        <HorizontalScrollView
+            android:id="@+id/booksScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:fillViewport="true"
+            android:measureAllChildren="false"
+            android:layout_below="@+id/textViewBooks">
 
+            <LinearLayout
+                android:id="@+id/booksScrollViewInner"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:id="@+id/book1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/metro"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/metro"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="METRO"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/metro"
+                            app:layout_constraintStart_toStartOf="@id/metro"
+                            app:layout_constraintTop_toBottomOf="@id/metro" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Autor: Dmitry Glukhovsky\nOcena: *****\nOpis:.............."
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintVertical_bias="0.1"
+                            app:layout_constraintStart_toEndOf="@id/metro"
+                            app:layout_constraintTop_toTopOf="@id/metro" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/book2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="200dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/witcher"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/wiedzmin"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="WIEDŹMIN"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/witcher"
+                            app:layout_constraintStart_toStartOf="@id/witcher"
+                            app:layout_constraintTop_toBottomOf="@id/witcher" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Autor: Andrzej Sapkowski\nOcena: *****\nOpis:.............."
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintVertical_bias="0.1"
+                            app:layout_constraintStart_toEndOf="@id/witcher"
+                            app:layout_constraintTop_toTopOf="@id/witcher" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/book3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="200dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/lotr"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/lotr"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="WŁADCA PIERŚCIENI"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/lotr"
+                            app:layout_constraintStart_toStartOf="@id/lotr"
+                            app:layout_constraintTop_toBottomOf="@id/lotr" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Autor: John R. R. Tolkien\nOcena: *****\nOpis:.............."
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintVertical_bias="0.1"
+                            app:layout_constraintStart_toEndOf="@id/lotr"
+                            app:layout_constraintTop_toTopOf="@id/lotr" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <HorizontalScrollView
+            android:id="@+id/gamesScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:fillViewport="true"
+            android:measureAllChildren="false"
+            android:layout_below="@+id/textViewGames">
+
+            <LinearLayout
+                android:id="@+id/gamesScrollViewInner"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/game1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/ludo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/metro"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="CHIŃCZYK"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/ludo"
+                            app:layout_constraintStart_toStartOf="@id/ludo"
+                            app:layout_constraintTop_toBottomOf="@id/ludo" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Wiek: 6-99\nOpis:.............."
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintVertical_bias="0.1"
+                            app:layout_constraintStart_toEndOf="@id/ludo"
+                            app:layout_constraintTop_toTopOf="@id/ludo" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/game2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="200dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/dominoes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/wiedzmin"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="DOMINO"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/dominoes"
+                            app:layout_constraintStart_toStartOf="@id/dominoes"
+                            app:layout_constraintTop_toBottomOf="@id/dominoes" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Wiek: 4-99\nOpis:.............."
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintVertical_bias="0.1"
+                            app:layout_constraintStart_toEndOf="@id/dominoes"
+                            app:layout_constraintTop_toTopOf="@id/dominoes" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/game3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="200dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageButton
+                            android:id="@+id/war"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/lotr"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="WOJNA - GRA KARCIANA"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/war"
+                            app:layout_constraintStart_toStartOf="@id/war"
+                            app:layout_constraintTop_toBottomOf="@id/war" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Wiek: 5-99\nOpis:.............."
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintVertical_bias="0.1"
+                            app:layout_constraintStart_toEndOf="@id/war"
+                            app:layout_constraintTop_toTopOf="@id/war" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/gamesScrollView"
+            android:weightSum="1">
+
+            <Button
+                android:id="@+id/entertainmentNotificationsSettingsBtn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:text="@string/notifications_settings_panel"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/entertainmentPreferencesBtn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:text="@string/preferences_panel"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/entertainmentNotificationsSettingsBtn" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>
