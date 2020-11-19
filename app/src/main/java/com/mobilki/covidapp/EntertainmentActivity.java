@@ -18,9 +18,6 @@ public class EntertainmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entertainment);
 
-        recommendedMoviesBtn = findViewById(R.id.recommendedMoviesBtn);
-        recommendedBooksBtn = findViewById(R.id.recommendedBooksBtn);
-        familialGamesBtn = findViewById(R.id.familialGamesBtn);
         notificationsSettingsBtn = findViewById(R.id.entertainmentNotificationsSettingsBtn);
         preferencesBtn = findViewById(R.id.entertainmentPreferencesBtn);
     }
