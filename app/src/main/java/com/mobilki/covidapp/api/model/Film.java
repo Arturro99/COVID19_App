@@ -6,8 +6,11 @@ public class Film {
     private String id;
     private String title;
     private int yearOfRelease;
-    private String description;
-    private float ratings;
+    private int duration;
+    private String longDescription;
+    private String shortDescription;
+    private double ratings;
+    private int ratingsCount;
     private List<String> genres;
     private String imageUrl;
     private List<Actor> actors;
@@ -28,11 +31,13 @@ public class Film {
         return yearOfRelease;
     }
 
-    public String getDescription() {
-        return description;
+    public String getLongDescription() {
+        return longDescription;
     }
 
-    public float getRatings() {
+    public String getShortDescription() { return shortDescription; }
+
+    public double getRatings() {
         return ratings;
     }
 
@@ -48,9 +53,12 @@ public class Film {
         return actors;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    public int getDuration() { return duration; }
+
+    public int getRatingsCount() { return ratingsCount; }
+
+
+    public void setId(String id) { this.id = id; }
 
     public void setTitle(String title) {
         this.title = title;
@@ -60,11 +68,11 @@ public class Film {
         this.yearOfRelease = yearOfRelease;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public void setLongDescription(String description) { this.longDescription = description; }
 
-    public void setRatings(float ratings) {
+    public void setShortDescription(String description) { this.shortDescription = description; }
+
+    public void setRatings(double ratings) {
         this.ratings = ratings;
     }
 
@@ -79,4 +87,8 @@ public class Film {
     public void setActors(List<Actor> actors) {
         this.actors = actors;
     }
+
+    public void setDuration(int duration) { this.duration = duration; }
+
+    public void setRatingsCount(int ratingsCount) { this.ratingsCount = ratingsCount; }
 }
