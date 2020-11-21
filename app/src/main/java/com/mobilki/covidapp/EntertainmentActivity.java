@@ -37,15 +37,10 @@ public class EntertainmentActivity extends AppCompatActivity {
 
     private void start() {
         notificationsSettingsBtn.setOnClickListener(view -> {
-            try {
-                imdbApi.getTitle("title/get-details", "tt0133093");
-                firstMovieTxt.setText(imdbApi.getFilms().get(0).getTitle());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+                imdbApi.fetchOverviewData("tt0133093");
         });
         preferencesBtn.setOnClickListener(view -> {
-//            Log.println(Log.WARN, "ss", Result.kupa);
+            firstMovieTxt.setText(imdbApi.getFilms().get(0).getGenres().toString());
         });
     }
 }

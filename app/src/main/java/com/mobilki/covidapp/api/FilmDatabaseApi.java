@@ -9,12 +9,7 @@ import com.mobilki.covidapp.exceptions.*;
 
 public interface FilmDatabaseApi {
 
-    void getTitle(String endPoint, String id) throws JSONException;
-    int getYearOfRelease(String endPoint, String id);
-    String getRatings(String endPoint, String id);
-    String getDescription(String endPoint, String id);
-    List<String> getGenres(String endPoint, String id);
-    String getImageUrl(String endPoint, String id);
+    void fetchOverviewData(String id);
     List<String> getActors(String endPoint, String id);
     String getActorName(String endPoint, String id);
     String getActorDateOfBirth(String endPoint, String id);

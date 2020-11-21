@@ -1,8 +1,13 @@
 package com.mobilki.covidapp.api;
 
+import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
+
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -17,6 +22,7 @@ import com.mobilki.covidapp.api.model.Film;
 import com.mobilki.covidapp.api.repository.FilmRepository;
 import com.mobilki.covidapp.exceptions.*;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,9 +37,10 @@ public class ImdbApi implements FilmDatabaseApi {
     private FilmRepository filmRepository = new FilmRepository();
 
     @Override
-    public void getTitle(String endPoint, String id) throws JSONException {
+    public void fetchOverviewData(String id) {
+        filmRepository.addFilm(new Film(id));
         Request request = new Request.Builder()
-                .url("https://imdb8.p.rapidapi.com/" + endPoint + "?tconst=" + id)
+                .url("https://imdb8.p.rapidapi.com/title/get-overview-details" + "?tconst=" + id)
                 .get()
                 .addHeader("x-rapidapi-key", key)
                 .addHeader("x-rapidapi-host", host)
@@ -49,6 +56,7 @@ public class ImdbApi implements FilmDatabaseApi {
                 }
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.R)
             @Override
             public void onResponse(Call call, Response response) throws IOException{
                 if (response.body() != null) {
@@ -68,36 +76,13 @@ public class ImdbApi implements FilmDatabaseApi {
                 }
                 try {
                     setTitle(id, jsonObject);
+                    setReleaseYear(id, jsonObject);
+                    setGenres(id, jsonObject);
                 } catch (JSONException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         });
-    }
-
-    @Override
-    public int getYearOfRelease(String endPoint, String id) {
-        return 0;
-    }
-
-    @Override
-    public String getRatings(String endPoint, String id) {
-        return null;
-    }
-
-    @Override
-    public String getDescription(String endPoint, String id) {
-        return null;
-    }
-
-    @Override
-    public List<String> getGenres(String endPoint, String id) {
-        return null;
-    }
-
-    @Override
-    public String getImageUrl(String endPoint, String id) {
-        return null;
     }
 
     @Override
@@ -126,8 +111,49 @@ public class ImdbApi implements FilmDatabaseApi {
     }
 
     private void setTitle(String id, JSONObject obj) throws JSONException, InterruptedException {
-        filmRepository.addFilm(new Film(id));
-        filmRepository.getFilm(id).setTitle(obj.getString("title"));
+        filmRepository.getFilm(id).setTitle(
+                obj.getJSONObject("title").getString("title"));
+    }
+
+    private void setDuration(String id, JSONObject obj) throws JSONException {
+        filmRepository.getFilm(id).setYearOfRelease(
+                obj.getJSONObject("title").getInt("runningTimeInMinutes"));
+    }
+
+    private void setReleaseYear(String id, JSONObject obj) throws JSONException {
+        filmRepository.getFilm(id).setYearOfRelease(
+                obj.getJSONObject("title").getInt("year"));
+    }
+
+    private void setImageUrl(String id, JSONObject obj) throws JSONException {
+        filmRepository.getFilm(id).setImageUrl(
+                obj.getJSONObject("title").getJSONObject("image").getString("url"));
+    }
+
+    private void setRatings(String id, JSONObject obj) throws JSONException {
+        filmRepository.getFilm(id).setRatings(
+                obj.getJSONObject("ratings").getDouble("rating"));
+    }
+
+    private void setRatingsCount(String id, JSONObject obj) throws JSONException {
+        filmRepository.getFilm(id).setRatingsCount(
+                obj.getJSONObject("ratings").getInt("ratingCount"));
+    }
+
+    private void setLongDescription(String id, JSONObject obj) throws JSONException {
+        filmRepository.getFilm(id).setLongDescription(
+                obj.getJSONObject("plotSummary").getString("text"));
+    }
+
+    private void setShortDescription(String id, JSONObject obj) throws JSONException {
+        filmRepository.getFilm(id).setShortDescription(
+                obj.getJSONObject("plotOutline").getString("text"));
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    private void setGenres(String id, JSONObject obj) throws JSONException {
+        filmRepository.getFilm(id).setGenres(
+                List.of(obj.getString("genres")));
     }
 
     public List<Film> getFilms() {
