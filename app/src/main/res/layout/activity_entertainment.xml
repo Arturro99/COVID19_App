@@ -41,132 +41,130 @@
         android:layout_below="@+id/textViewMovies">
 
         <LinearLayout
-            android:id="@+id/moviesScrollViewInner"
+            android:id="@+id/filmsLinearLayout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/movie1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
+<!--            <LinearLayout-->
+<!--                android:id="@+id/movie1"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center"-->
+<!--                android:orientation="vertical">-->
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent">-->
 
-                    <ImageButton
-                        android:id="@+id/matrix"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/matrix"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+<!--                    <ImageButton-->
+<!--                        android:id="@+id/matrix"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:src="@drawable/matrix"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent"/>-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="kupa"
-                        android:id="@+id/firstMovieTextView"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@id/matrix"
-                        app:layout_constraintStart_toStartOf="@id/matrix"
-                        app:layout_constraintTop_toBottomOf="@id/matrix" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Reżyseria: Lily Wachowsky\nOcena: *****\nOpis:.............."
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintVertical_bias="0.1"
-                        app:layout_constraintStart_toEndOf="@id/matrix"
-                        app:layout_constraintTop_toTopOf="@id/matrix" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </LinearLayout>
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="kupa"-->
+<!--                        android:id="@+id/firstMovieTextView"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintEnd_toEndOf="@id/matrix"-->
+<!--                        app:layout_constraintStart_toStartOf="@id/matrix"-->
+<!--                        app:layout_constraintTop_toBottomOf="@id/matrix" />-->
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Reżyseria: Lily Wachowsky\nOcena: *****\nOpis:.............."-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintVertical_bias="0.1"-->
+<!--                        app:layout_constraintStart_toEndOf="@id/matrix"-->
+<!--                        app:layout_constraintTop_toTopOf="@id/matrix" />-->
+<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--            </LinearLayout>-->
 
-            <LinearLayout
-                android:id="@+id/movie2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="200dp"
-                android:gravity="center"
-                android:orientation="vertical">
+<!--            <LinearLayout-->
+<!--                android:id="@+id/movie2"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center"-->
+<!--                android:orientation="vertical">-->
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent">-->
 
-                    <ImageButton
-                        android:id="@+id/tenet"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/tenet"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+<!--                    <ImageButton-->
+<!--                        android:id="@+id/tenet"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:src="@drawable/tenet"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent"/>-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="TENET"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@id/tenet"
-                        app:layout_constraintStart_toStartOf="@id/tenet"
-                        app:layout_constraintTop_toBottomOf="@id/tenet" />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="TENET"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintEnd_toEndOf="@id/tenet"-->
+<!--                        app:layout_constraintStart_toStartOf="@id/tenet"-->
+<!--                        app:layout_constraintTop_toBottomOf="@id/tenet" />-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Reżyseria: Christopher Nolan\nOcena: *****\nOpis:.............."
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintVertical_bias="0.1"
-                        app:layout_constraintStart_toEndOf="@id/tenet"
-                        app:layout_constraintTop_toTopOf="@id/tenet" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </LinearLayout>
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Reżyseria: Christopher Nolan\nOcena: *****\nOpis:.............."-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintVertical_bias="0.1"-->
+<!--                        app:layout_constraintStart_toEndOf="@id/tenet"-->
+<!--                        app:layout_constraintTop_toTopOf="@id/tenet" />-->
+<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--            </LinearLayout>-->
 
-            <LinearLayout
-                android:id="@+id/movie3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="200dp"
-                android:gravity="center"
-                android:orientation="vertical">
+<!--            <LinearLayout-->
+<!--                android:id="@+id/movie3"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center"-->
+<!--                android:orientation="vertical">-->
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
+<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="match_parent">-->
 
-                    <ImageButton
-                        android:id="@+id/greenMile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/green_mile"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+<!--                    <ImageButton-->
+<!--                        android:id="@+id/greenMile"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:src="@drawable/green_mile"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent"/>-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="ZIELONA MILA"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@id/greenMile"
-                        app:layout_constraintStart_toStartOf="@id/greenMile"
-                        app:layout_constraintTop_toBottomOf="@id/greenMile" />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="ZIELONA MILA"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintEnd_toEndOf="@id/greenMile"-->
+<!--                        app:layout_constraintStart_toStartOf="@id/greenMile"-->
+<!--                        app:layout_constraintTop_toBottomOf="@id/greenMile" />-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Reżyseria: Fran Darabont\nOcena: *****\nOpis:.............."
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintVertical_bias="0.1"
-                        app:layout_constraintStart_toEndOf="@id/greenMile"
-                        app:layout_constraintTop_toTopOf="@id/greenMile" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </LinearLayout>
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Reżyseria: Fran Darabont\nOcena: *****\nOpis:.............."-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintVertical_bias="0.1"-->
+<!--                        app:layout_constraintStart_toEndOf="@id/greenMile"-->
+<!--                        app:layout_constraintTop_toTopOf="@id/greenMile" />-->
+<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--            </LinearLayout>-->
         </LinearLayout>
     </HorizontalScrollView>
 
@@ -179,7 +177,7 @@
             android:layout_below="@+id/textViewBooks">
 
             <LinearLayout
-                android:id="@+id/booksScrollViewInner"
+                android:id="@+id/booksLinearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -227,7 +225,6 @@
                     android:id="@+id/book2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="200dp"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -268,7 +265,6 @@
                     android:id="@+id/book3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="200dp"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -316,7 +312,7 @@
             android:layout_below="@+id/textViewGames">
 
             <LinearLayout
-                android:id="@+id/gamesScrollViewInner"
+                android:id="@+id/gamesLinearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -364,7 +360,6 @@
                     android:id="@+id/game2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="200dp"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -405,7 +400,6 @@
                     android:id="@+id/game3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="200dp"
                     android:gravity="center"
                     android:orientation="vertical">
 

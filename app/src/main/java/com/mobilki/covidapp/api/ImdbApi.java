@@ -153,7 +153,11 @@ public class ImdbApi implements FilmDatabaseApi {
     @RequiresApi(api = Build.VERSION_CODES.R)
     private void setGenres(String id, JSONObject obj) throws JSONException {
         filmRepository.getFilm(id).setGenres(
-                List.of(obj.getString("genres")));
+                List.of(obj.getString("genres")
+                        .replace("[", "")
+                        .replace("]", "")
+                        .replace("\"", "")
+                        .split(",")));
     }
 
     public List<Film> getFilms() {
