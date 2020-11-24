@@ -9,11 +9,10 @@ import com.mobilki.covidapp.exceptions.*;
 
 public interface FilmDatabaseApi {
 
-    void fetchOverviewData(String id);
-    List<String> getActors(String endPoint, String id);
-    String getActorName(String endPoint, String id);
-    String getActorDateOfBirth(String endPoint, String id);
-    String getActorHeight(String endPoint, String id);
-    String getActorBirthPlace(String endPoint, String id);
+    void fetchOverviewData(List<Film> films);
+
+
+    void getMostPopularFilms();
+
     List<Film>getFilms();
 }

@@ -8,7 +8,10 @@ import androidx.annotation.RequiresApi;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 import okhttp3.Call;
@@ -37,10 +40,59 @@ public class ImdbApi implements FilmDatabaseApi {
     private FilmRepository filmRepository = new FilmRepository();
 
     @Override
-    public void fetchOverviewData(String id) {
-        filmRepository.addFilm(new Film(id));
+    public void fetchOverviewData(List<Film> films) {
+        for (Film film : films) {
+            String id = film.getId();
+            Request request = new Request.Builder()
+                    .url("https://imdb8.p.rapidapi.com/title/get-overview-details" + "?tconst=" + id)
+                    .get()
+                    .addHeader("x-rapidapi-key", key)
+                    .addHeader("x-rapidapi-host", host)
+                    .build();
+
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    try {
+                        throw new incorrectRequestException("Incorrect request.");
+                    } catch (incorrectRequestException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+
+                @RequiresApi(api = Build.VERSION_CODES.R)
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (response.body() != null) {
+                        jsonString = response.body().string();
+                        try {
+                            jsonObject = new JSONObject(jsonString);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        try {
+                            throw new emptyResponseBodyException("Empty body in response.");
+                        } catch (emptyResponseBodyException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    try {
+                        setTitle(id, jsonObject);
+                        setReleaseYear(id, jsonObject);
+                        setGenres(id, jsonObject);
+                    } catch (JSONException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+    }
+
+    @Override
+    public void getMostPopularFilms() {
         Request request = new Request.Builder()
-                .url("https://imdb8.p.rapidapi.com/title/get-overview-details" + "?tconst=" + id)
+                .url("https://imdb8.p.rapidapi.com/title/get-most-popular-movies?purchaseCountry=US&homeCountry=US&currentCountry=US")
                 .get()
                 .addHeader("x-rapidapi-key", key)
                 .addHeader("x-rapidapi-host", host)
@@ -61,11 +113,6 @@ public class ImdbApi implements FilmDatabaseApi {
             public void onResponse(Call call, Response response) throws IOException{
                 if (response.body() != null) {
                     jsonString = response.body().string();
-                    try {
-                        jsonObject = new JSONObject(jsonString);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
                 }
                 else {
                     try {
@@ -75,39 +122,13 @@ public class ImdbApi implements FilmDatabaseApi {
                     }
                 }
                 try {
-                    setTitle(id, jsonObject);
-                    setReleaseYear(id, jsonObject);
-                    setGenres(id, jsonObject);
-                } catch (JSONException | InterruptedException e) {
+                    instantiateFilms(jsonString);
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
-    }
 
-    @Override
-    public List<String> getActors(String endPoint, String id) {
-        return null;
-    }
-
-    @Override
-    public String getActorName(String endPoint, String id) {
-        return null;
-    }
-
-    @Override
-    public String getActorDateOfBirth(String endPoint, String id) {
-        return null;
-    }
-
-    @Override
-    public String getActorHeight(String endPoint, String id) {
-        return null;
-    }
-
-    @Override
-    public String getActorBirthPlace(String endPoint, String id) {
-        return null;
     }
 
     private void setTitle(String id, JSONObject obj) throws JSONException, InterruptedException {
@@ -148,6 +169,21 @@ public class ImdbApi implements FilmDatabaseApi {
     private void setShortDescription(String id, JSONObject obj) throws JSONException {
         filmRepository.getFilm(id).setShortDescription(
                 obj.getJSONObject("plotOutline").getString("text"));
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    private void instantiateFilms(String jsonString) throws JSONException {
+        List<String> ids = List.of(jsonString
+                .replace("[", "")
+                .replace("]", "")
+                .replace("\"", "")
+                .replace("/", "")
+                .replace("title", "")
+                .split(","));
+
+        for (int i = 0; i < 10; i++) {
+            filmRepository.addFilm(new Film(ids.get(i)));
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
