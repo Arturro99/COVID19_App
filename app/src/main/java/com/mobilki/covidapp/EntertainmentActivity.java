@@ -12,9 +12,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mobilki.covidapp.api.*;
+import com.squareup.picasso.Picasso;
 
 import java.net.URI;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 
 public class EntertainmentActivity extends AppCompatActivity {
 
@@ -33,9 +39,10 @@ public class EntertainmentActivity extends AppCompatActivity {
     TextView []filmTitleTxtList = new TextView[10];
     ImageButton []filmPhotosList = new ImageButton[10];
     TextView []filmDirectorList = new TextView[10];
-    TextView []filmReleaseYear = new TextView[10];
+    TextView []filmReleaseYearList = new TextView[10];
 
     private FilmDatabaseApi imdbApi;
+    private List synchedList = Collections.synchronizedList(new LinkedList<>());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,21 +58,22 @@ public class EntertainmentActivity extends AppCompatActivity {
 
         inflater = LayoutInflater.from(this);
 
-        int titleInitiateId = 1000;
-        int releaseYearInitiateId = 2000;
+        int filmTitleInitiateId = 1000;
+        int filmReleaseYearInitiateId = 2000;
+        int filmPhotoInitiateId = 2000;
 
         for (int i = 0; i < 10; i++) {
             View anotherLayout = inflater.inflate(R.layout.film_overview, null, true);
             filmsLayout.addView(anotherLayout);
             filmTitleTxtList[i] = findViewById(R.id.filmTitleTxt);
-//            filmPhotosList[i] = findViewById(R.id.mainFilmPhoto);
+            filmPhotosList[i] = findViewById(R.id.mainFilmPhoto);
 //            filmDirectorList[i] = findViewById(R.id.filmDirector);
-            filmReleaseYear[i] = findViewById(R.id.filmReleaseYear);
+            filmReleaseYearList[i] = findViewById(R.id.filmReleaseYear);
 
-            filmTitleTxtList[i].setId(titleInitiateId + i);
-//            filmPhotosList[i].setId(R.id.mainFilmPhoto + i + 1);
+            filmTitleTxtList[i].setId(filmTitleInitiateId + i);
+            filmPhotosList[i].setId(R.id.mainFilmPhoto + i);
 //            filmDirectorList[i].setId(R.id.filmDirector + i + 1);
-            filmReleaseYear[i].setId(releaseYearInitiateId + i);
+            filmReleaseYearList[i].setId(filmReleaseYearInitiateId + i);
             //
         }
 
@@ -77,14 +85,18 @@ public class EntertainmentActivity extends AppCompatActivity {
     private void start() {
         imdbApi.getMostPopularFilms();
         notificationsSettingsBtn.setOnClickListener(view -> {
-                imdbApi.fetchOverviewData(imdbApi.getFilms());
+            ExecutorService executorService = Executors.newFixedThreadPool(10);
+            executorService.submit((Runnable) imdbApi);
+                //imdbApi.fetchOverviewData(imdbApi.getFilms());
+            executorService.shutdown();
         });
         preferencesBtn.setOnClickListener(view -> {
             for (int i = 0; i < 10; i++) {
                 filmTitleTxtList[i].setText(imdbApi.getFilms().get(i).getTitle());
-                filmReleaseYear[i].setText(String.valueOf(imdbApi.getFilms().get(i).getYearOfRelease()));
-                //filmPhotosList[i].setImageURI(Uri.parse(imdbApi.getFilms().get(i).getImageUrl()));
-                //filmDirectorList[i].setText(Uri.parse(imdbApi.getFilms().get(i).get()));
+                filmReleaseYearList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getYearOfRelease()));
+                //filmPhotosList[i].setImageResource(Uri.parse(imdbApi.getFilms().get(i).getImageUrl()));
+                Picasso.get().load(imdbApi.getFilms().get(i).getImageUrl()).into(filmPhotosList[i]);
+                //filmDirectorList[i].setText(Uri.parse(`imdbApi.getFilms().get(i).get()));
             }
         });
     }

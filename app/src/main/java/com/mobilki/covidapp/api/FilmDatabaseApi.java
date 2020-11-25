@@ -13,6 +13,7 @@ public interface FilmDatabaseApi {
 
 
     void getMostPopularFilms();
+    void getTopRatedFilms();
 
     List<Film>getFilms();
 }
