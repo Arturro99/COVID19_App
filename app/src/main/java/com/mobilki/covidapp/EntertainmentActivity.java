@@ -66,12 +66,12 @@ public class EntertainmentActivity extends AppCompatActivity {
             View anotherLayout = inflater.inflate(R.layout.film_overview, null, true);
             filmsLayout.addView(anotherLayout);
             filmTitleTxtList[i] = findViewById(R.id.filmTitleTxt);
-            filmPhotosList[i] = findViewById(R.id.mainFilmPhoto);
+            //filmPhotosList[i] = findViewById(R.id.mainFilmPhoto);
 //            filmDirectorList[i] = findViewById(R.id.filmDirector);
             filmReleaseYearList[i] = findViewById(R.id.filmReleaseYear);
 
             filmTitleTxtList[i].setId(filmTitleInitiateId + i);
-            filmPhotosList[i].setId(R.id.mainFilmPhoto + i);
+            //filmPhotosList[i].setId(R.id.mainFilmPhoto + i);
 //            filmDirectorList[i].setId(R.id.filmDirector + i + 1);
             filmReleaseYearList[i].setId(filmReleaseYearInitiateId + i);
             //
@@ -83,19 +83,20 @@ public class EntertainmentActivity extends AppCompatActivity {
     }
 
     private void start() {
-        imdbApi.getMostPopularFilms();
+        imdbApi.getGenres();
+        imdbApi.getTopRatedOrPopularFilms(false);
         notificationsSettingsBtn.setOnClickListener(view -> {
-            ExecutorService executorService = Executors.newFixedThreadPool(10);
-            executorService.submit((Runnable) imdbApi);
-                //imdbApi.fetchOverviewData(imdbApi.getFilms());
-            executorService.shutdown();
+//            ExecutorService executorService = Executors.newFixedThreadPool(10);
+//            executorService.submit((Runnable) imdbApi);
+//                //imdbApi.fetchOverviewData(imdbApi.getFilms());
+//            executorService.shutdown();
         });
         preferencesBtn.setOnClickListener(view -> {
             for (int i = 0; i < 10; i++) {
                 filmTitleTxtList[i].setText(imdbApi.getFilms().get(i).getTitle());
-                filmReleaseYearList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getYearOfRelease()));
+                filmReleaseYearList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getDateOfRelease()));
                 //filmPhotosList[i].setImageResource(Uri.parse(imdbApi.getFilms().get(i).getImageUrl()));
-                Picasso.get().load(imdbApi.getFilms().get(i).getImageUrl()).into(filmPhotosList[i]);
+                //Picasso.get().load(imdbApi.getFilms().get(i).getImageUrl()).into(filmPhotosList[i]);
                 //filmDirectorList[i].setText(Uri.parse(`imdbApi.getFilms().get(i).get()));
             }
         });

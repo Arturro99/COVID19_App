@@ -9,11 +9,13 @@ import com.mobilki.covidapp.exceptions.*;
 
 public interface FilmDatabaseApi {
 
-    void fetchOverviewData(List<Film> films);
+    //void fetchOverviewData(List<Film> films);
 
+    void getTopRatedOrPopularFilms(boolean topRated);
 
-    void getMostPopularFilms();
-    void getTopRatedFilms();
+    //void getMostPopularFilms();
+    //void getTopRatedFilms();
+    void getGenres();
 
     List<Film>getFilms();
 }
