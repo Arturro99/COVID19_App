@@ -1,11 +1,12 @@
 package com.mobilki.covidapp.api.model;
 
+import java.util.Date;
 import java.util.List;
 
 public class Film {
     private String id;
     private String title;
-    private int yearOfRelease;
+    private Date dateOfRelease;
     private int duration;
     private String longDescription;
     private String shortDescription;
@@ -27,8 +28,8 @@ public class Film {
         return title;
     }
 
-    public int getYearOfRelease() {
-        return yearOfRelease;
+    public Date getDateOfRelease() {
+        return dateOfRelease;
     }
 
     public String getLongDescription() {
@@ -64,8 +65,8 @@ public class Film {
         this.title = title;
     }
 
-    public void setYearOfRelease(int yearOfRelease) {
-        this.yearOfRelease = yearOfRelease;
+    public void setDateOfRelease(Date dateOfRelease) {
+        this.dateOfRelease = dateOfRelease;
     }
 
     public void setLongDescription(String description) { this.longDescription = description; }
