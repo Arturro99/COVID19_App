@@ -1,7 +1,13 @@
 package com.mobilki.covidapp.api.model;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Film {
     private String id;
@@ -77,6 +83,7 @@ public class Film {
         this.ratings = ratings;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void setGenres(List<String> genres) {
         this.genres = genres;
     }

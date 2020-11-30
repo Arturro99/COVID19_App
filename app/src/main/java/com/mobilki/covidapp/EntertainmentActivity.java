@@ -1,10 +1,12 @@
 package com.mobilki.covidapp;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 
 public class EntertainmentActivity extends AppCompatActivity {
@@ -231,9 +234,10 @@ public class EntertainmentActivity extends AppCompatActivity {
         start();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void start() {
         imdbApi.getGenres();
-        imdbApi.getTopRatedOrPopularFilms(true);
+        imdbApi.getTopRatedOrPopularFilms(false);
 
         notificationsSettingsBtn.setOnClickListener(view -> {
 //            ExecutorService executorService = Executors.newFixedThreadPool(10);
@@ -247,7 +251,10 @@ public class EntertainmentActivity extends AppCompatActivity {
                 filmReleaseYearList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getDateOfRelease()));
                 filmDurationList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getDuration()));
                 filmRatingList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getRatings()));
-                filmGenresList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getGenres()));
+                filmGenresList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getGenres())
+                .replace("[", "")
+                .replace("]", "")
+                .replace(", ", "\n"));
                 //filmDirectorList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getDirector()));
                 Picasso.get().load(imdbApi.getFilms().get(i).getImageUrl()).into(filmPhotosList[i]);
             }

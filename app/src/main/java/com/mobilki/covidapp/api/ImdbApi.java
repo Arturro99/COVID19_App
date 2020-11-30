@@ -153,7 +153,18 @@ public class ImdbApi implements FilmDatabaseApi {
             film.setRatings(Double.parseDouble(o.getString("vote_average")));
             film.setShortDescription(o.getString("overview"));
             film.setImageUrl(imgFirstPartUrl + o.getString("poster_path"));
-            //film.setGenres(filmGenresRepository.getGenres().);
+
+            List<Integer> arr = new ArrayList<>();
+            JSONArray jArr = o.getJSONArray("genre_ids");
+            for (int j = 0; j < jArr.length(); j++) {
+                arr.add(jArr.getInt(j));
+            }
+            List<String> genres = new ArrayList<>();
+            arr.stream()
+                    .filter((filmGenresRepository.getGenres().keySet()::contains))
+                    .collect(Collectors.toList())
+                    .forEach(x -> genres.add(filmGenresRepository.getGenre(x)));
+            film.setGenres(genres);
 
             filmRepository.addFilm(film);
         }
