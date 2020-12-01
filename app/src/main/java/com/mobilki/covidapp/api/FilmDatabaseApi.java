@@ -18,4 +18,5 @@ public interface FilmDatabaseApi {
     void getGenres();
 
     List<Film>getFilms();
+    void manageEmptyFields(int id);
 }

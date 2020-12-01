@@ -5,12 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -19,13 +18,9 @@ import android.widget.TextView;
 import com.mobilki.covidapp.api.*;
 import com.squareup.picasso.Picasso;
 
-import java.net.URI;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 
 
 public class EntertainmentActivity extends AppCompatActivity {
@@ -62,6 +57,7 @@ public class EntertainmentActivity extends AppCompatActivity {
     private FilmDatabaseApi imdbApi;
     private List synchedList = Collections.synchronizedList(new LinkedList<>());
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -234,19 +230,29 @@ public class EntertainmentActivity extends AppCompatActivity {
         start();
     }
 
+
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void start() {
+
+        for (int i = 0; i < 10; i++) {
+            int finalI = i;
+            filmPhotosList[i].setOnClickListener(view -> {
+                Intent intent = new Intent(this, FilmDetailsActivity.class);
+
+                intent.putExtra("film", imdbApi.getFilms().get(finalI));
+                startActivity(intent);
+            });
+        }
+
         imdbApi.getGenres();
-        imdbApi.getTopRatedOrPopularFilms(false);
+        imdbApi.getTopRatedOrPopularFilms(true);
 
         notificationsSettingsBtn.setOnClickListener(view -> {
-//            ExecutorService executorService = Executors.newFixedThreadPool(10);
-//            executorService.submit((Runnable) imdbApi);
-//                //imdbApi.fetchOverviewData(imdbApi.getFilms());
-//            executorService.shutdown();
         });
         preferencesBtn.setOnClickListener(view -> {
             for (int i = 0; i < 10; i++) {
+                imdbApi.manageEmptyFields(i);
                 filmTitleList[i].setText(imdbApi.getFilms().get(i).getTitle());
                 filmReleaseYearList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getDateOfRelease()));
                 filmDurationList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getDuration()));
@@ -255,7 +261,9 @@ public class EntertainmentActivity extends AppCompatActivity {
                 .replace("[", "")
                 .replace("]", "")
                 .replace(", ", "\n"));
-                //filmDirectorList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getDirector()));
+                filmDirectorList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getDirectors().values())
+                        .replace("[", "")
+                        .replace("]", ""));
                 Picasso.get().load(imdbApi.getFilms().get(i).getImageUrl()).into(filmPhotosList[i]);
             }
         });

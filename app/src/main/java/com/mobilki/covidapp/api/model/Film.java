@@ -4,12 +4,14 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Film {
+public class Film implements Serializable {
     private String id;
     private String title;
     private Date dateOfRelease;
@@ -20,7 +22,22 @@ public class Film {
     private int ratingsCount;
     private List<String> genres;
     private String imageUrl;
-    private List<Actor> actors;
+
+    private HashMap<Integer, String> actors = new HashMap<>();
+    private HashMap<Integer, String> directors = new HashMap<>();
+
+    public void addActor(int id, String name) {
+        actors.put(id, name);
+    }
+    public void addDirector(int id, String name) { directors.put(id, name); }
+
+    public String getActor(int id) {
+        return actors.get(id);
+    }
+    public String getDirector(int id) { return directors.get(id); }
+
+    public HashMap<Integer, String> getActors() { return this.actors; }
+    public HashMap<Integer, String> getDirectors() { return this.directors; }
 
     public Film(String id) {
         this.id = id;
@@ -56,9 +73,6 @@ public class Film {
         return imageUrl;
     }
 
-    public List<Actor> getActors() {
-        return actors;
-    }
 
     public int getDuration() { return duration; }
 
@@ -92,9 +106,6 @@ public class Film {
         this.imageUrl = imageUrl;
     }
 
-    public void setActors(List<Actor> actors) {
-        this.actors = actors;
-    }
 
     public void setDuration(int duration) { this.duration = duration; }
 
