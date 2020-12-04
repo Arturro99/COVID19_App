@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 public class Film implements Serializable {
     private String id;
@@ -23,20 +23,23 @@ public class Film implements Serializable {
     private List<String> genres;
     private String imageUrl;
 
-    private HashMap<Integer, String> actors = new HashMap<>();
+    private List<Actor> actors = new ArrayList<>();
     private HashMap<Integer, String> directors = new HashMap<>();
 
-    public void addActor(int id, String name) {
-        actors.put(id, name);
+    public void addActor(Actor actor) {
+        actors.add(actor);
     }
     public void addDirector(int id, String name) { directors.put(id, name); }
 
-    public String getActor(int id) {
-        return actors.get(id);
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public Optional<Actor> getActor(int id) {
+        return actors.stream()
+                .filter(actor -> actor.getId() == id)
+                .findFirst();
     }
     public String getDirector(int id) { return directors.get(id); }
 
-    public HashMap<Integer, String> getActors() { return this.actors; }
+    public List<Actor> getActors() { return this.actors; }
     public HashMap<Integer, String> getDirectors() { return this.directors; }
 
     public Film(String id) {

@@ -16,6 +16,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import com.mobilki.covidapp.api.model.Actor;
 import com.mobilki.covidapp.api.model.Film;
 import com.mobilki.covidapp.api.repository.FilmGenresRepository;
 import com.mobilki.covidapp.api.repository.FilmRepository;
@@ -221,8 +222,10 @@ public class ImdbApi implements FilmDatabaseApi {
         JSONArray directorArr = obj.getJSONArray("crew");
         for (int i = 0; i < 10; i++) {
             if (actorArr.get(i) != null) {
+                Actor actor = new Actor(actorArr.getJSONObject(i).getInt("id"), actorArr.getJSONObject(i).getString("name"));
+                actor.setImgUrl(imgFirstPartUrl +  actorArr.getJSONObject(i).getString("profile_path"));
                 filmRepository.getFilm(obj.getString("id"))
-                        .addActor(actorArr.getJSONObject(i).getInt("id"), actorArr.getJSONObject(i).getString("name"));
+                        .addActor(actor);
             }
             else
                 break;
@@ -235,12 +238,19 @@ public class ImdbApi implements FilmDatabaseApi {
         }
     }
 
+//    @RequiresApi(api = Build.VERSION_CODES.N)
+//    private void setActorImages(JSONObject object, int actorId, String filmId) throws JSONException {
+//        filmRepository.getFilm(filmId).getActor(actorId).get().setImgUrl(
+//               imgFirstPartUrl + object.getString("profile_path")
+//        );
+//    }
+
     @Override
     public void manageEmptyFields(int i) {
             if (filmRepository.getFilms().get(i).getDirectors().size() == 0)
                 filmRepository.getFilms().get(i).addDirector(0, "no data");
             if (filmRepository.getFilms().get(i).getActors().size() == 0)
-                filmRepository.getFilms().get(i).addActor(0, "no data");
+                filmRepository.getFilms().get(i).addActor(new Actor(0, "No data"));
     }
 
     public List<Film> getFilms() {
