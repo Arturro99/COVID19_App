@@ -16,7 +16,6 @@ public class Film implements Serializable {
     private String title;
     private Date dateOfRelease;
     private int duration;
-    private String longDescription;
     private String shortDescription;
     private double ratings;
     private int ratingsCount;
@@ -58,9 +57,6 @@ public class Film implements Serializable {
         return dateOfRelease;
     }
 
-    public String getLongDescription() {
-        return longDescription;
-    }
 
     public String getShortDescription() { return shortDescription; }
 
@@ -76,7 +72,6 @@ public class Film implements Serializable {
         return imageUrl;
     }
 
-
     public int getDuration() { return duration; }
 
     public int getRatingsCount() { return ratingsCount; }
@@ -91,8 +86,6 @@ public class Film implements Serializable {
     public void setDateOfRelease(Date dateOfRelease) {
         this.dateOfRelease = dateOfRelease;
     }
-
-    public void setLongDescription(String description) { this.longDescription = description; }
 
     public void setShortDescription(String description) { this.shortDescription = description; }
 

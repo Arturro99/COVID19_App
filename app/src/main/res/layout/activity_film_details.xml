@@ -79,5 +79,6 @@
         android:id="@+id/detailedActors"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/detailedActorsTxt" />
+        android:layout_below="@id/detailedActorsTxt"
+        android:clickable="false"/>
 </RelativeLayout>

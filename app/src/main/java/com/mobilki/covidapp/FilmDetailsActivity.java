@@ -11,10 +11,12 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.mobilki.covidapp.api.imageslistview.CustomAdapter;
 import com.mobilki.covidapp.api.model.Actor;
 import com.mobilki.covidapp.api.model.Film;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,15 +28,12 @@ public class FilmDetailsActivity extends AppCompatActivity {
     private TextView ratingsCountTxt;
     private TextView description;
     private TextView descriptionTxt;
-    private ListView actors;
-    private TextView actorsTxt;
+    private ListView actorsList;
+
+    private CustomAdapter adapter;
 
     private Film film;
-
-    List<String> actorNames;
-    List<ImageView> actorImgs;
-    ArrayAdapter<String> namesAdapter;
-    ArrayAdapter<ImageView> imagesAdapter;
+    private ArrayList actors;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -50,8 +49,10 @@ public class FilmDetailsActivity extends AppCompatActivity {
         ratingsCountTxt = findViewById(R.id.detailedRatingsCountTxt);
         description = findViewById(R.id.detailedDescription);
         descriptionTxt = findViewById(R.id.detailedDescriptionTxt);
-        actors = findViewById(R.id.detailedActors);
-        actorsTxt = findViewById(R.id.detailedActorsTxt);
+        actorsList = findViewById(R.id.detailedActors);
+
+        actors = (ArrayList) film.getActors();
+
 
 
         ratingBar.setRating((float)film.getRatings() / 2);
@@ -59,16 +60,10 @@ public class FilmDetailsActivity extends AppCompatActivity {
         ratingsCount.setText(String.valueOf(film.getRatingsCount()));
         description.setText(film.getShortDescription());
 
-        actorNames = new ArrayList<>();
-        actorNames.addAll(film.getActors().stream()
-                .map(Actor::getName)
-                .collect(Collectors.toList())
-        );
-        namesAdapter = new ArrayAdapter<>(this, R.layout.list_item, R.id.actorName, actorNames);
-        actors.setAdapter(namesAdapter);
-        namesAdapter.notifyDataSetChanged();
+        adapter = new CustomAdapter(getApplication(), actors);
 
-        actorImgs = new ArrayList<>();
+        actorsList.setAdapter(adapter);
+
     }
 
 }

@@ -174,6 +174,48 @@ public class ImdbApi implements FilmDatabaseApi {
         });
     }
 
+    private void getDuration(String filmId) {
+        Request request = new Request.Builder()
+                .url("https://api.themoviedb.org/3/movie/" + filmId + "?api_key=" + key + "&language=en-US")
+                .get()
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                try {
+                    throw new incorrectRequestException("Incorrect request.");
+                } catch (incorrectRequestException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.R)
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.body() != null) {
+                    jsonString = response.body().string();
+                    try {
+                        jsonObject = new JSONObject(jsonString);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        throw new emptyResponseBodyException("Empty body in response.");
+                    } catch (emptyResponseBodyException e) {
+                        e.printStackTrace();
+                    }
+                }
+                try {
+                    setDuration(jsonObject);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     private void instantiateFilms(JSONObject obj) throws JSONException {
@@ -183,6 +225,7 @@ public class ImdbApi implements FilmDatabaseApi {
             Film film = new Film(id);
 
             getCredits(id);
+            getDuration(id);
 
             film.setTitle(o.getString("title"));
             film.setDateOfRelease(Date.valueOf(o.getString("release_date")));
@@ -220,15 +263,11 @@ public class ImdbApi implements FilmDatabaseApi {
     private void setCast(JSONObject obj) throws JSONException {
         JSONArray actorArr = obj.getJSONArray("cast");
         JSONArray directorArr = obj.getJSONArray("crew");
-        for (int i = 0; i < 10; i++) {
-            if (actorArr.get(i) != null) {
+        for (int i = 0; i < actorArr.length(); i++) {
                 Actor actor = new Actor(actorArr.getJSONObject(i).getInt("id"), actorArr.getJSONObject(i).getString("name"));
                 actor.setImgUrl(imgFirstPartUrl +  actorArr.getJSONObject(i).getString("profile_path"));
                 filmRepository.getFilm(obj.getString("id"))
                         .addActor(actor);
-            }
-            else
-                break;
         }
         for (int i = 0; i < directorArr.length(); i++) {
             if (directorArr.getJSONObject(i).getString("job").equals("Director")) {
@@ -236,6 +275,10 @@ public class ImdbApi implements FilmDatabaseApi {
                         .addDirector(directorArr.getJSONObject(i).getInt("id"), directorArr.getJSONObject(i).getString("name"));
             }
         }
+    }
+
+    private void setDuration(JSONObject obj) throws JSONException {
+        filmRepository.getFilm(obj.getString("id")).setDuration(obj.getInt("runtime"));
     }
 
 //    @RequiresApi(api = Build.VERSION_CODES.N)
