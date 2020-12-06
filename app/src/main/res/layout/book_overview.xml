@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/book"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -10,32 +11,133 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/bookConstraintLayout">
 
         <ImageButton
-            android:id="@+id/mainBookPhoto"
+            android:id="@+id/bookPhoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/metro"
+            android:src="@drawable/wiedzmin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="METRO"
+            android:text="kupa"
+            android:id="@+id/bookTitle"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/mainBookPhoto"
-            app:layout_constraintStart_toStartOf="@id/mainBookPhoto"
-            app:layout_constraintTop_toBottomOf="@id/mainBookPhoto" />
+            app:layout_constraintEnd_toEndOf="@id/bookPhoto"
+            app:layout_constraintStart_toStartOf="@id/bookPhoto"
+            app:layout_constraintTop_toBottomOf="@id/bookPhoto" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Autor: Dmitry Glukhovsky\nOcena: *****\nOpis:.............."
+            android:id="@+id/bookAuthorTxt"
+            android:text="Author:"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_bias="0.1"
-            app:layout_constraintStart_toEndOf="@id/mainBookPhoto"
-            app:layout_constraintTop_toTopOf="@id/mainBookPhoto" />
+            app:layout_constraintVertical_bias="0.05"
+            app:layout_constraintStart_toEndOf="@id/bookPhoto"
+            app:layout_constraintTop_toTopOf="@id/bookPhoto" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sapek"
+            android:id="@+id/bookAuthor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.01"
+            app:layout_constraintStart_toEndOf="@id/bookPhoto"
+            app:layout_constraintTop_toBottomOf="@id/bookAuthorTxt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bookRatingTxt"
+            android:text="Ratings:"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toEndOf="@id/bookPhoto"
+            app:layout_constraintTop_toTopOf="@id/bookPhoto" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100"
+            android:id="@+id/bookRating"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.6"
+            app:layout_constraintStart_toEndOf="@id/bookPhoto"
+            app:layout_constraintTop_toTopOf="@id/bookPhoto" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bookPublicationDateTxt"
+            android:text="Released:"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.3"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toEndOf="@id/bookPhoto"
+            app:layout_constraintTop_toTopOf="@id/bookPhoto" />
+
+        <TextView
+            android:id="@+id/bookPublicationDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="year"
+            app:layout_constraintVertical_bias="0.3"
+            app:layout_constraintHorizontal_bias="0.6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/bookPhoto"
+            app:layout_constraintTop_toTopOf="@+id/bookPhoto"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bookPagesTxt"
+            android:text="Pages:"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.4"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toEndOf="@id/bookPhoto"
+            app:layout_constraintTop_toTopOf="@id/bookPhoto" />
+
+        <TextView
+            android:id="@+id/bookPages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="dur"
+            app:layout_constraintVertical_bias="0.4"
+            app:layout_constraintHorizontal_bias="0.6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/bookPhoto"
+            app:layout_constraintTop_toTopOf="@+id/bookPhoto"/>
+
+        <TextView
+            android:id="@+id/bookGenres"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:text="no \njakies \ntam"
+            app:layout_constraintVertical_bias="0.8"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/bookPhoto"
+            app:layout_constraintTop_toTopOf="@id/bookPhoto"/>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

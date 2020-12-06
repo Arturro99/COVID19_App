@@ -34,6 +34,7 @@ public class EntertainmentActivity extends AppCompatActivity {
     LayoutInflater inflater;
 
 
+    //FILMS
     TextView []filmTitleList = new TextView[10];
     TextView []filmGenresList = new TextView[10];
 
@@ -51,10 +52,32 @@ public class EntertainmentActivity extends AppCompatActivity {
     TextView []filmRatingList = new TextView[10];
     TextView []filmRatingTxtList = new TextView[10];
 
-
     ConstraintLayout []filmConstraintLayoutList = new ConstraintLayout[10];
+    /////////////////////////////////////////////////////////
+
+    //BOOKS
+    TextView []bookTitleList = new TextView[10];
+    TextView []bookGenresList = new TextView[10];
+
+    ImageButton []bookPhotosList = new ImageButton[10];
+
+    TextView []bookAuthorList = new TextView[10];
+    TextView []bookAuthorTxtList = new TextView[10];
+
+    TextView []bookPublicationDateList = new TextView[10];
+    TextView []bookPublicationDateTxtList = new TextView[10];
+
+    TextView []bookPagesList = new TextView[10];
+    TextView []bookPagesTxtList = new TextView[10];
+
+    TextView []bookRatingList = new TextView[10];
+    TextView []bookRatingTxtList = new TextView[10];
+
+    ConstraintLayout []bookConstraintLayoutList = new ConstraintLayout[10];
+    /////////////////////////////////////////////////////////////
 
     private FilmDatabaseApi imdbApi;
+    private GoogleBooksApi googleApi;
     private List synchedList = Collections.synchronizedList(new LinkedList<>());
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -72,7 +95,58 @@ public class EntertainmentActivity extends AppCompatActivity {
 
         inflater = LayoutInflater.from(this);
 
+        setFilms(10);
+        setBooks(10);
 
+
+
+        googleApi = new GoogleBooksApi();
+        googleApi.getByGenre("fiction");
+        start();
+    }
+
+
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void start() {
+
+        for (int i = 0; i < 10; i++) {
+            int finalI = i;
+            filmPhotosList[i].setOnClickListener(view -> {
+                Intent intent = new Intent(this, FilmDetailsActivity.class);
+
+                intent.putExtra("film", imdbApi.getFilms().get(finalI));
+                startActivity(intent);
+            });
+        }
+
+        notificationsSettingsBtn.setOnClickListener(view -> {
+
+        });
+        preferencesBtn.setOnClickListener(view -> {
+            initiateFilms(10);
+        });
+    }
+
+    private void initiateFilms(int number) {
+        for (int i = 0; i < number; i++) {
+            imdbApi.manageEmptyFields(i);
+            filmTitleList[i].setText(imdbApi.getFilms().get(i).getTitle());
+            filmReleaseYearList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getDateOfRelease()));
+            filmDurationList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getDuration()));
+            filmRatingList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getRatings()));
+            filmGenresList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getGenres())
+                    .replace("[", "")
+                    .replace("]", "")
+                    .replace(", ", "\n"));
+            filmDirectorList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getDirectors().values())
+                    .replace("[", "")
+                    .replace("]", ""));
+            Picasso.get().load(imdbApi.getFilms().get(i).getImageUrl()).into(filmPhotosList[i]);
+        }
+    }
+
+    private void setFilms(int number) {
         int filmTitleInitiateId = 1000;
 
         int filmReleaseYearInitiateId = 2000;
@@ -97,7 +171,7 @@ public class EntertainmentActivity extends AppCompatActivity {
 
 
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < number; i++) {
             View anotherLayout = inflater.inflate(R.layout.film_overview, null, true);
             filmsLayout.addView(anotherLayout);
 
@@ -227,45 +301,163 @@ public class EntertainmentActivity extends AppCompatActivity {
 
         imdbApi = new ImdbApi();
 
-        start();
-    }
-
-
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void start() {
-
-        for (int i = 0; i < 10; i++) {
-            int finalI = i;
-            filmPhotosList[i].setOnClickListener(view -> {
-                Intent intent = new Intent(this, FilmDetailsActivity.class);
-
-                intent.putExtra("film", imdbApi.getFilms().get(finalI));
-                startActivity(intent);
-            });
-        }
-
         imdbApi.getGenres();
         imdbApi.getTopRatedOrPopularFilms(true);
+    }
 
-        notificationsSettingsBtn.setOnClickListener(view -> {
-        });
-        preferencesBtn.setOnClickListener(view -> {
-            for (int i = 0; i < 10; i++) {
-                imdbApi.manageEmptyFields(i);
-                filmTitleList[i].setText(imdbApi.getFilms().get(i).getTitle());
-                filmReleaseYearList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getDateOfRelease()));
-                filmDurationList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getDuration()));
-                filmRatingList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getRatings()));
-                filmGenresList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getGenres())
-                .replace("[", "")
-                .replace("]", "")
-                .replace(", ", "\n"));
-                filmDirectorList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getDirectors().values())
-                        .replace("[", "")
-                        .replace("]", ""));
-                Picasso.get().load(imdbApi.getFilms().get(i).getImageUrl()).into(filmPhotosList[i]);
-            }
-        });
+    private void setBooks(int number) {
+        int bookTitleInitiateId = 11000;
+
+        int bookPublicationDateInitiateId = 12000;
+        int bookPublicationDateTxtInitiateId = 12500;
+
+        int bookPhotoInitiateId = 13000;
+
+        int bookAuthorInitiateId = 14000;
+        int bookAuthorTxtInitiateId = 14500;
+
+        int bookPagesInitiateId = 15000;
+        int bookPagesTxtInitiateId = 15500;
+
+        int bookRatingInitiateId = 16000;
+        int bookRatingTxtInitiateId = 16500;
+
+        int bookGenresInitiateId = 17000;
+
+        int bookConstraintLayoutInitiateId = 20000;
+
+        ConstraintLayout constraintLayout;
+
+        for (int i = 0; i < number; i++) {
+            View anotherLayout = inflater.inflate(R.layout.book_overview, null, true);
+            booksLayout.addView(anotherLayout);
+
+            bookConstraintLayoutList[i] = findViewById(R.id.bookConstraintLayout);
+            bookTitleList[i] = findViewById(R.id.bookTitle);
+            bookPhotosList[i] = findViewById(R.id.bookPhoto);
+            bookGenresList[i] = findViewById(R.id.bookGenres);
+
+            bookAuthorList[i] = findViewById(R.id.bookAuthor);
+            bookAuthorTxtList[i] = findViewById(R.id.bookAuthorTxt);
+
+            bookRatingList[i] = findViewById(R.id.bookRating);
+            bookRatingTxtList[i] = findViewById(R.id.bookRatingTxt);
+
+            bookPublicationDateList[i] = findViewById(R.id.bookPublicationDate);
+            bookPublicationDateTxtList[i] = findViewById(R.id.bookPublicationDateTxt);
+
+            bookPagesList[i] = findViewById(R.id.bookPages);
+            bookPagesTxtList[i] = findViewById(R.id.bookPagesTxt);
+
+
+            bookConstraintLayoutList[i].setId(bookConstraintLayoutInitiateId + i);
+            bookTitleList[i].setId(bookTitleInitiateId + i);
+            bookPhotosList[i].setId(bookPhotoInitiateId + i);
+            bookGenresList[i].setId(bookGenresInitiateId + i);
+
+            bookPublicationDateList[i].setId(bookPublicationDateInitiateId + i);
+            bookPublicationDateTxtList[i].setId(bookPublicationDateTxtInitiateId + i);
+
+            bookAuthorList[i].setId(bookAuthorInitiateId + i);
+            bookAuthorTxtList[i].setId(bookAuthorTxtInitiateId + i);
+
+            bookPagesList[i].setId(bookPagesInitiateId + i);
+            bookPagesTxtList[i].setId(bookPagesTxtInitiateId + i);
+
+            bookRatingList[i].setId(bookRatingInitiateId + i);
+            bookRatingTxtList[i].setId(bookRatingTxtInitiateId + i);
+
+            constraintLayout = findViewById(bookConstraintLayoutInitiateId + i);
+            constraintLayout.setMinWidth(1200);
+            ConstraintSet constraintSet = new ConstraintSet();
+            constraintSet.clone(constraintLayout);
+
+            //IMAGE
+            constraintSet.connect(bookPhotoInitiateId + i, ConstraintSet.START, bookPhotoInitiateId + i, ConstraintSet.START);
+            constraintSet.connect(bookPhotoInitiateId + i, ConstraintSet.TOP, bookPhotoInitiateId + i, ConstraintSet.TOP);
+
+            //TITLE
+            constraintSet.connect(bookTitleInitiateId + i, ConstraintSet.BOTTOM, bookConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
+            constraintSet.connect(bookTitleInitiateId + i, ConstraintSet.END, bookPhotoInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(bookTitleInitiateId + i, ConstraintSet.START, bookPhotoInitiateId + i, ConstraintSet.START);
+            constraintSet.connect(bookTitleInitiateId + i, ConstraintSet.TOP, bookPhotoInitiateId + i, ConstraintSet.BOTTOM);
+
+
+            //AUTHOR TXT
+            constraintSet.connect(bookAuthorTxtInitiateId + i, ConstraintSet.BOTTOM, bookConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
+            constraintSet.connect(bookAuthorTxtInitiateId + i, ConstraintSet.END, bookConstraintLayoutInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(bookAuthorTxtInitiateId + i, ConstraintSet.START, bookPhotoInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(bookAuthorTxtInitiateId + i, ConstraintSet.TOP, bookPhotoInitiateId + i, ConstraintSet.TOP);
+            constraintSet.setVerticalBias(bookAuthorTxtInitiateId + i, 0.05f);
+
+            //DIRECTOR
+            constraintSet.connect(bookAuthorInitiateId + i, ConstraintSet.BOTTOM, bookConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
+            constraintSet.connect(bookAuthorInitiateId + i, ConstraintSet.END, bookConstraintLayoutInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(bookAuthorInitiateId + i, ConstraintSet.START, bookPhotoInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(bookAuthorInitiateId + i, ConstraintSet.TOP, bookAuthorTxtInitiateId + i, ConstraintSet.BOTTOM);
+            constraintSet.setVerticalBias(bookAuthorInitiateId + i, 0.01f);
+
+            //PUBLICATION DATE TXT
+            constraintSet.connect(bookPublicationDateTxtInitiateId + i, ConstraintSet.BOTTOM, bookConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
+            constraintSet.connect(bookPublicationDateTxtInitiateId + i, ConstraintSet.END, bookConstraintLayoutInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(bookPublicationDateTxtInitiateId + i, ConstraintSet.START, bookPhotoInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(bookPublicationDateTxtInitiateId + i, ConstraintSet.TOP, bookPhotoInitiateId + i, ConstraintSet.TOP);
+            constraintSet.setVerticalBias(bookPublicationDateTxtInitiateId + i, 0.3f);
+            constraintSet.setHorizontalBias(bookPublicationDateTxtInitiateId + i, 0.1f);
+
+            //PUBLICATION DATE
+            constraintSet.connect(bookPublicationDateInitiateId + i, ConstraintSet.BOTTOM, bookConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
+            constraintSet.connect(bookPublicationDateInitiateId + i, ConstraintSet.END, bookConstraintLayoutInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(bookPublicationDateInitiateId + i, ConstraintSet.START, bookPhotoInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(bookPublicationDateInitiateId + i, ConstraintSet.TOP, bookPhotoInitiateId + i, ConstraintSet.TOP);
+            constraintSet.setVerticalBias(bookPublicationDateInitiateId + i, 0.3f);
+            constraintSet.setHorizontalBias(bookPublicationDateInitiateId + i, 0.6f);
+
+            //PAGES TXT
+            constraintSet.connect(bookPagesTxtInitiateId + i, ConstraintSet.BOTTOM, bookConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
+            constraintSet.connect(bookPagesTxtInitiateId + i, ConstraintSet.END, bookConstraintLayoutInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(bookPagesTxtInitiateId + i, ConstraintSet.START, bookPhotoInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(bookPagesTxtInitiateId + i, ConstraintSet.TOP, bookPhotoInitiateId + i, ConstraintSet.TOP);
+            constraintSet.setVerticalBias(bookPagesTxtInitiateId + i, 0.4f);
+            constraintSet.setHorizontalBias(bookPagesTxtInitiateId + i, 0.1f);
+
+            //PAGES
+            constraintSet.connect(bookPagesInitiateId + i, ConstraintSet.BOTTOM, bookConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
+            constraintSet.connect(bookPagesInitiateId + i, ConstraintSet.END, bookConstraintLayoutInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(bookPagesInitiateId + i, ConstraintSet.START, bookPhotoInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(bookPagesInitiateId + i, ConstraintSet.TOP, bookPhotoInitiateId + i, ConstraintSet.TOP);
+            constraintSet.setVerticalBias(bookPagesInitiateId + i, 0.4f);
+            constraintSet.setHorizontalBias(bookPagesInitiateId + i, 0.6f);
+
+            //RATINGS TXT
+            constraintSet.connect(bookRatingTxtInitiateId + i, ConstraintSet.BOTTOM, bookConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
+            constraintSet.connect(bookRatingTxtInitiateId + i, ConstraintSet.END, bookConstraintLayoutInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(bookRatingTxtInitiateId + i, ConstraintSet.START, bookPhotoInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(bookRatingTxtInitiateId + i, ConstraintSet.TOP, bookPhotoInitiateId + i, ConstraintSet.TOP);
+            constraintSet.setVerticalBias(bookRatingTxtInitiateId + i, 0.5f);
+            constraintSet.setHorizontalBias(bookRatingTxtInitiateId + i, 0.1f);
+
+            //RATINGS
+            constraintSet.connect(bookRatingInitiateId + i, ConstraintSet.BOTTOM, bookConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
+            constraintSet.connect(bookRatingInitiateId + i, ConstraintSet.END, bookConstraintLayoutInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(bookRatingInitiateId + i, ConstraintSet.START, bookPhotoInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(bookRatingInitiateId + i, ConstraintSet.TOP, bookPhotoInitiateId + i, ConstraintSet.TOP);
+            constraintSet.setVerticalBias(bookRatingInitiateId + i, 0.5f);
+            constraintSet.setHorizontalBias(bookRatingInitiateId + i, 0.6f);
+
+            //Genres
+            constraintSet.connect(bookGenresInitiateId + i, ConstraintSet.BOTTOM, bookConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
+            constraintSet.connect(bookGenresInitiateId + i, ConstraintSet.END, bookConstraintLayoutInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(bookGenresInitiateId + i, ConstraintSet.START, bookPhotoInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(bookGenresInitiateId + i, ConstraintSet.TOP, bookPhotoInitiateId + i, ConstraintSet.TOP);
+            constraintSet.setVerticalBias(bookGenresInitiateId + i, 0.8f);
+            constraintSet.setHorizontalBias(bookGenresInitiateId + i, 0.1f);
+
+            constraintSet.applyTo(constraintLayout);
+        }
+
+        googleApi = new GoogleBooksApi();
+
+        googleApi.getByGenre("drama");
     }
 }
