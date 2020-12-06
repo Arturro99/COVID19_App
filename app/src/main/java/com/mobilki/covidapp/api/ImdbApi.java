@@ -246,7 +246,7 @@ public class ImdbApi implements FilmDatabaseApi {
                     .forEach(x -> genres.add(filmGenresRepository.getGenre(x)));
             film.setGenres(genres);
 
-            filmRepository.addFilm(film);
+            filmRepository.add(film);
         }
     }
 
@@ -266,19 +266,19 @@ public class ImdbApi implements FilmDatabaseApi {
         for (int i = 0; i < actorArr.length(); i++) {
                 Actor actor = new Actor(actorArr.getJSONObject(i).getInt("id"), actorArr.getJSONObject(i).getString("name"));
                 actor.setImgUrl(imgFirstPartUrl +  actorArr.getJSONObject(i).getString("profile_path"));
-                filmRepository.getFilm(obj.getString("id"))
+                filmRepository.get(obj.getString("id"))
                         .addActor(actor);
         }
         for (int i = 0; i < directorArr.length(); i++) {
             if (directorArr.getJSONObject(i).getString("job").equals("Director")) {
-                filmRepository.getFilm(obj.getString("id"))
+                filmRepository.get(obj.getString("id"))
                         .addDirector(directorArr.getJSONObject(i).getInt("id"), directorArr.getJSONObject(i).getString("name"));
             }
         }
     }
 
     private void setDuration(JSONObject obj) throws JSONException {
-        filmRepository.getFilm(obj.getString("id")).setDuration(obj.getInt("runtime"));
+        filmRepository.get(obj.getString("id")).setDuration(obj.getInt("runtime"));
     }
 
 //    @RequiresApi(api = Build.VERSION_CODES.N)
@@ -290,14 +290,14 @@ public class ImdbApi implements FilmDatabaseApi {
 
     @Override
     public void manageEmptyFields(int i) {
-            if (filmRepository.getFilms().get(i).getDirectors().size() == 0)
-                filmRepository.getFilms().get(i).addDirector(0, "no data");
-            if (filmRepository.getFilms().get(i).getActors().size() == 0)
-                filmRepository.getFilms().get(i).addActor(new Actor(0, "No data"));
+            if (filmRepository.getAll().get(i).getDirectors().size() == 0)
+                filmRepository.getAll().get(i).addDirector(0, "no data");
+            if (filmRepository.getAll().get(i).getActors().size() == 0)
+                filmRepository.getAll().get(i).addActor(new Actor(0, "No data"));
     }
 
     public List<Film> getFilms() {
-        return filmRepository.getFilms();
+        return filmRepository.getAll();
     }
 
 //    @Override

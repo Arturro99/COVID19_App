@@ -5,10 +5,11 @@ import com.mobilki.covidapp.api.model.Film;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilmRepository {
+public class FilmRepository implements Repository<Film> {
     private List<Film> films = new ArrayList<>();
 
-    public Film getFilm(String id) {
+    @Override
+    public Film get(String id) {
         for (Film f : films) {
             if (f.getId().equals(id))
                 return f;
@@ -16,11 +17,13 @@ public class FilmRepository {
         return null;
     }
 
-    public void addFilm(Film film) {
+    @Override
+    public void add(Film film) {
         this.films.add(film);
     }
 
-    public List<Film> getFilms() {
+    @Override
+    public List<Film> getAll() {
         return films;
     }
 }

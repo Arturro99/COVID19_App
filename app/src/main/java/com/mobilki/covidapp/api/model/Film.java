@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import lombok.Data;
+
+@Data
 public class Film implements Serializable {
     private String id;
     private String title;
@@ -25,6 +28,10 @@ public class Film implements Serializable {
     private List<Actor> actors = new ArrayList<>();
     private HashMap<Integer, String> directors = new HashMap<>();
 
+    public Film(String id) {
+        this.id = id;
+    }
+
     public void addActor(Actor actor) {
         actors.add(actor);
     }
@@ -36,74 +43,4 @@ public class Film implements Serializable {
                 .filter(actor -> actor.getId() == id)
                 .findFirst();
     }
-    public String getDirector(int id) { return directors.get(id); }
-
-    public List<Actor> getActors() { return this.actors; }
-    public HashMap<Integer, String> getDirectors() { return this.directors; }
-
-    public Film(String id) {
-        this.id = id;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public Date getDateOfRelease() {
-        return dateOfRelease;
-    }
-
-
-    public String getShortDescription() { return shortDescription; }
-
-    public double getRatings() {
-        return ratings;
-    }
-
-    public List<String> getGenres() {
-        return genres;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public int getDuration() { return duration; }
-
-    public int getRatingsCount() { return ratingsCount; }
-
-
-    public void setId(String id) { this.id = id; }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setDateOfRelease(Date dateOfRelease) {
-        this.dateOfRelease = dateOfRelease;
-    }
-
-    public void setShortDescription(String description) { this.shortDescription = description; }
-
-    public void setRatings(double ratings) {
-        this.ratings = ratings;
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void setGenres(List<String> genres) {
-        this.genres = genres;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-
-    public void setDuration(int duration) { this.duration = duration; }
-
-    public void setRatingsCount(int ratingsCount) { this.ratingsCount = ratingsCount; }
 }
