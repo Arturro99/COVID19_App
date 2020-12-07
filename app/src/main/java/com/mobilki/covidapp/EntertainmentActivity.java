@@ -101,7 +101,7 @@ public class EntertainmentActivity extends AppCompatActivity {
 
 
         googleApi = new GoogleBooksApi();
-        googleApi.getByGenre("fiction");
+        googleApi.getByGenre("drama");
         start();
     }
 
@@ -111,12 +111,16 @@ public class EntertainmentActivity extends AppCompatActivity {
     private void start() {
 
         for (int i = 0; i < 10; i++) {
-            int finalI = i;
+            int finalBookI = i;
+            int finalFilmI = i;
             filmPhotosList[i].setOnClickListener(view -> {
                 Intent intent = new Intent(this, FilmDetailsActivity.class);
 
-                intent.putExtra("film", imdbApi.getFilms().get(finalI));
+                intent.putExtra("film", imdbApi.getFilms().get(finalFilmI));
                 startActivity(intent);
+            });
+            bookPhotosList[i].setOnClickListener(view -> {
+                //TODO implement clickable book cover
             });
         }
 
@@ -125,6 +129,7 @@ public class EntertainmentActivity extends AppCompatActivity {
         });
         preferencesBtn.setOnClickListener(view -> {
             initiateFilms(10);
+            initiateBooks(10);
         });
     }
 
@@ -143,6 +148,23 @@ public class EntertainmentActivity extends AppCompatActivity {
                     .replace("[", "")
                     .replace("]", ""));
             Picasso.get().load(imdbApi.getFilms().get(i).getImageUrl()).into(filmPhotosList[i]);
+        }
+    }
+
+    private void initiateBooks(int number) {
+        for (int i = 0; i < number; i++) {
+            bookTitleList[i].setText(googleApi.getBooks().get(i).getTitle());
+            bookPublicationDateList[i].setText(String.valueOf(googleApi.getBooks().get(i).getPublicationDate()));
+            bookPagesList[i].setText(String.valueOf(googleApi.getBooks().get(i).getPages()));
+            //filmRatingList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getRatings()));
+//            filmGenresList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getGenres())
+//                    .replace("[", "")
+//                    .replace("]", "")
+//                    .replace(", ", "\n"));
+//            filmDirectorList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getDirectors().values())
+//                    .replace("[", "")
+//                    .replace("]", ""));
+            Picasso.get().load(googleApi.getBooks().get(i).getImageUrl()).into(bookPhotosList[i]);
         }
     }
 

@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 public class Book {
-    private String isbn;
+    private String id;
     private String title;
     private Date publicationDate;
     private String publisher;
@@ -21,8 +21,8 @@ public class Book {
     private boolean pdfAvailable;
     private List<String> authors;
 
-    public Book(String isbn) {
-        this.isbn = isbn;
+    public Book(String id) {
+        this.id = id;
         authors = new ArrayList<>();
     }
 

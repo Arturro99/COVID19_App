@@ -21,7 +21,7 @@ public class BookRepository implements Repository<Book> {
     @Override
     public Book get(String isbn) {
         return books.stream()
-                .filter(b -> b.getIsbn().equals(isbn))
+                .filter(b -> b.getId().equals(isbn))
                 .findAny()
                 .orElse(null);
     }
