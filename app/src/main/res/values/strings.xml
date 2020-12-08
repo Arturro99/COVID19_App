@@ -27,4 +27,19 @@
     <string name="preferences_panel">Preferencje</string>
     <string name="notifications_settings_panel">Ustawienia powiadomień</string>
 
+
+    <!-- Book genres -->
+    <string-array name="book_genres">
+        <item>drama</item>
+        <item>fiction</item>
+        <item>history</item>
+        <item>fiction</item>
+        <item>art</item>
+        <item>detective</item>
+        <item>psychology</item>
+        <item>medical</item>
+        <item>biography</item>
+        <item>poetry</item>
+    </string-array>
+
 </resources>

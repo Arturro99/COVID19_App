@@ -1,5 +1,6 @@
 package com.mobilki.covidapp;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -9,11 +10,15 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.mobilki.covidapp.api.*;
@@ -78,6 +83,8 @@ public class EntertainmentActivity extends AppCompatActivity {
     ConstraintLayout []bookConstraintLayoutList = new ConstraintLayout[10];
     /////////////////////////////////////////////////////////////
 
+    private Toolbar mToolbar;
+
     private FilmDatabaseApi imdbApi;
     private GoogleBooksApi googleApi;
     private List synchedList = Collections.synchronizedList(new LinkedList<>());
@@ -87,6 +94,9 @@ public class EntertainmentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entertainment);
+
+        mToolbar = findViewById(R.id.entertainmentToolbar);
+        setActionBar(mToolbar);
 
         notificationsSettingsBtn = findViewById(R.id.entertainmentNotificationsSettingsBtn);
         preferencesBtn = findViewById(R.id.entertainmentPreferencesBtn);
@@ -133,6 +143,23 @@ public class EntertainmentActivity extends AppCompatActivity {
             initiateFilms(10);
             initiateBooks(10);
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_entertainment, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.menuEntertainmentSettings) {
+            startActivity(new Intent(this, EntertainmentSettingsActivity.class));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initiateFilms(int number) {
