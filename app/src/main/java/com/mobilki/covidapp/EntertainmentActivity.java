@@ -15,7 +15,9 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mobilki.covidapp.api.*;
+import com.mobilki.covidapp.api.model.Book;
 import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
@@ -147,24 +149,25 @@ public class EntertainmentActivity extends AppCompatActivity {
             filmDirectorList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getDirectors().values())
                     .replace("[", "")
                     .replace("]", ""));
-            Picasso.get().load(imdbApi.getFilms().get(i).getImageUrl()).into(filmPhotosList[i]);
+            Picasso.get().load(imdbApi.getFilms().get(i).getImageUrl()).placeholder(R.drawable.placeholder).into(filmPhotosList[i]);
         }
     }
 
     private void initiateBooks(int number) {
+        List<Book> booklist = googleApi.getBooks();
         for (int i = 0; i < number; i++) {
             bookTitleList[i].setText(googleApi.getBooks().get(i).getTitle());
             bookPublicationDateList[i].setText(String.valueOf(googleApi.getBooks().get(i).getPublicationDate()));
             bookPagesList[i].setText(String.valueOf(googleApi.getBooks().get(i).getPages()));
-            //filmRatingList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getRatings()));
-//            filmGenresList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getGenres())
-//                    .replace("[", "")
-//                    .replace("]", "")
-//                    .replace(", ", "\n"));
-//            filmDirectorList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getDirectors().values())
-//                    .replace("[", "")
-//                    .replace("]", ""));
-            Picasso.get().load(googleApi.getBooks().get(i).getImageUrl()).into(bookPhotosList[i]);
+            bookRatingList[i].setText(String.valueOf(googleApi.getBooks().get(i).getRatings()));
+            bookAuthorList[i].setText(String.valueOf(googleApi.getBooks().get(i).getAuthors())
+                    .replace("[", "")
+                    .replace("]", ""));
+            bookGenresList[i].setText(String.valueOf(googleApi.getBooks().get(i).getGenres())
+                    .replace("[", "")
+                    .replace("]", "")
+                    .replace(", ", "\n"));
+            Glide.with(this).load(googleApi.getBooks().get(i).getImageUrl()).placeholder(R.drawable.placeholder).into(bookPhotosList[i]);
         }
     }
 

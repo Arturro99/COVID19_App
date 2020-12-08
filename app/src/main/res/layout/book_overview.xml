@@ -20,7 +20,10 @@
             android:layout_height="wrap_content"
             android:src="@drawable/wiedzmin"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            android:adjustViewBounds="true"
+            android:maxHeight="500dp"
+            android:maxWidth="250dp"/>
 
         <TextView
             android:layout_width="wrap_content"

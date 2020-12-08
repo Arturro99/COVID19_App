@@ -11,6 +11,7 @@ import com.mobilki.covidapp.api.repository.BookRepository;
 import com.mobilki.covidapp.exceptions.emptyResponseBodyException;
 import com.mobilki.covidapp.exceptions.incorrectRequestException;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,7 +32,7 @@ public class GoogleBooksApi {
 
     private String jsonString;
     private static JSONObject jsonObject;
-    private BookRepository bookRepository;
+    private BookRepository bookRepository = new BookRepository();
 
 //    public void getDetails(String filmId) {
 //        Request request = new Request.Builder()
@@ -77,7 +78,7 @@ public class GoogleBooksApi {
 
     public void getByGenre(String genre) {
         Request request = new Request.Builder()
-                .url(imgFirstPartUrl + "/volumes?q=" + genre)
+                .url(imgFirstPartUrl + "/volumes?q=subject:" + genre)
                 .get()
                 .build();
 
@@ -125,15 +126,46 @@ public class GoogleBooksApi {
 
             Book book = new Book(id);
             book.setTitle(o.getJSONObject("volumeInfo").getString("title"));
-            book.setPublicationDate(Date.valueOf(o.getJSONObject("volumeInfo").getString("publishedDate")));
+            JSONObject volumeInfo = o.getJSONObject("volumeInfo");
+            if (volumeInfo.has("publishedDate")) {
+                book.setPublicationDate(volumeInfo.getString("publishedDate"));
+            }
+            else {
+                book.setPublicationDate("no data");
+            }
+            if (volumeInfo.has("averageRating")) {
+                book.setRatings(volumeInfo.getString("averageRating"));
+            }
+            else {
+                book.setRatings("no data");
+            }
+            if (volumeInfo.has("ratingsCount")) {
+                book.setRatingsCount(volumeInfo.getString("ratingsCount"));
+            }
+            else {
+                book.setRatingsCount("no data");
+            }
+
             book.setPublisher(o.getJSONObject("volumeInfo").getString("publisher"));
-            book.setPages(o.getJSONObject("volumeInfo").getInt("pageCount"));
-            book.setDescription(o.getString("description"));
+
+            if (volumeInfo.has("pageCount")) {
+                book.setPages(volumeInfo.getString("pageCount"));
+            }
+            else {
+                book.setPages("no data");
+            }
+            book.setDescription(o.getJSONObject("volumeInfo").getString("description"));
             book.setImageUrl(o.getJSONObject("volumeInfo").getJSONObject("imageLinks").getString("thumbnail"));
             book.setPdfAvailable(o.getJSONObject("accessInfo").getJSONObject("pdf").getBoolean("isAvailable"));
-            //TODO book.setAuthors()...
-            //TODO book.setGenres()...
-            //TODO ratings?
+
+            JSONArray authors = o.getJSONObject("volumeInfo").getJSONArray("authors");
+            for (int j = 0; j < authors.length(); j++) {
+                book.addAuthor((String) authors.get(j));
+            }
+            JSONArray genres = o.getJSONObject("volumeInfo").getJSONArray("categories");
+            for (int j = 0; j < genres.length(); j++) {
+                book.addGenre((String) genres.get(j));
+            }
             bookRepository.add(book);
         }
     }

@@ -281,13 +281,6 @@ public class ImdbApi implements FilmDatabaseApi {
         filmRepository.get(obj.getString("id")).setDuration(obj.getInt("runtime"));
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.N)
-//    private void setActorImages(JSONObject object, int actorId, String filmId) throws JSONException {
-//        filmRepository.getFilm(filmId).getActor(actorId).get().setImgUrl(
-//               imgFirstPartUrl + object.getString("profile_path")
-//        );
-//    }
-
     @Override
     public void manageEmptyFields(int i) {
             if (filmRepository.getAll().get(i).getDirectors().size() == 0)

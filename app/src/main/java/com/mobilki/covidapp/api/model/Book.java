@@ -10,12 +10,12 @@ import lombok.Data;
 public class Book {
     private String id;
     private String title;
-    private Date publicationDate;
+    private String publicationDate;
     private String publisher;
-    private int pages;
+    private String pages;
     private String description;
-    private double ratings;
-    private int ratingsCount;
+    private String ratings;
+    private String ratingsCount;
     private List<String> genres;
     private String imageUrl;
     private boolean pdfAvailable;
@@ -24,7 +24,9 @@ public class Book {
     public Book(String id) {
         this.id = id;
         authors = new ArrayList<>();
+        genres = new ArrayList<>();
     }
 
     public void addAuthor(String name) { authors.add(name); }
+    public void addGenre(String name) { genres.add(name); }
 }
