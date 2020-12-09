@@ -76,7 +76,7 @@ public class GoogleBooksApi {
 //        });
 //    }
 
-    public void getByGenre(String genre) {
+    public void getByGenre(String genre, int bookDigit) {
         Request request = new Request.Builder()
                 .url(imgFirstPartUrl + "/volumes?q=subject:" + genre)
                 .get()
@@ -110,7 +110,7 @@ public class GoogleBooksApi {
                     }
                 }
                 try {
-                    instantiateBook(jsonObject);
+                    instantiateBook(jsonObject, bookDigit);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -118,8 +118,8 @@ public class GoogleBooksApi {
         });
     }
 
-    public void instantiateBook(JSONObject jsonObject) throws JSONException {
-        for (int i = 0; i < 10; i++) {
+    public void instantiateBook(JSONObject jsonObject, int bookDigit) throws JSONException {
+        for (int i = 0; i < bookDigit; i++) {
             JSONObject o = (JSONObject) jsonObject.getJSONArray("items").get(i);
 
             String id = o.getString("id");

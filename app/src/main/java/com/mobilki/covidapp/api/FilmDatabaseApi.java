@@ -11,12 +11,11 @@ public interface FilmDatabaseApi {
 
     //void fetchOverviewData(List<Film> films);
 
-    void getTopRatedOrPopularFilms(boolean topRated);
+    void getTopRatedOrPopularFilms(boolean topRated, int digit);
 
     //void getMostPopularFilms();
     //void getTopRatedFilms();
     void getGenres();
 
     List<Film>getFilms();
-    void manageEmptyFields(int id);
 }

@@ -1,5 +1,6 @@
 package com.mobilki.covidapp.api;
 
+import android.content.SharedPreferences;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -39,7 +40,7 @@ public class ImdbApi implements FilmDatabaseApi {
     private FilmGenresRepository filmGenresRepository = new FilmGenresRepository();
 
     @Override
-    public void getTopRatedOrPopularFilms(boolean topRated) {
+    public void getTopRatedOrPopularFilms(boolean topRated, int filmDigit) {
         Request request = null;
         if (topRated) {
             request = new Request.Builder()
@@ -81,7 +82,7 @@ public class ImdbApi implements FilmDatabaseApi {
                     }
                 }
                 try {
-                    instantiateFilms(jsonObject);
+                    instantiateFilms(jsonObject, filmDigit);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -218,8 +219,8 @@ public class ImdbApi implements FilmDatabaseApi {
 
 
     @RequiresApi(api = Build.VERSION_CODES.R)
-    private void instantiateFilms(JSONObject obj) throws JSONException {
-        for (int i = 0; i < 10; i++) {
+    private void instantiateFilms(JSONObject obj, int filmDigit) throws JSONException {
+        for (int i = 0; i < filmDigit; i++) {
             JSONObject o = (JSONObject) obj.getJSONArray("results").get(i);
             String id = o.getString("id");
             Film film = new Film(id);
@@ -275,27 +276,27 @@ public class ImdbApi implements FilmDatabaseApi {
                         .addDirector(directorArr.getJSONObject(i).getInt("id"), directorArr.getJSONObject(i).getString("name"));
             }
         }
+        if (actorArr.length() == 0) {
+            filmRepository.get(obj.getString("id"))
+                    .addActor(new Actor(0, "no data"));
+        }
+        if (directorArr.length() == 0) {
+            filmRepository.get(obj.getString("id"))
+                    .addDirector(0, "no data");
+        }
     }
 
     private void setDuration(JSONObject obj) throws JSONException {
         filmRepository.get(obj.getString("id")).setDuration(obj.getInt("runtime"));
     }
 
-    @Override
-    public void manageEmptyFields(int i) {
-            if (filmRepository.getAll().get(i).getDirectors().size() == 0)
-                filmRepository.getAll().get(i).addDirector(0, "no data");
-            if (filmRepository.getAll().get(i).getActors().size() == 0)
-                filmRepository.getAll().get(i).addActor(new Actor(0, "No data"));
-    }
-
     public List<Film> getFilms() {
         return filmRepository.getAll();
     }
 
-//    @Override
-//    public void run() {
-//        fetchOverviewData(getFilms());
+
+//    public void run(boolean rated, int number) {
+//        getTopRatedOrPopularFilms(rated, number);
 //    }
 }
 

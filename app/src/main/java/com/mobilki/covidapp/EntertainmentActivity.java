@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,9 +30,14 @@ import com.squareup.picasso.Picasso;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class EntertainmentActivity extends AppCompatActivity {
+
+    SharedPreferences sharedPreferences;
 
     Button notificationsSettingsBtn;
     Button preferencesBtn;
@@ -42,45 +49,45 @@ public class EntertainmentActivity extends AppCompatActivity {
 
 
     //FILMS
-    TextView []filmTitleList = new TextView[10];
-    TextView []filmGenresList = new TextView[10];
+    TextView []filmTitleList;
+    TextView []filmGenresList;
 
-    ImageButton []filmPhotosList = new ImageButton[10];
+    ImageButton []filmPhotosList;
 
-    TextView []filmDirectorList = new TextView[10];
-    TextView []filmDirectorTxtList = new TextView[10];
+    TextView []filmDirectorList;
+    TextView []filmDirectorTxtList;
 
-    TextView []filmReleaseYearList = new TextView[10];
-    TextView []filmReleaseYearTxtList = new TextView[10];
+    TextView []filmReleaseYearList;
+    TextView []filmReleaseYearTxtList;
 
-    TextView []filmDurationList = new TextView[10];
-    TextView []filmDurationTxtList = new TextView[10];
+    TextView []filmDurationList;
+    TextView []filmDurationTxtList;
 
-    TextView []filmRatingList = new TextView[10];
-    TextView []filmRatingTxtList = new TextView[10];
+    TextView []filmRatingList;
+    TextView []filmRatingTxtList;
 
-    ConstraintLayout []filmConstraintLayoutList = new ConstraintLayout[10];
+    ConstraintLayout []filmConstraintLayoutList;
     /////////////////////////////////////////////////////////
 
     //BOOKS
-    TextView []bookTitleList = new TextView[10];
-    TextView []bookGenresList = new TextView[10];
+    TextView []bookTitleList;
+    TextView []bookGenresList;
 
-    ImageButton []bookPhotosList = new ImageButton[10];
+    ImageButton []bookPhotosList;
 
-    TextView []bookAuthorList = new TextView[10];
-    TextView []bookAuthorTxtList = new TextView[10];
+    TextView []bookAuthorList;
+    TextView []bookAuthorTxtList;
 
-    TextView []bookPublicationDateList = new TextView[10];
-    TextView []bookPublicationDateTxtList = new TextView[10];
+    TextView []bookPublicationDateList;
+    TextView []bookPublicationDateTxtList;
 
-    TextView []bookPagesList = new TextView[10];
-    TextView []bookPagesTxtList = new TextView[10];
+    TextView []bookPagesList;
+    TextView []bookPagesTxtList;
 
-    TextView []bookRatingList = new TextView[10];
-    TextView []bookRatingTxtList = new TextView[10];
+    TextView []bookRatingList;
+    TextView []bookRatingTxtList;
 
-    ConstraintLayout []bookConstraintLayoutList = new ConstraintLayout[10];
+    ConstraintLayout []bookConstraintLayoutList;
     /////////////////////////////////////////////////////////////
 
     private Toolbar mToolbar;
@@ -89,11 +96,17 @@ public class EntertainmentActivity extends AppCompatActivity {
     private GoogleBooksApi googleApi;
     private List synchedList = Collections.synchronizedList(new LinkedList<>());
 
+    private int bookDigit;
+    private int filmDigit;
+    private String bookGenre;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entertainment);
+
+        sharedPreferences = getApplication().getSharedPreferences("Prefs", Context.MODE_PRIVATE);
 
         mToolbar = findViewById(R.id.entertainmentToolbar);
         setActionBar(mToolbar);
@@ -107,13 +120,19 @@ public class EntertainmentActivity extends AppCompatActivity {
 
         inflater = LayoutInflater.from(this);
 
-        setFilms(10);
-        setBooks(10);
+        bookDigit = sharedPreferences.getInt("bookDigit", 10);
+        filmDigit = sharedPreferences.getInt("filmDigit", 10);
+        bookGenre = sharedPreferences.getString("bookGenre", "drama");
 
+        booksFieldInitialization(bookDigit);
+        filmsFieldInitialization(filmDigit);
 
+        setFilms(filmDigit);
+        setBooks(bookDigit);
 
-        googleApi = new GoogleBooksApi();
-        googleApi.getByGenre("drama");
+        imdbApi.getTopRatedOrPopularFilms(true, filmDigit);
+        googleApi.getByGenre(bookGenre, bookDigit);
+
         start();
     }
 
@@ -122,8 +141,7 @@ public class EntertainmentActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void start() {
 
-        for (int i = 0; i < 10; i++) {
-            int finalBookI = i;
+        for (int i = 0; i < filmDigit; i++) {
             int finalFilmI = i;
             filmPhotosList[i].setOnClickListener(view -> {
                 Intent intent = new Intent(this, FilmDetailsActivity.class);
@@ -131,6 +149,10 @@ public class EntertainmentActivity extends AppCompatActivity {
                 intent.putExtra("film", imdbApi.getFilms().get(finalFilmI));
                 startActivity(intent);
             });
+        }
+
+        for (int i = 0; i < bookDigit; i++) {
+            int finalBookI = i;
             bookPhotosList[i].setOnClickListener(view -> {
                 //TODO implement clickable book cover
             });
@@ -140,8 +162,8 @@ public class EntertainmentActivity extends AppCompatActivity {
 
         });
         preferencesBtn.setOnClickListener(view -> {
-            initiateFilms(10);
-            initiateBooks(10);
+            initiateFilms(sharedPreferences.getInt("filmDigit", 10));
+            initiateBooks(sharedPreferences.getInt("bookDigit", 10));
         });
     }
 
@@ -162,9 +184,52 @@ public class EntertainmentActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void booksFieldInitialization(int number) {
+        //BOOKS
+        bookTitleList = new TextView[number];
+        bookGenresList = new TextView[number];
+
+        bookPhotosList = new ImageButton[number];
+
+        bookAuthorList = new TextView[number];
+        bookAuthorTxtList = new TextView[number];
+
+        bookPublicationDateList = new TextView[number];
+        bookPublicationDateTxtList = new TextView[number];
+
+        bookPagesList = new TextView[number];
+        bookPagesTxtList = new TextView[number];
+
+        bookRatingList = new TextView[number];
+        bookRatingTxtList = new TextView[number];
+
+        bookConstraintLayoutList = new ConstraintLayout[number];
+    }
+
+    private void filmsFieldInitialization(int number) {
+        //FILMS
+        filmTitleList = new TextView[number];
+        filmGenresList = new TextView[number];
+
+        filmPhotosList = new ImageButton[number];
+
+        filmDirectorList = new TextView[number];
+        filmDirectorTxtList = new TextView[number];
+
+        filmReleaseYearList = new TextView[number];
+        filmReleaseYearTxtList = new TextView[number];
+
+        filmDurationList = new TextView[number];
+        filmDurationTxtList = new TextView[number];
+
+        filmRatingList = new TextView[number];
+        filmRatingTxtList = new TextView[number];
+
+        filmConstraintLayoutList = new ConstraintLayout[number];
+    }
+
     private void initiateFilms(int number) {
         for (int i = 0; i < number; i++) {
-            imdbApi.manageEmptyFields(i);
             filmTitleList[i].setText(imdbApi.getFilms().get(i).getTitle());
             filmReleaseYearList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getDateOfRelease()));
             filmDurationList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getDuration()));
@@ -181,7 +246,6 @@ public class EntertainmentActivity extends AppCompatActivity {
     }
 
     private void initiateBooks(int number) {
-        List<Book> booklist = googleApi.getBooks();
         for (int i = 0; i < number; i++) {
             bookTitleList[i].setText(googleApi.getBooks().get(i).getTitle());
             bookPublicationDateList[i].setText(String.valueOf(googleApi.getBooks().get(i).getPublicationDate()));
@@ -198,7 +262,7 @@ public class EntertainmentActivity extends AppCompatActivity {
         }
     }
 
-    private void setFilms(int number) {
+    private void setFilms(int filmDigit) {
         int filmTitleInitiateId = 1000;
 
         int filmReleaseYearInitiateId = 2000;
@@ -223,7 +287,7 @@ public class EntertainmentActivity extends AppCompatActivity {
 
 
 
-        for (int i = 0; i < number; i++) {
+        for (int i = 0; i < filmDigit; i++) {
             View anotherLayout = inflater.inflate(R.layout.film_overview, null, true);
             filmsLayout.addView(anotherLayout);
 
@@ -350,14 +414,11 @@ public class EntertainmentActivity extends AppCompatActivity {
 
             constraintSet.applyTo(constraintLayout);
         }
-
         imdbApi = new ImdbApi();
-
         imdbApi.getGenres();
-        imdbApi.getTopRatedOrPopularFilms(true);
     }
 
-    private void setBooks(int number) {
+    private void setBooks(int bookDigit) {
         int bookTitleInitiateId = 11000;
 
         int bookPublicationDateInitiateId = 12000;
@@ -380,7 +441,7 @@ public class EntertainmentActivity extends AppCompatActivity {
 
         ConstraintLayout constraintLayout;
 
-        for (int i = 0; i < number; i++) {
+        for (int i = 0; i < bookDigit; i++) {
             View anotherLayout = inflater.inflate(R.layout.book_overview, null, true);
             booksLayout.addView(anotherLayout);
 
@@ -507,9 +568,6 @@ public class EntertainmentActivity extends AppCompatActivity {
 
             constraintSet.applyTo(constraintLayout);
         }
-
         googleApi = new GoogleBooksApi();
-
-        googleApi.getByGenre("drama");
     }
 }
