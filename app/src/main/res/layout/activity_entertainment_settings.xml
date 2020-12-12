@@ -24,11 +24,11 @@
         android:id="@+id/bookDigitTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Number of displayed books:"
+        android:text="Number of displayed books (5-15):"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.02"/>
+        app:layout_constraintVertical_bias="0.02" />
 
     <EditText
         android:id="@+id/bookDigit"
@@ -48,7 +48,7 @@
         android:id="@+id/filmDigitTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Number of displayed films:"
+        android:text="Number of displayed films (5-10):"
         android:layout_below="@id/bookDigit"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -70,6 +70,80 @@
         app:layout_constraintVertical_bias="0.05"
         android:text="7"/>
 
+    <TextView
+        android:id="@+id/filmSortingTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Film sorting method:"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.25" />
+
+    <RadioGroup
+        android:id="@+id/sortingGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintHorizontal_bias="0.6">
+        <RadioButton
+            android:id="@+id/sort_top_rated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/top_rated"/>
+        <RadioButton
+            android:id="@+id/sort_most_popular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/most_popular"/>
+        <RadioButton
+            android:id="@+id/sort_upcoming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/upcoming"/>
+        <RadioButton
+            android:id="@+id/sort_now_playing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/now_playing"/>
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/filmGenresSpinnerTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chosen film genre:"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.4" />
+
+    <Spinner
+        android:id="@+id/filmGenresSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4"
+        app:layout_constraintHorizontal_bias="0.6"
+        />
+
+    <TextView
+        android:id="@+id/bookGenresSpinnerTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chosen books genre:"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
     <Spinner
         android:id="@+id/bookGenresSpinner"
         android:layout_width="wrap_content"
@@ -77,7 +151,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"/>
+
+
 
     <Button
         android:id="@+id/applyEntertainmentSettings"
@@ -87,4 +164,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

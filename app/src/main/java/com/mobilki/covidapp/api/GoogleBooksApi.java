@@ -158,9 +158,14 @@ public class GoogleBooksApi {
             book.setImageUrl(o.getJSONObject("volumeInfo").getJSONObject("imageLinks").getString("thumbnail"));
             book.setPdfAvailable(o.getJSONObject("accessInfo").getJSONObject("pdf").getBoolean("isAvailable"));
 
-            JSONArray authors = o.getJSONObject("volumeInfo").getJSONArray("authors");
-            for (int j = 0; j < authors.length(); j++) {
-                book.addAuthor((String) authors.get(j));
+            if (volumeInfo.has("authors")) {
+                JSONArray authors = o.getJSONObject("volumeInfo").getJSONArray("authors");
+                for (int j = 0; j < authors.length(); j++) {
+                    book.addAuthor((String) authors.get(j));
+                }
+            }
+            else {
+                book.addAuthor("no data");
             }
             JSONArray genres = o.getJSONObject("volumeInfo").getJSONArray("categories");
             for (int j = 0; j < genres.length(); j++) {

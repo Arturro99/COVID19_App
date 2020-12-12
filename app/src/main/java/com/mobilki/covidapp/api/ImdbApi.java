@@ -1,6 +1,5 @@
 package com.mobilki.covidapp.api;
 
-import android.content.SharedPreferences;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -27,7 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ImdbApi implements FilmDatabaseApi {
+public class ImdbApi implements EntertainmentDatabaseApi<Film, FilmSortingType> {
 
         private final String key = "c13cb8428b25d1e30290182db543602c";
     private final String host = "imdb8.p.rapidapi.com";
@@ -40,19 +39,33 @@ public class ImdbApi implements FilmDatabaseApi {
     private FilmGenresRepository filmGenresRepository = new FilmGenresRepository();
 
     @Override
-    public void getTopRatedOrPopularFilms(boolean topRated, int filmDigit) {
+    public void getSorted(FilmSortingType type, int number) {
         Request request = null;
-        if (topRated) {
-            request = new Request.Builder()
-                    .url("https://api.themoviedb.org/3/movie/popular?api_key=" + key + "&language=en-US&page=1")
-                    .get()
-                    .build();
-        }
-        else {
-            request = new Request.Builder()
-                    .url("https://api.themoviedb.org/3/movie/top_rated?api_key=" + key + "&language=en-US&page=1")
-                    .get()
-                    .build();
+        switch (type) {
+            case TOP_RATED:
+                request = new Request.Builder()
+                        .url("https://api.themoviedb.org/3/movie/top_rated?api_key=" + key + "&language=en-US&page=1")
+                        .get()
+                        .build();
+                break;
+            case UPCOMING:
+                request = new Request.Builder()
+                        .url("https://api.themoviedb.org/3/movie/upcoming?api_key=" + key + "&language=en-US&page=1")
+                        .get()
+                        .build();
+                break;
+            case NOW_PLAYING:
+                request = new Request.Builder()
+                        .url("https://api.themoviedb.org/3/movie/now_playing?api_key=" + key + "&language=en-US&page=1")
+                        .get()
+                        .build();
+                break;
+            case MOST_POPULAR:
+                request = new Request.Builder()
+                        .url("https://api.themoviedb.org/3/movie/popular?api_key=" + key + "&language=en-US&page=1")
+                        .get()
+                        .build();
+                break;
         }
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -82,7 +95,7 @@ public class ImdbApi implements FilmDatabaseApi {
                     }
                 }
                 try {
-                    instantiateFilms(jsonObject, filmDigit);
+                    instantiateFilms(jsonObject, number);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -131,6 +144,11 @@ public class ImdbApi implements FilmDatabaseApi {
                 }
             }
         });
+    }
+
+    @Override
+    public List<Film> getAll() {
+        return filmRepository.getAll();
     }
 
     private void getCredits(String filmId) {
@@ -219,8 +237,8 @@ public class ImdbApi implements FilmDatabaseApi {
 
 
     @RequiresApi(api = Build.VERSION_CODES.R)
-    private void instantiateFilms(JSONObject obj, int filmDigit) throws JSONException {
-        for (int i = 0; i < filmDigit; i++) {
+    private void instantiateFilms(JSONObject obj, int number) throws JSONException {
+        for (int i = 0; i < number; i++) {
             JSONObject o = (JSONObject) obj.getJSONArray("results").get(i);
             String id = o.getString("id");
             Film film = new Film(id);
@@ -257,7 +275,7 @@ public class ImdbApi implements FilmDatabaseApi {
     private void setGenres(JSONObject obj) throws JSONException {
         JSONArray arr = obj.getJSONArray("genres");
         for (int i = 0; i < arr.length(); i++) {
-            filmGenresRepository.addGenre(arr.getJSONObject(i).getInt("id"), arr.getJSONObject(i).getString("name"));
+           FilmGenresRepository.addGenre(arr.getJSONObject(i).getInt("id"), arr.getJSONObject(i).getString("name"));
         }
     }
 
@@ -288,10 +306,6 @@ public class ImdbApi implements FilmDatabaseApi {
 
     private void setDuration(JSONObject obj) throws JSONException {
         filmRepository.get(obj.getString("id")).setDuration(obj.getInt("runtime"));
-    }
-
-    public List<Film> getFilms() {
-        return filmRepository.getAll();
     }
 
 

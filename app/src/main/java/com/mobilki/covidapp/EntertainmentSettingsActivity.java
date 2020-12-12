@@ -12,9 +12,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.mobilki.covidapp.api.repository.FilmGenresRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EntertainmentSettingsActivity extends AppCompatActivity {
 
@@ -24,12 +31,17 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
     TextView bookDigit;
     Button applySettings;
     Spinner bookGenresSpinner;
+    Spinner filmGenresSpinner;
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     Context context;
 
     String bookGenre;
+    String filmGenre;
+
+
+    RadioGroup sortingGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +51,6 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
         context = getApplicationContext();
         sharedPreferences = context.getSharedPreferences("Prefs", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-
 
 
 //        filmsNumberLayout = findViewById(R.id.filmsNumberLayout);
@@ -56,7 +67,12 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
         bookDigit = findViewById(R.id.bookDigit);
         applySettings = findViewById(R.id.applyEntertainmentSettings);
 
+        sortingGroup = findViewById(R.id.sortingGroup);
+        for (int i = 0; i < sortingGroup.getChildCount(); i++) {
+            sortingGroup.getChildAt(i).setEnabled(false);
+        }
 
+        //Book Spinner initialization
         bookGenresSpinner = findViewById(R.id.bookGenresSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this, R.array.book_genres, android.R.layout.simple_spinner_item);
@@ -64,15 +80,29 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
         bookGenresSpinner.setAdapter(adapter);
         bookGenresSpinner.setSelection(adapter.getPosition(sharedPreferences.getString("bookGenre", "drama")));
 
+
+        //Film Spinner initialization
+        filmGenresSpinner = findViewById(R.id.filmGenresSpinner);
+        String[] filmGenresList;
+        filmGenresList = FilmGenresRepository.getGenres().values().toArray(new String[0]);
+        ArrayAdapter<CharSequence> filmAdapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item, filmGenresList
+        );
+        filmAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        filmGenresSpinner.setAdapter(filmAdapter);
+        filmGenresSpinner.setSelection(filmAdapter.getPosition(sharedPreferences.getString("filmGenre", "Drama")));
+        filmGenresSpinner.setEnabled(false);
+
+
+        filmDigit.setText(String.valueOf(sharedPreferences.getInt("filmDigit", 10)));
+        bookDigit.setText(String.valueOf(sharedPreferences.getInt("bookDigit", 10)));
+
         start();
 
     }
 
     private void start() {
-        applySettings.setOnClickListener(view -> {
-            saveOptions();
-            System.out.println("SHARED BDIGIT: " + sharedPreferences.getInt("bookDigit", 10));
-        });
+        applySettings.setOnClickListener(view -> saveOptions());
 
         bookGenresSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -85,12 +115,32 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
 
             }
         });
+        filmGenresSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                filmGenre = adapterView.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
+
+
 
     private void saveOptions() {
         editor.putInt("bookDigit", Integer.parseInt(bookDigit.getText().toString()));
         editor.putInt("filmDigit", Integer.parseInt(filmDigit.getText().toString()));
         editor.putString("bookGenre", bookGenre);
+        editor.putString("filmGenre", filmGenre);
+
+        if (sortingGroup.getCheckedRadioButtonId() != -1) {
+            int id = sortingGroup.getCheckedRadioButtonId();
+            RadioButton radioButton = findViewById(id);
+            editor.putString("filmSortingMethod", radioButton.getText().toString());
+        }
 
         editor.apply();
     }

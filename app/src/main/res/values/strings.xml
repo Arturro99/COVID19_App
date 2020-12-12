@@ -27,6 +27,11 @@
     <string name="preferences_panel">Preferencje</string>
     <string name="notifications_settings_panel">Ustawienia powiadomień</string>
 
+    <!-- Film sorting methods -->
+    <string name="top_rated">Top rated</string>
+    <string name="most_popular">Most popular</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="now_playing">Now playing</string>
 
     <!-- Book genres -->
     <string-array name="book_genres">
@@ -41,5 +46,26 @@
         <item>biography</item>
         <item>poetry</item>
     </string-array>
+
+    <!-- Film genres -->
+    <string-array name="film_genres">
+        <item>Action</item>
+        <item>Animation</item>
+        <item>Comedy</item>
+        <item>Crime</item>
+        <item>Documentary</item>
+        <item>Drama</item>
+        <item>Fantasy</item>
+        <item>Family</item>
+        <item>History</item>
+        <item>Horror</item>
+        <item>Mystery</item>
+        <item>Romance</item>
+        <item>Science Fiction</item>
+        <item>Thriller</item>
+        <item>War</item>
+        <item>Western</item>
+    </string-array>
+
 
 </resources>

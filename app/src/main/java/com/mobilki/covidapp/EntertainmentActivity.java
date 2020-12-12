@@ -19,20 +19,16 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.mobilki.covidapp.api.*;
-import com.mobilki.covidapp.api.model.Book;
 import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.Objects;
 
 
 public class EntertainmentActivity extends AppCompatActivity {
@@ -92,7 +88,7 @@ public class EntertainmentActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
 
-    private FilmDatabaseApi imdbApi;
+    private ImdbApi imdbApi;
     private GoogleBooksApi googleApi;
     private List synchedList = Collections.synchronizedList(new LinkedList<>());
 
@@ -130,7 +126,7 @@ public class EntertainmentActivity extends AppCompatActivity {
         setFilms(filmDigit);
         setBooks(bookDigit);
 
-        imdbApi.getTopRatedOrPopularFilms(true, filmDigit);
+        imdbApi.getSorted(getSortingMethod(Objects.requireNonNull(sharedPreferences.getString("filmSortingMethod", "Most popular"))), filmDigit);
         googleApi.getByGenre(bookGenre, bookDigit);
 
         start();
@@ -146,7 +142,7 @@ public class EntertainmentActivity extends AppCompatActivity {
             filmPhotosList[i].setOnClickListener(view -> {
                 Intent intent = new Intent(this, FilmDetailsActivity.class);
 
-                intent.putExtra("film", imdbApi.getFilms().get(finalFilmI));
+                intent.putExtra("film", imdbApi.getAll().get(finalFilmI));
                 startActivity(intent);
             });
         }
@@ -182,6 +178,20 @@ public class EntertainmentActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private FilmSortingType getSortingMethod(String type) {
+        switch (type) {
+            case("Top rated"):
+                return FilmSortingType.TOP_RATED;
+            case ("Most popular"):
+                return FilmSortingType.MOST_POPULAR;
+            case("Upcoming"):
+                return FilmSortingType.UPCOMING;
+            case("Now playing"):
+                return FilmSortingType.NOW_PLAYING;
+        }
+        return FilmSortingType.MOST_POPULAR;
     }
 
     private void booksFieldInitialization(int number) {
@@ -230,18 +240,18 @@ public class EntertainmentActivity extends AppCompatActivity {
 
     private void initiateFilms(int number) {
         for (int i = 0; i < number; i++) {
-            filmTitleList[i].setText(imdbApi.getFilms().get(i).getTitle());
-            filmReleaseYearList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getDateOfRelease()));
-            filmDurationList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getDuration()));
-            filmRatingList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getRatings()));
-            filmGenresList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getGenres())
+            filmTitleList[i].setText(imdbApi.getAll().get(i).getTitle());
+            filmReleaseYearList[i].setText(String.valueOf(imdbApi.getAll().get(i).getDateOfRelease()));
+            filmDurationList[i].setText(String.valueOf(imdbApi.getAll().get(i).getDuration()));
+            filmRatingList[i].setText(String.valueOf(imdbApi.getAll().get(i).getRatings()));
+            filmGenresList[i].setText(String.valueOf(imdbApi.getAll().get(i).getGenres())
                     .replace("[", "")
                     .replace("]", "")
                     .replace(", ", "\n"));
-            filmDirectorList[i].setText(String.valueOf(imdbApi.getFilms().get(i).getDirectors().values())
+            filmDirectorList[i].setText(String.valueOf(imdbApi.getAll().get(i).getDirectors().values())
                     .replace("[", "")
                     .replace("]", ""));
-            Picasso.get().load(imdbApi.getFilms().get(i).getImageUrl()).placeholder(R.drawable.placeholder).into(filmPhotosList[i]);
+            Picasso.get().load(imdbApi.getAll().get(i).getImageUrl()).placeholder(R.drawable.placeholder).into(filmPhotosList[i]);
         }
     }
 
