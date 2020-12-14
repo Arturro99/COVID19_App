@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import okhttp3.Call;
@@ -26,7 +28,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ImdbApi implements EntertainmentDatabaseApi<Film, FilmSortingType> {
+public class ImdbApi extends Thread implements EntertainmentDatabaseApi<Film, FilmSortingType> {
 
         private final String key = "c13cb8428b25d1e30290182db543602c";
     private final String host = "imdb8.p.rapidapi.com";
@@ -36,10 +38,9 @@ public class ImdbApi implements EntertainmentDatabaseApi<Film, FilmSortingType> 
     private String jsonString;
     private static JSONObject jsonObject;
     private FilmRepository filmRepository = new FilmRepository();
-    private FilmGenresRepository filmGenresRepository = new FilmGenresRepository();
 
     @Override
-    public void getSorted(FilmSortingType type, int number) {
+    public void getSortedByValues(FilmSortingType type, int number) {
         Request request = null;
         switch (type) {
             case TOP_RATED:
@@ -67,6 +68,50 @@ public class ImdbApi implements EntertainmentDatabaseApi<Film, FilmSortingType> 
                         .build();
                 break;
         }
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                try {
+                    throw new incorrectRequestException("Incorrect request.");
+                } catch (incorrectRequestException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.R)
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.body() != null) {
+                    jsonString = response.body().string();
+                    try {
+                        jsonObject = new JSONObject(jsonString);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        throw new emptyResponseBodyException("Empty body in response.");
+                    } catch (emptyResponseBodyException e) {
+                        e.printStackTrace();
+                    }
+                }
+                try {
+                    instantiateFilms(jsonObject, number);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public void getSortedByGenres(String genre, int number) {
+        int genreId = getGenreId(genre);
+        Request request = new Request.Builder()
+                .url("https://api.themoviedb.org/3/discover/movie?api_key=" + key + "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=" + String.valueOf(genreId))
+                .get()
+                .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -260,9 +305,9 @@ public class ImdbApi implements EntertainmentDatabaseApi<Film, FilmSortingType> 
             }
             List<String> genres = new ArrayList<>();
             arr.stream()
-                    .filter((filmGenresRepository.getGenres().keySet()::contains))
+                    .filter((FilmGenresRepository.getGenres().keySet()::contains))
                     .collect(Collectors.toList())
-                    .forEach(x -> genres.add(filmGenresRepository.getGenre(x)));
+                    .forEach(x -> genres.add(FilmGenresRepository.getGenre(x)));
             film.setGenres(genres);
 
             filmRepository.add(film);
@@ -280,25 +325,30 @@ public class ImdbApi implements EntertainmentDatabaseApi<Film, FilmSortingType> 
     }
 
     private void setCast(JSONObject obj) throws JSONException {
-        JSONArray actorArr = obj.getJSONArray("cast");
-        JSONArray directorArr = obj.getJSONArray("crew");
-        for (int i = 0; i < actorArr.length(); i++) {
+        if (obj.has("cast")) {
+            JSONArray actorArr = obj.getJSONArray("cast");
+            for (int i = 0; i < actorArr.length(); i++) {
                 Actor actor = new Actor(actorArr.getJSONObject(i).getInt("id"), actorArr.getJSONObject(i).getString("name"));
-                actor.setImgUrl(imgFirstPartUrl +  actorArr.getJSONObject(i).getString("profile_path"));
+                actor.setImgUrl(imgFirstPartUrl + actorArr.getJSONObject(i).getString("profile_path"));
                 filmRepository.get(obj.getString("id"))
                         .addActor(actor);
-        }
-        for (int i = 0; i < directorArr.length(); i++) {
-            if (directorArr.getJSONObject(i).getString("job").equals("Director")) {
-                filmRepository.get(obj.getString("id"))
-                        .addDirector(directorArr.getJSONObject(i).getInt("id"), directorArr.getJSONObject(i).getString("name"));
             }
         }
-        if (actorArr.length() == 0) {
+        else {
             filmRepository.get(obj.getString("id"))
                     .addActor(new Actor(0, "no data"));
         }
-        if (directorArr.length() == 0) {
+
+        if (obj.has("crew")) {
+            JSONArray directorArr = obj.getJSONArray("crew");
+            for (int i = 0; i < directorArr.length(); i++) {
+                if (directorArr.getJSONObject(i).getString("job").equals("Director")) {
+                    filmRepository.get(obj.getString("id"))
+                            .addDirector(directorArr.getJSONObject(i).getInt("id"), directorArr.getJSONObject(i).getString("name"));
+                }
+            }
+        }
+        else {
             filmRepository.get(obj.getString("id"))
                     .addDirector(0, "no data");
         }
@@ -308,9 +358,13 @@ public class ImdbApi implements EntertainmentDatabaseApi<Film, FilmSortingType> 
         filmRepository.get(obj.getString("id")).setDuration(obj.getInt("runtime"));
     }
 
-
-//    public void run(boolean rated, int number) {
-//        getTopRatedOrPopularFilms(rated, number);
-//    }
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private int getGenreId(String genre) {
+        return FilmGenresRepository.getGenres().entrySet().stream()
+                .filter(integerStringEntry -> Objects.equals(integerStringEntry.getValue(), genre))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(-1);
+    }
 }
 

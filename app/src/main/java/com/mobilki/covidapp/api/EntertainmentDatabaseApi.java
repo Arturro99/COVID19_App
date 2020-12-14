@@ -8,7 +8,8 @@ import com.mobilki.covidapp.api.model.Film;
 import com.mobilki.covidapp.exceptions.*;
 
 public interface EntertainmentDatabaseApi<T, S>{
-    void getSorted(FilmSortingType type, int number);
+    void getSortedByValues(FilmSortingType type, int number);
+    void getSortedByGenres(String genre, int number);
     void getGenres();
 
     List<Film>getAll();

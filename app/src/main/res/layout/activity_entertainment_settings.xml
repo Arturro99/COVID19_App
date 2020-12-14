@@ -70,6 +70,30 @@
         app:layout_constraintVertical_bias="0.05"
         android:text="7"/>
 
+    <RadioGroup
+        android:id="@+id/typeOfSorting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.3"
+        app:layout_constraintHorizontal_bias="0.35">
+        <RadioButton
+            android:id="@+id/sortByValues"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            />
+        <RadioButton
+            android:id="@+id/sortByGenres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            />
+    </RadioGroup>
+
     <TextView
         android:id="@+id/filmSortingTxt"
         android:layout_width="wrap_content"

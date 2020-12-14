@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -42,6 +43,8 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
 
 
     RadioGroup sortingGroup;
+    RadioButton sortByValues;
+    RadioButton sortByGenres;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +71,9 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
         applySettings = findViewById(R.id.applyEntertainmentSettings);
 
         sortingGroup = findViewById(R.id.sortingGroup);
-        for (int i = 0; i < sortingGroup.getChildCount(); i++) {
-            sortingGroup.getChildAt(i).setEnabled(false);
-        }
+
+        sortByValues = findViewById(R.id.sortByValues);
+        sortByGenres = findViewById(R.id.sortByGenres);
 
         //Book Spinner initialization
         bookGenresSpinner = findViewById(R.id.bookGenresSpinner);
@@ -102,6 +105,18 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
     }
 
     private void start() {
+        sortByValues.setOnCheckedChangeListener((compoundButton, b) -> {
+            filmGenresSpinner.setEnabled(!compoundButton.isChecked());
+            editor.putString("filmSortingMethod", "sortByValues");
+        });
+
+        sortByGenres.setOnCheckedChangeListener((compoundButton, b) -> {
+            for (int i = 0; i < sortingGroup.getChildCount(); i++) {
+                sortingGroup.getChildAt(i).setEnabled(!compoundButton.isChecked());
+            }
+            editor.putString("filmSortingMethod", "sortByGenres");
+        });
+
         applySettings.setOnClickListener(view -> saveOptions());
 
         bookGenresSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -134,12 +149,17 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
         editor.putInt("bookDigit", Integer.parseInt(bookDigit.getText().toString()));
         editor.putInt("filmDigit", Integer.parseInt(filmDigit.getText().toString()));
         editor.putString("bookGenre", bookGenre);
-        editor.putString("filmGenre", filmGenre);
 
-        if (sortingGroup.getCheckedRadioButtonId() != -1) {
-            int id = sortingGroup.getCheckedRadioButtonId();
-            RadioButton radioButton = findViewById(id);
-            editor.putString("filmSortingMethod", radioButton.getText().toString());
+        if (sortByValues.isChecked()) {
+            if (sortingGroup.getCheckedRadioButtonId() != -1) {
+                int id = sortingGroup.getCheckedRadioButtonId();
+                RadioButton radioButton = findViewById(id);
+                editor.putString("filmSortingByValuesType", radioButton.getText().toString());
+            }
+        }
+
+        if (sortByGenres.isChecked()) {
+            editor.putString("filmGenre", filmGenre);
         }
 
         editor.apply();

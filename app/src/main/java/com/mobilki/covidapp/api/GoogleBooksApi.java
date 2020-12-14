@@ -146,7 +146,12 @@ public class GoogleBooksApi {
                 book.setRatingsCount("no data");
             }
 
-            book.setPublisher(o.getJSONObject("volumeInfo").getString("publisher"));
+            if (volumeInfo.has("publisher")) {
+                book.setPublisher(volumeInfo.getString("publisher"));
+            }
+            else {
+                book.setPublisher("no data");
+            }
 
             if (volumeInfo.has("pageCount")) {
                 book.setPages(volumeInfo.getString("pageCount"));
