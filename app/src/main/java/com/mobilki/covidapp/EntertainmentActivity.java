@@ -30,6 +30,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+import lombok.SneakyThrows;
+
 
 public class EntertainmentActivity extends AppCompatActivity {
 
@@ -90,12 +92,15 @@ public class EntertainmentActivity extends AppCompatActivity {
 
     private ImdbApi imdbApi;
     private GoogleBooksApi googleApi;
+    private Thread genresSetter;
     private List synchedList = Collections.synchronizedList(new LinkedList<>());
 
     private int bookDigit;
     private int filmDigit;
     private String bookGenre;
+    private String filmGenre;
 
+    @SneakyThrows
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +124,7 @@ public class EntertainmentActivity extends AppCompatActivity {
         bookDigit = sharedPreferences.getInt("bookDigit", 10);
         filmDigit = sharedPreferences.getInt("filmDigit", 10);
         bookGenre = sharedPreferences.getString("bookGenre", "drama");
+        filmGenre = sharedPreferences.getString("filmGenre", "Drama");
 
         booksFieldInitialization(bookDigit);
         filmsFieldInitialization(filmDigit);
@@ -126,7 +132,10 @@ public class EntertainmentActivity extends AppCompatActivity {
         setFilms(filmDigit);
         setBooks(bookDigit);
 
-        imdbApi.getSorted(getSortingMethod(Objects.requireNonNull(sharedPreferences.getString("filmSortingMethod", "Most popular"))), filmDigit);
+        if (sharedPreferences.getString("filmSortingMethod", "KK").equals("sortByValues"))
+            imdbApi.getSortedByValues(getSortingValue(Objects.requireNonNull(sharedPreferences.getString("filmSortingByValuesType", "Most popular"))), filmDigit);
+        else
+            imdbApi.getSortedByGenres(sharedPreferences.getString("filmGenre", "Drama"), filmDigit);
         googleApi.getByGenre(bookGenre, bookDigit);
 
         start();
@@ -180,7 +189,7 @@ public class EntertainmentActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private FilmSortingType getSortingMethod(String type) {
+    private FilmSortingType getSortingValue(String type) {
         switch (type) {
             case("Top rated"):
                 return FilmSortingType.TOP_RATED;
@@ -272,7 +281,7 @@ public class EntertainmentActivity extends AppCompatActivity {
         }
     }
 
-    private void setFilms(int filmDigit) {
+    private void setFilms(int filmDigit) throws InterruptedException {
         int filmTitleInitiateId = 1000;
 
         int filmReleaseYearInitiateId = 2000;
@@ -425,7 +434,9 @@ public class EntertainmentActivity extends AppCompatActivity {
             constraintSet.applyTo(constraintLayout);
         }
         imdbApi = new ImdbApi();
-        imdbApi.getGenres();
+        genresSetter = new GenresSetter(imdbApi);
+        genresSetter.start();
+        genresSetter.join();
     }
 
     private void setBooks(int bookDigit) {
