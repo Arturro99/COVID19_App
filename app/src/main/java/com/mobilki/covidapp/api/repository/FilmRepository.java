@@ -9,7 +9,7 @@ public class FilmRepository implements Repository<Film> {
     private List<Film> films = new ArrayList<>();
 
     @Override
-    public Film get(String id) {
+    public synchronized Film get(String id) {
         for (Film f : films) {
             if (f.getId().equals(id))
                 return f;

@@ -119,6 +119,7 @@ public class GoogleBooksApi {
     }
 
     public void instantiateBook(JSONObject jsonObject, int bookDigit) throws JSONException {
+        bookRepository.getAll().clear();
         for (int i = 0; i < bookDigit; i++) {
             JSONObject o = (JSONObject) jsonObject.getJSONArray("items").get(i);
 

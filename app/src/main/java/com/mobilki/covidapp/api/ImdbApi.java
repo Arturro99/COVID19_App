@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.CountDownLatch;
 import java.util.stream.Collectors;
 
 import okhttp3.Call;
@@ -149,12 +150,13 @@ public class ImdbApi implements EntertainmentDatabaseApi<Film, FilmSortingType> 
     }
 
     @Override
-    public void getGenres() {
+    public void getGenres() throws InterruptedException {
         Request request = new Request.Builder()
                 .url("https://api.themoviedb.org/3/genre/movie/list?api_key=" + key + "&language=en-US")
                 .get()
                 .build();
 
+        CountDownLatch countDownLatch = new CountDownLatch(1);
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -184,11 +186,13 @@ public class ImdbApi implements EntertainmentDatabaseApi<Film, FilmSortingType> 
                 }
                 try {
                     setGenres(jsonObject);
+                    countDownLatch.countDown();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
+        countDownLatch.await();
     }
 
     @Override
@@ -283,6 +287,7 @@ public class ImdbApi implements EntertainmentDatabaseApi<Film, FilmSortingType> 
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     private void instantiateFilms(JSONObject obj, int number) throws JSONException {
+        filmRepository.getAll().clear();
         for (int i = 0; i < number; i++) {
             JSONObject o = (JSONObject) obj.getJSONArray("results").get(i);
             String id = o.getString("id");

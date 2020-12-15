@@ -2,6 +2,8 @@ package com.mobilki.covidapp.api.customThreads;
 
 import com.mobilki.covidapp.api.ImdbApi;
 
+import lombok.SneakyThrows;
+
 public class GenresSetter extends Thread {
 
     private ImdbApi imdbApi;
@@ -10,6 +12,7 @@ public class GenresSetter extends Thread {
         this.imdbApi = imdbApi;
     }
 
+    @SneakyThrows
     @Override
     public void run() {
        imdbApi.getGenres();

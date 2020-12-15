@@ -10,7 +10,7 @@ import com.mobilki.covidapp.exceptions.*;
 public interface EntertainmentDatabaseApi<T, S>{
     void getSortedByValues(FilmSortingType type, int number);
     void getSortedByGenres(String genre, int number);
-    void getGenres();
+    void getGenres() throws InterruptedException;
 
     List<Film>getAll();
 }

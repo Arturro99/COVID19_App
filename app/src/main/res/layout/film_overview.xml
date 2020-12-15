@@ -18,14 +18,17 @@
         android:id="@+id/mainFilmPhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/matrix"
+        android:src="@drawable/placeholder"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:adjustViewBounds="true"
+        android:maxWidth="250dp"
+        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="kupa"
+        android:text="film"
         android:id="@+id/filmTitle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/mainFilmPhoto"

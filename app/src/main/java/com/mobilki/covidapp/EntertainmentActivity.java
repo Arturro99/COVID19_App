@@ -102,8 +102,6 @@ public class EntertainmentActivity extends AppCompatActivity {
 
     private int bookDigit;
     private int filmDigit;
-    private String bookGenre;
-    private String filmGenre;
 
     @SneakyThrows
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -128,27 +126,32 @@ public class EntertainmentActivity extends AppCompatActivity {
 
         bookDigit = sharedPreferences.getInt("bookDigit", 10);
         filmDigit = sharedPreferences.getInt("filmDigit", 10);
-        bookGenre = sharedPreferences.getString("bookGenre", "drama");
-        filmGenre = sharedPreferences.getString("filmGenre", "Drama");
 
         booksFieldInitialization(bookDigit);
         filmsFieldInitialization(filmDigit);
 
         setFilms(filmDigit);
-        System.out.println("W EntertainmentAct2: " + Thread.currentThread().getName());
         setBooks(bookDigit);
 
+        System.out.println(Thread.currentThread().getName());
+        genresSetter = new Thread(new GenresSetter(imdbApi), "genresSetter");
+        genresSetter.start();
+        genresSetter.join();
+        System.out.println(Thread.currentThread().getName());
+
         if (sharedPreferences.getString("filmSortingMethod", "KK").equals("sortByValues")) {
-            filmByValuesSorter = new FilmByValuesSorter(imdbApi, getSortingValue(Objects.requireNonNull(sharedPreferences.getString("filmSortingByValuesType", "Most popular"))), filmDigit);
+            filmByValuesSorter = new Thread(new FilmByValuesSorter(imdbApi, getSortingValue(Objects.requireNonNull(sharedPreferences.getString("filmSortingByValuesType", "Most popular"))), filmDigit), "filmValuesSorter");
             filmByValuesSorter.start();
-            filmByValuesSorter.join(3000);
+            System.out.println(Thread.currentThread().getName());
+            filmByValuesSorter.join(3000L);
         }
         else {
-            filmByGenresSorter = new FilmByGenresSorter(imdbApi, sharedPreferences.getString("filmGenre", "Drama"), filmDigit);
+            filmByGenresSorter = new Thread(new FilmByGenresSorter(imdbApi, sharedPreferences.getString("filmGenre", "Drama"), filmDigit), "filmGenresSorter");
             filmByGenresSorter.start();
-            filmByGenresSorter.join(3000);
+            System.out.println(Thread.currentThread().getName());
+            filmByGenresSorter.join(3000L);
         }
-        googleApi.getByGenre(bookGenre, bookDigit);
+        googleApi.getByGenre(sharedPreferences.getString("bookGenre", "drama"), bookDigit);
 
         start();
     }
@@ -198,6 +201,28 @@ public class EntertainmentActivity extends AppCompatActivity {
             startActivity(new Intent(this, EntertainmentSettingsActivity.class));
             return true;
         }
+        else if (id == R.id.menuEntertainmentRefresh) {
+            if (sharedPreferences.getString("filmSortingMethod", "KK").equals("sortByValues")) {
+                filmByValuesSorter = new FilmByValuesSorter(imdbApi, getSortingValue(Objects.requireNonNull(sharedPreferences.getString("filmSortingByValuesType", "Most popular"))), filmDigit);
+                filmByValuesSorter.start();
+                try {
+                    filmByValuesSorter.join(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                filmByGenresSorter = new FilmByGenresSorter(imdbApi, sharedPreferences.getString("filmGenre", "Drama"), filmDigit);
+                filmByGenresSorter.start();
+                try {
+                    filmByGenresSorter.join(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            googleApi.getByGenre(sharedPreferences.getString("bookGenre", "drama"), bookDigit);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -446,10 +471,6 @@ public class EntertainmentActivity extends AppCompatActivity {
             constraintSet.applyTo(constraintLayout);
         }
         imdbApi = new ImdbApi();
-        genresSetter = new GenresSetter(imdbApi);
-        System.out.println("W EntertainmentAct: " + Thread.currentThread().getName());
-        genresSetter.start();
-        genresSetter.join(3000L);
     }
 
     private void setBooks(int bookDigit) {
