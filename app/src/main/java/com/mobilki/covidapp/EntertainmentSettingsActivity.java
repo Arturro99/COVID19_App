@@ -106,15 +106,14 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
 
     private void start() {
         sortByValues.setOnCheckedChangeListener((compoundButton, b) -> {
-            filmGenresSpinner.setEnabled(!compoundButton.isChecked());
-            editor.putString("filmSortingMethod", "sortByValues");
+            for (int i = 0; i < sortingGroup.getChildCount(); i++) {
+                sortingGroup.getChildAt(i).setEnabled(compoundButton.isChecked());
+            }
+
         });
 
         sortByGenres.setOnCheckedChangeListener((compoundButton, b) -> {
-            for (int i = 0; i < sortingGroup.getChildCount(); i++) {
-                sortingGroup.getChildAt(i).setEnabled(!compoundButton.isChecked());
-            }
-            editor.putString("filmSortingMethod", "sortByGenres");
+            filmGenresSpinner.setEnabled(compoundButton.isChecked());
         });
 
         applySettings.setOnClickListener(view -> saveOptions());
@@ -159,9 +158,14 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
         }
 
         if (sortByGenres.isChecked()) {
+            editor.putString("filmSortingMethod", "sortByGenres");
             editor.putString("filmGenre", filmGenre);
         }
-
+        else if (sortByValues.isChecked()) {
+            editor.putString("filmSortingMethod", "sortByValues");
+        }
         editor.apply();
+        Toast.makeText(this, "filmGenre :" + filmGenre, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "sortingMethod :" + sharedPreferences.getString("filmSortingMethod", "NOTOK"), Toast.LENGTH_SHORT).show();
     }
 }

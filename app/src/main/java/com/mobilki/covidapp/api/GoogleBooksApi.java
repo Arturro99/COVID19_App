@@ -172,9 +172,14 @@ public class GoogleBooksApi {
             else {
                 book.addAuthor("no data");
             }
-            JSONArray genres = o.getJSONObject("volumeInfo").getJSONArray("categories");
-            for (int j = 0; j < genres.length(); j++) {
-                book.addGenre((String) genres.get(j));
+            if (volumeInfo.has("categories")) {
+                JSONArray genres = o.getJSONObject("volumeInfo").getJSONArray("categories");
+                for (int j = 0; j < genres.length(); j++) {
+                    book.addGenre((String) genres.get(j));
+                }
+            }
+            else {
+                book.addGenre("no data");
             }
             bookRepository.add(book);
         }
