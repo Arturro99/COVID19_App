@@ -1,4 +1,6 @@
-package com.mobilki.covidapp.api;
+package com.mobilki.covidapp.api.customThreads;
+
+import com.mobilki.covidapp.api.ImdbApi;
 
 public class GenresSetter extends Thread {
 

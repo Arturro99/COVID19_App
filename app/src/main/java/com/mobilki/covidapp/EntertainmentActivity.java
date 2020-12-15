@@ -23,6 +23,9 @@ import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.mobilki.covidapp.api.*;
+import com.mobilki.covidapp.api.customThreads.FilmByGenresSorter;
+import com.mobilki.covidapp.api.customThreads.FilmByValuesSorter;
+import com.mobilki.covidapp.api.customThreads.GenresSetter;
 import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
@@ -93,6 +96,8 @@ public class EntertainmentActivity extends AppCompatActivity {
     private ImdbApi imdbApi;
     private GoogleBooksApi googleApi;
     private Thread genresSetter;
+    private Thread filmByGenresSorter;
+    private Thread filmByValuesSorter;
     private List synchedList = Collections.synchronizedList(new LinkedList<>());
 
     private int bookDigit;
@@ -130,12 +135,19 @@ public class EntertainmentActivity extends AppCompatActivity {
         filmsFieldInitialization(filmDigit);
 
         setFilms(filmDigit);
+        System.out.println("W EntertainmentAct2: " + Thread.currentThread().getName());
         setBooks(bookDigit);
 
-        if (sharedPreferences.getString("filmSortingMethod", "KK").equals("sortByValues"))
-            imdbApi.getSortedByValues(getSortingValue(Objects.requireNonNull(sharedPreferences.getString("filmSortingByValuesType", "Most popular"))), filmDigit);
-        else
-            imdbApi.getSortedByGenres(sharedPreferences.getString("filmGenre", "Drama"), filmDigit);
+        if (sharedPreferences.getString("filmSortingMethod", "KK").equals("sortByValues")) {
+            filmByValuesSorter = new FilmByValuesSorter(imdbApi, getSortingValue(Objects.requireNonNull(sharedPreferences.getString("filmSortingByValuesType", "Most popular"))), filmDigit);
+            filmByValuesSorter.start();
+            filmByValuesSorter.join(3000);
+        }
+        else {
+            filmByGenresSorter = new FilmByGenresSorter(imdbApi, sharedPreferences.getString("filmGenre", "Drama"), filmDigit);
+            filmByGenresSorter.start();
+            filmByGenresSorter.join(3000);
+        }
         googleApi.getByGenre(bookGenre, bookDigit);
 
         start();
@@ -435,8 +447,9 @@ public class EntertainmentActivity extends AppCompatActivity {
         }
         imdbApi = new ImdbApi();
         genresSetter = new GenresSetter(imdbApi);
+        System.out.println("W EntertainmentAct: " + Thread.currentThread().getName());
         genresSetter.start();
-        genresSetter.join();
+        genresSetter.join(3000L);
     }
 
     private void setBooks(int bookDigit) {

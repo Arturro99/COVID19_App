@@ -28,7 +28,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ImdbApi extends Thread implements EntertainmentDatabaseApi<Film, FilmSortingType> {
+public class ImdbApi implements EntertainmentDatabaseApi<Film, FilmSortingType> {
 
         private final String key = "c13cb8428b25d1e30290182db543602c";
     private final String host = "imdb8.p.rapidapi.com";
