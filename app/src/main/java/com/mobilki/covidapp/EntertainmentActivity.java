@@ -142,16 +142,17 @@ public class EntertainmentActivity extends AppCompatActivity {
         if (sharedPreferences.getString("filmSortingMethod", "KK").equals("sortByValues")) {
             filmByValuesSorter = new Thread(new FilmByValuesSorter(imdbApi, getSortingValue(Objects.requireNonNull(sharedPreferences.getString("filmSortingByValuesType", "Most popular"))), filmDigit), "filmValuesSorter");
             filmByValuesSorter.start();
-            System.out.println(Thread.currentThread().getName());
             filmByValuesSorter.join(3000L);
         }
         else {
             filmByGenresSorter = new Thread(new FilmByGenresSorter(imdbApi, sharedPreferences.getString("filmGenre", "Drama"), filmDigit), "filmGenresSorter");
             filmByGenresSorter.start();
-            System.out.println(Thread.currentThread().getName());
             filmByGenresSorter.join(3000L);
         }
         googleApi.getByGenre(sharedPreferences.getString("bookGenre", "drama"), bookDigit);
+
+        initiateFilms(sharedPreferences.getInt("filmDigit", 10));
+        initiateBooks(sharedPreferences.getInt("bookDigit", 10));
 
         start();
     }
@@ -182,8 +183,7 @@ public class EntertainmentActivity extends AppCompatActivity {
 
         });
         preferencesBtn.setOnClickListener(view -> {
-            initiateFilms(sharedPreferences.getInt("filmDigit", 10));
-            initiateBooks(sharedPreferences.getInt("bookDigit", 10));
+
         });
     }
 
@@ -193,6 +193,7 @@ public class EntertainmentActivity extends AppCompatActivity {
         return true;
     }
 
+    @SneakyThrows
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -210,6 +211,7 @@ public class EntertainmentActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                initiateFilms(sharedPreferences.getInt("filmDigit", 10));
             }
             else {
                 filmByGenresSorter = new FilmByGenresSorter(imdbApi, sharedPreferences.getString("filmGenre", "Drama"), filmDigit);
@@ -219,8 +221,12 @@ public class EntertainmentActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                initiateFilms(sharedPreferences.getInt("filmDigit", 10));
+
             }
             googleApi.getByGenre(sharedPreferences.getString("bookGenre", "drama"), bookDigit);
+            initiateBooks(sharedPreferences.getInt("bookDigit", 10));
+
         }
 
         return super.onOptionsItemSelected(item);

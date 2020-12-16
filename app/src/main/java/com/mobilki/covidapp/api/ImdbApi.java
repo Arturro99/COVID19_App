@@ -41,7 +41,7 @@ public class ImdbApi implements EntertainmentDatabaseApi<Film, FilmSortingType> 
     private FilmRepository filmRepository = new FilmRepository();
 
     @Override
-    public void getSortedByValues(FilmSortingType type, int number) {
+    public void getSortedByValues(FilmSortingType type, int number) throws InterruptedException {
         Request request = null;
         switch (type) {
             case TOP_RATED:
@@ -69,6 +69,7 @@ public class ImdbApi implements EntertainmentDatabaseApi<Film, FilmSortingType> 
                         .build();
                 break;
         }
+        CountDownLatch countDownLatch = new CountDownLatch(1);
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -98,17 +99,20 @@ public class ImdbApi implements EntertainmentDatabaseApi<Film, FilmSortingType> 
                 }
                 try {
                     instantiateFilms(jsonObject, number);
+                    countDownLatch.countDown();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
+        countDownLatch.await();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void getSortedByGenres(String genre, int number) {
+    public void getSortedByGenres(String genre, int number) throws InterruptedException {
         int genreId = getGenreId(genre);
+        CountDownLatch countDownLatch = new CountDownLatch(1);
         Request request = new Request.Builder()
                 .url("https://api.themoviedb.org/3/discover/movie?api_key=" + key + "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=" + String.valueOf(genreId))
                 .get()
@@ -142,11 +146,13 @@ public class ImdbApi implements EntertainmentDatabaseApi<Film, FilmSortingType> 
                 }
                 try {
                     instantiateFilms(jsonObject, number);
+                    countDownLatch.countDown();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
+        countDownLatch.await();
     }
 
     @Override

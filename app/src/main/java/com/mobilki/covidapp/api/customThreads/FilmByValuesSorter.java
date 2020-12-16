@@ -7,6 +7,8 @@ import androidx.annotation.RequiresApi;
 import com.mobilki.covidapp.api.FilmSortingType;
 import com.mobilki.covidapp.api.ImdbApi;
 
+import lombok.SneakyThrows;
+
 public class FilmByValuesSorter extends Thread{
     private ImdbApi imdbApi;
     private FilmSortingType type;
@@ -18,6 +20,7 @@ public class FilmByValuesSorter extends Thread{
         this.numberOfFilms = numberOfFilms;
     }
 
+    @SneakyThrows
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void run() {

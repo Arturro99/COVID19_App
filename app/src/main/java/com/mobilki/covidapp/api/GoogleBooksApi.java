@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -76,12 +77,13 @@ public class GoogleBooksApi {
 //        });
 //    }
 
-    public void getByGenre(String genre, int bookDigit) {
+    public void getByGenre(String genre, int bookDigit) throws InterruptedException {
         Request request = new Request.Builder()
                 .url(imgFirstPartUrl + "/volumes?q=subject:" + genre)
                 .get()
                 .build();
 
+        CountDownLatch countDownLatch = new CountDownLatch(1);
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -111,11 +113,13 @@ public class GoogleBooksApi {
                 }
                 try {
                     instantiateBook(jsonObject, bookDigit);
+                    countDownLatch.countDown();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
+        countDownLatch.await();
     }
 
     public void instantiateBook(JSONObject jsonObject, int bookDigit) throws JSONException {
@@ -160,7 +164,12 @@ public class GoogleBooksApi {
             else {
                 book.setPages("no data");
             }
-            book.setDescription(o.getJSONObject("volumeInfo").getString("description"));
+            if (volumeInfo.has("description")) {
+                book.setDescription(volumeInfo.getString("description"));
+            }
+            else {
+                book.setDescription("no data");
+            }
             book.setImageUrl(o.getJSONObject("volumeInfo").getJSONObject("imageLinks").getString("thumbnail"));
             book.setPdfAvailable(o.getJSONObject("accessInfo").getJSONObject("pdf").getBoolean("isAvailable"));
 
