@@ -195,7 +195,7 @@ public class GoogleBooksApi {
         }
     }
 
-    public List<Book> getBooks() {
+    public List<Book> getAll() {
         return bookRepository.getAll();
     }
 }

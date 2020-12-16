@@ -1,5 +1,6 @@
 package com.mobilki.covidapp.api.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class Book {
+public class Book implements Serializable {
     private String id;
     private String title;
     private String publicationDate;

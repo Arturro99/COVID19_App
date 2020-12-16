@@ -12,11 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EntertainmentSettingsActivity"></activity>
+        <activity android:name=".exceptions.BookDetailsActivity"></activity>
+        <activity android:name=".EntertainmentSettingsActivity" />
         <activity android:name=".FilmDetailsActivity" />
         <activity android:name=".HealthDataActivity" />
-        <activity android:name=".EntertainmentActivity" >
-        </activity>
+        <activity android:name=".EntertainmentActivity"></activity>
         <activity android:name=".HealthActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -25,7 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

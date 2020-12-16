@@ -25,9 +25,7 @@ public class FilmDetailsActivity extends AppCompatActivity {
     private RatingBar ratingBar;
     private TextView title;
     private TextView ratingsCount;
-    private TextView ratingsCountTxt;
     private TextView description;
-    private TextView descriptionTxt;
     private ListView actorsList;
 
     private CustomAdapter adapter;
@@ -46,9 +44,7 @@ public class FilmDetailsActivity extends AppCompatActivity {
         ratingBar = findViewById(R.id.ratingBar);
         title = findViewById(R.id.detailedTitle);
         ratingsCount = findViewById(R.id.detailedRatingsCount);
-        ratingsCountTxt = findViewById(R.id.detailedRatingsCountTxt);
         description = findViewById(R.id.detailedDescription);
-        descriptionTxt = findViewById(R.id.detailedDescriptionTxt);
         actorsList = findViewById(R.id.detailedActors);
 
         actors = (ArrayList) film.getActors();
