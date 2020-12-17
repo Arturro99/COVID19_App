@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/wallpaper"
+    tools:context=".authentication.Register">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/aclonica"
+        android:text="Register"
+        android:textColor="#8F0303"
+        android:textSize="50sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.05" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/aclonica"
+        android:text="Create New Account"
+        android:textAlignment="center"
+        android:textColor="#8F0303"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:layout_constraintVertical_bias="0.05" />
+
+    <EditText
+        android:id="@+id/clientName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name"
+        android:inputType="textPersonName"
+        android:textColor="@android:color/white"
+        android:background="@android:color/black"
+        android:textSize="15sp"
+        android:padding="10dp"
+        android:layout_marginStart="20sp"
+        android:layout_marginEnd="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.1"
+        android:textColorHint="@android:color/white"
+        android:fontFamily="@font/aclonica"/>
+
+    <EditText
+        android:id="@+id/clientLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Login"
+        android:textColor="@android:color/white"
+        android:background="@android:color/black"
+        android:textSize="15sp"
+        android:padding="10dp"
+        android:layout_marginStart="20sp"
+        android:layout_marginEnd="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clientName"
+        app:layout_constraintVertical_bias="0.05"
+        android:textColorHint="@android:color/white"
+        android:fontFamily="@font/aclonica"/>
+
+    <EditText
+        android:id="@+id/clientEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="E-mail"
+        android:inputType="textEmailAddress"
+        android:textColor="@android:color/white"
+        android:background="@android:color/black"
+        android:textSize="15sp"
+        android:padding="10dp"
+        android:layout_marginStart="20sp"
+        android:layout_marginEnd="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clientLogin"
+        app:layout_constraintVertical_bias="0.05"
+        android:textColorHint="@android:color/white"
+        android:fontFamily="@font/aclonica"/>
+
+    <EditText
+        android:id="@+id/clientPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:textColor="@android:color/white"
+        android:background="@android:color/black"
+        android:textSize="15sp"
+        android:padding="10dp"
+        android:layout_marginStart="20sp"
+        android:layout_marginEnd="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clientEmail"
+        app:layout_constraintVertical_bias="0.05"
+        android:textColorHint="@android:color/white"
+        android:fontFamily="@font/aclonica"/>
+
+    <EditText
+        android:id="@+id/clientPasswordRepeated"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Repeat password"
+        android:inputType="textPassword"
+        android:textColor="@android:color/white"
+        android:background="@android:color/black"
+        android:textSize="15sp"
+        android:padding="10dp"
+        android:layout_marginStart="20sp"
+        android:layout_marginEnd="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clientPassword"
+        app:layout_constraintVertical_bias="0.05"
+        android:textColorHint="@android:color/white"
+        android:fontFamily="@font/aclonica"/>
+
+    <Button
+        android:id="@+id/register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clientPasswordRepeated"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Submit"
+        app:layout_constraintVertical_bias="0.05"
+        android:background="@drawable/button_shape"
+        android:textColor="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/logIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/aclonica"
+        android:text="Already registered?"
+        android:textColor="#8F0303"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/register"
+        app:layout_constraintVertical_bias="0.05" />
+
+    <ProgressBar
+        android:id="@+id/progressBarRegister"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logIn"
+        android:visibility="invisible"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

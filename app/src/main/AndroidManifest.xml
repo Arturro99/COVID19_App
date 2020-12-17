@@ -12,19 +12,31 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".exceptions.BookDetailsActivity"></activity>
-        <activity android:name=".EntertainmentSettingsActivity" />
-        <activity android:name=".FilmDetailsActivity" />
-        <activity android:name=".HealthDataActivity" />
-        <activity android:name=".EntertainmentActivity"></activity>
-        <activity android:name=".HealthActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".authentication.Login"></activity>
+        <activity android:name=".authentication.Register" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".exceptions.BookDetailsActivity" />
+        <activity android:name=".EntertainmentSettingsActivity" />
+        <activity android:name=".FilmDetailsActivity" />
+        <activity android:name=".HealthDataActivity" />
+        <activity android:name=".EntertainmentActivity" />
+        <activity android:name=".HealthActivity" />
+        <activity android:name=".MainActivity">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
