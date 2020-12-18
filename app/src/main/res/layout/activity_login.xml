@@ -36,10 +36,10 @@
         app:layout_constraintVertical_bias="0.05" />
 
     <EditText
-        android:id="@+id/clientLogin"
+        android:id="@+id/clientEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Login"
+        android:hint="E-mail"
         android:textColor="@android:color/white"
         android:background="@android:color/black"
         android:textSize="15sp"
@@ -65,7 +65,7 @@
         android:layout_marginStart="20sp"
         android:layout_marginEnd="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clientLogin"
+        app:layout_constraintTop_toBottomOf="@+id/clientEmail"
         app:layout_constraintVertical_bias="0.05"
         android:textColorHint="@android:color/white"
         android:fontFamily="@font/aclonica"/>
@@ -93,7 +93,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/logIn"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintVertical_bias="0.05"
+        android:fontFamily="@font/aclonica"/>
 
     <TextView
         android:id="@+id/register"
@@ -105,7 +106,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/forgotPassword"
-        app:layout_constraintVertical_bias="0.02" />
+        app:layout_constraintVertical_bias="0.1"
+        android:fontFamily="@font/aclonica"/>
 
     <ProgressBar
         android:id="@+id/progressBarLogin"

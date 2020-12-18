@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,10 +29,11 @@ import java.util.stream.Stream;
 
 public class Register extends AppCompatActivity {
 
-    EditText mName, mLogin, mEmail, mPassword, mPasswordRepeated;
+    EditText mName, mEmail, mPassword, mPasswordRepeated;
     Button mRegisterBtn;
-    ProgressBar progressBar;
+    ProgressBar mProgressBar;
     FirebaseAuth mFirebaseAuth;
+    TextView mLogIn;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -41,11 +43,11 @@ public class Register extends AppCompatActivity {
 
         mName = findViewById(R.id.clientName);
         mEmail = findViewById(R.id.clientEmail);
-        mLogin = findViewById(R.id.clientLogin);
         mPassword = findViewById(R.id.clientPassword);
         mPasswordRepeated = findViewById(R.id.clientPasswordRepeated);
         mRegisterBtn = findViewById(R.id.register);
-        progressBar = findViewById(R.id.progressBarRegister);
+        mProgressBar = findViewById(R.id.progressBarRegister);
+        mLogIn = findViewById(R.id.logIn);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
@@ -61,6 +63,7 @@ public class Register extends AppCompatActivity {
         mRegisterBtn.setOnClickListener(view -> {
             register();
         });
+        mLogIn.setOnClickListener(view -> startActivity(new Intent(this, Login.class)));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -88,7 +91,7 @@ public class Register extends AppCompatActivity {
 
         if (emailFilled && isValid(password)) {
             System.out.println("IN SUBMITTING");
-            progressBar.setVisibility(View.VISIBLE);
+            mProgressBar.setVisibility(View.VISIBLE);
 
             mFirebaseAuth.createUserWithEmailAndPassword(eMail, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -99,6 +102,7 @@ public class Register extends AppCompatActivity {
                     }
                     else {
                         Toast.makeText(Register.this, "An error occurred: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        mProgressBar.setVisibility(View.GONE);
                     }
                 }
             });

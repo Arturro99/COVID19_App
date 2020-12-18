@@ -54,23 +54,6 @@
         android:fontFamily="@font/aclonica"/>
 
     <EditText
-        android:id="@+id/clientLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Login"
-        android:textColor="@android:color/white"
-        android:background="@android:color/black"
-        android:textSize="15sp"
-        android:padding="10dp"
-        android:layout_marginStart="20sp"
-        android:layout_marginEnd="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clientName"
-        app:layout_constraintVertical_bias="0.05"
-        android:textColorHint="@android:color/white"
-        android:fontFamily="@font/aclonica"/>
-
-    <EditText
         android:id="@+id/clientEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -83,7 +66,7 @@
         android:layout_marginStart="20sp"
         android:layout_marginEnd="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clientLogin"
+        app:layout_constraintTop_toBottomOf="@+id/clientName"
         app:layout_constraintVertical_bias="0.05"
         android:textColorHint="@android:color/white"
         android:fontFamily="@font/aclonica"/>
