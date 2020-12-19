@@ -68,16 +68,14 @@ public class Register extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private boolean register() {
-        System.out.println("IN REGISTRATION");
-        boolean emailFilled = false;
 
         String eMail = mEmail.getText().toString().trim();
         String password = mPassword.getText().toString().trim();
 
-        if (TextUtils.isEmpty(eMail))
+        if (TextUtils.isEmpty(eMail)) {
             mEmail.setError("You need to specify e-mail");
-        else
-            emailFilled = true;
+            return false;
+        }
 
 
         if (!isValid(password)) {
@@ -87,28 +85,22 @@ public class Register extends AppCompatActivity {
                     "\nat least one lowercase letter" +
                     "\nat least one digit" +
                     "\nat least one non-alphabetic symbol");
+            return false;
         }
 
-        if (emailFilled && isValid(password)) {
-            System.out.println("IN SUBMITTING");
             mProgressBar.setVisibility(View.VISIBLE);
 
-            mFirebaseAuth.createUserWithEmailAndPassword(eMail, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(Register.this, "User created successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    }
-                    else {
-                        Toast.makeText(Register.this, "An error occurred: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        mProgressBar.setVisibility(View.GONE);
-                    }
+            mFirebaseAuth.createUserWithEmailAndPassword(eMail, password).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Toast.makeText(Register.this, "User created successfully", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                }
+                else {
+                    Toast.makeText(Register.this, "An error occurred: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                    mProgressBar.setVisibility(View.GONE);
                 }
             });
             return true;
-        }
-        return false;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -117,12 +109,11 @@ public class Register extends AppCompatActivity {
         Predicate<String> rule2a = s -> !s.equals(s.toLowerCase());
         Predicate<String> rule2b = s -> !s.equals(s.toUpperCase());
         Predicate<String> rule2c = s -> s.codePoints().anyMatch(Character::isDigit);
-        Predicate<String> rule2d = s -> s.codePoints().anyMatch(Character::isAlphabetic);
+        Predicate<String> rule2d = s -> s.matches(".*^[A-Za-z0-9 ].*");
         Predicate<String> rule2 = s -> Stream.of(rule2a, rule2b, rule2c, rule2d)
                                                 .filter(x -> x.test(s))
-                                                .count() >= 3;
+                                                .count() >= 4;
 
-        System.out.println("IN PWD VALIDATION");
         return rule1.and(rule2).test(pwd);
     }
 }
