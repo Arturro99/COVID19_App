@@ -1,10 +1,15 @@
 package com.mobilki.covidapp;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.Group;
+import androidx.core.view.ViewCompat;
 
 import android.os.Bundle;
+import android.transition.Explode;
+import android.transition.Transition;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
@@ -39,11 +44,20 @@ public class HealthDataActivity extends AppCompatActivity {
     Group sleepGroup;
     Group waterGroup;
 
+    TextView title;
+
     SimpleDateFormat sdf;
     Calendar calendar;
+    public static final String VIEW_NAME_HEADER_TITLE = "activity:header:title";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        getWindow().setExitTransition(new Explode());
+//        getWindow().setAllowEnterTransitionOverlap(true);
+//        getWindow().setAllowReturnTransitionOverlap(true);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_health_data);
 
         nextDayWeightBtn = findViewById(R.id.nextDayWeightBtn);
@@ -70,6 +84,8 @@ public class HealthDataActivity extends AppCompatActivity {
         sleepGroup = findViewById(R.id.sleepGroup);
         waterGroup = findViewById(R.id.waterGroup);
 
+        title = findViewById(R.id.titleaaaa);
+        ViewCompat.setTransitionName(title, VIEW_NAME_HEADER_TITLE);
         sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         String currentDate = sdf.format(new Date());
         calendar = Calendar.getInstance();
@@ -82,7 +98,7 @@ public class HealthDataActivity extends AppCompatActivity {
         stepDate.setText(currentDate);
         sleepDate.setText(currentDate);
         waterDate.setText(currentDate);
-
+//        addTransitionListener();
         start();
     }
 
@@ -131,4 +147,52 @@ public class HealthDataActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Try and add a {@link Transition.TransitionListener} to the entering shared element
+     * {@link Transition}. We do this so that we can load the full-size image after the transition
+     * has completed.
+     *
+     * @return true if we were successful in adding a listener to the enter transition
+     */
+    @RequiresApi(21)
+    private boolean addTransitionListener() {
+        final Transition transition = getWindow().getSharedElementEnterTransition();
+
+        if (transition != null) {
+            // There is an entering shared element transition so add a listener to it
+            transition.addListener(new Transition.TransitionListener() {
+                @Override
+                public void onTransitionEnd(Transition transition) {
+                    // As the transition has ended, we can now load the full-size image
+                    // Make sure we remove ourselves as a listener
+                    transition.removeListener(this);
+                }
+
+                @Override
+                public void onTransitionStart(Transition transition) {
+                    // No-op
+                }
+
+                @Override
+                public void onTransitionCancel(Transition transition) {
+                    // Make sure we remove ourselves as a listener
+                    transition.removeListener(this);
+                }
+
+                @Override
+                public void onTransitionPause(Transition transition) {
+                    // No-op
+                }
+
+                @Override
+                public void onTransitionResume(Transition transition) {
+                    // No-op
+                }
+            });
+            return true;
+        }
+
+        // If we reach here then we have not added a listener
+        return false;
+    }
 }

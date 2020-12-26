@@ -3,8 +3,10 @@ package com.mobilki.covidapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -22,9 +24,13 @@ public class MainActivity extends AppCompatActivity {
 
     TextView curiosities;
 
+    SharedPreferences settings;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
         healthBtn = findViewById(R.id.healthBtn);
@@ -34,12 +40,23 @@ public class MainActivity extends AppCompatActivity {
         mLogoutBtn = findViewById(R.id.logout);
 
         curiosities = findViewById(R.id.mainCuriositiesTxt);
-
+        settings = getSharedPreferences(getResources().getString(R.string.shared_preferences),0);
         start();
     }
 
     private void start() {
-        healthBtn.setOnClickListener(view -> startActivity(new Intent(this, Register.class)));
+        healthBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (settings.getBoolean("first_time_health", true)) {
+                    startActivity(new Intent(MainActivity.this, HealthForm.class));
+                }
+                else {
+                    startActivity(new Intent(MainActivity.this, HealthActivity.class));
+                }
+            }
+        });
+//        healthBtn.setOnClickListener(view -> startActivity(new Intent(this, HealthActivity.class)));
         entertainmentBtn.setOnClickListener(view -> startActivity(new Intent(this, EntertainmentActivity.class)));
     }
 

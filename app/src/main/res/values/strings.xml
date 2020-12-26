@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">CovidApp</string>
+    <!--SharedPreferences-->
+    <string name="shared_preferences">CovidAppPref</string>
+
 
     <!-- Main Activity   -->
     <string name="health_panel">Zdrowie</string>

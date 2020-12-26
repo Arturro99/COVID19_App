@@ -1,9 +1,17 @@
 package com.mobilki.covidapp;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.Transition;
+import android.util.Pair;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 
 public class HealthActivity extends AppCompatActivity {
@@ -16,6 +24,8 @@ public class HealthActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_health);
 
         exerciseSetBtn = findViewById(R.id.exerciseSetBtn);
@@ -27,7 +37,9 @@ public class HealthActivity extends AppCompatActivity {
     }
 
     private void start() {
-
-        addDataBtn.setOnClickListener(view -> startActivity(new Intent(this, HealthDataActivity.class)));
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(HealthActivity.this, findViewById(R.id.textView3), HealthDataActivity.VIEW_NAME_HEADER_TITLE);
+        addDataBtn.setOnClickListener(view -> ActivityCompat.startActivity(HealthActivity.this, new Intent(HealthActivity.this, HealthDataActivity.class), options.toBundle()));
     }
+
+
 }
