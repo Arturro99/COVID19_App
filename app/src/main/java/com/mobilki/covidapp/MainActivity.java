@@ -2,6 +2,7 @@ package com.mobilki.covidapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,8 +14,15 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.mobilki.covidapp.authentication.Login;
 import com.mobilki.covidapp.authentication.Register;
+
+import javax.annotation.Nullable;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     Button resendVerification;
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
+    FirebaseFirestore firestore;
 
     SharedPreferences settings;
 
@@ -48,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         settings = getSharedPreferences(getResources().getString(R.string.shared_preferences),0);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        firestore = FirebaseFirestore.getInstance();
         resendVerification = findViewById(R.id.resendVerification);
         resendVerificationTxt = findViewById(R.id.resendVerificationTxt);
         user = firebaseAuth.getCurrentUser();
@@ -55,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         start();
     }
 
+    @SuppressLint("SetTextI18n")
     private void start() {
         healthBtn.setOnClickListener(view -> {
             if (user.isEmailVerified()) {
@@ -87,6 +98,15 @@ public class MainActivity extends AppCompatActivity {
                 assert user != null;
                 user.sendEmailVerification().addOnSuccessListener(aVoid -> Toast.makeText(getApplicationContext(), "E-mail sent successfully", Toast.LENGTH_SHORT).show())
                         .addOnFailureListener(aVoid -> Toast.makeText(getApplicationContext(), "E-mail not sent (" + aVoid.getMessage() +")", Toast.LENGTH_SHORT).show());
+            });
+        }
+        else {
+            DocumentReference documentReference = firestore.collection("users").document(user.getUid());
+            documentReference.addSnapshotListener(this, (documentSnapshot, e) -> {
+                if (documentSnapshot != null)
+                    curiosities.setText("Hello, " + documentSnapshot.getString("name"));
+                else
+                    curiosities.setText("Hello, unknown");
             });
         }
     }

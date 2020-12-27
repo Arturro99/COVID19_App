@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,9 +22,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.mobilki.covidapp.MainActivity;
 import com.mobilki.covidapp.R;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,6 +40,8 @@ public class Register extends AppCompatActivity {
     Button mRegisterBtn;
     ProgressBar mProgressBar;
     FirebaseAuth mFirebaseAuth;
+    FirebaseFirestore mFirestore;
+    String userId;
     TextView mLogIn;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -52,6 +59,7 @@ public class Register extends AppCompatActivity {
         mLogIn = findViewById(R.id.logIn);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirestore = FirebaseFirestore.getInstance();
 
         if (mFirebaseAuth.getCurrentUser() != null) {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
@@ -73,6 +81,8 @@ public class Register extends AppCompatActivity {
 
         String eMail = mEmail.getText().toString().trim();
         String password = mPassword.getText().toString().trim();
+        String passwordRepeated = mPasswordRepeated.getText().toString().trim();
+        String name = mName.getText().toString();
 
         if (TextUtils.isEmpty(eMail)) {
             mEmail.setError("You need to specify e-mail");
@@ -90,6 +100,11 @@ public class Register extends AppCompatActivity {
             return false;
         }
 
+        if (!password.equals(passwordRepeated)) {
+            mPasswordRepeated.setError("Provided passwords do not match");
+            return false;
+        }
+
             mProgressBar.setVisibility(View.VISIBLE);
 
             mFirebaseAuth.createUserWithEmailAndPassword(eMail, password).addOnCompleteListener(task -> {
@@ -99,6 +114,13 @@ public class Register extends AppCompatActivity {
                     assert fUser != null;
                     fUser.sendEmailVerification().addOnSuccessListener(aVoid -> Toast.makeText(Register.this, "E-mail sent successfully", Toast.LENGTH_SHORT).show())
                             .addOnFailureListener(aVoid -> Toast.makeText(Register.this, "E-mail not sent (" + aVoid.getMessage() +")", Toast.LENGTH_SHORT).show());
+
+                    userId = fUser.getUid();
+                    DocumentReference documentReference = mFirestore.collection("users").document(userId);
+                    Map<String, Object> user = new HashMap<>();
+                    user.put("name", name);
+                    user.put("email", eMail);
+                    documentReference.set(user).addOnSuccessListener(aVoid -> Log.d("SS", "Profile updated for" + userId));
 
                     Toast.makeText(Register.this, "User created successfully", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
