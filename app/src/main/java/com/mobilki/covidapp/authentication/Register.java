@@ -16,9 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.mobilki.covidapp.MainActivity;
 import com.mobilki.covidapp.R;
 
@@ -92,6 +94,12 @@ public class Register extends AppCompatActivity {
 
             mFirebaseAuth.createUserWithEmailAndPassword(eMail, password).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
+
+                    FirebaseUser fUser = mFirebaseAuth.getCurrentUser();
+                    assert fUser != null;
+                    fUser.sendEmailVerification().addOnSuccessListener(aVoid -> Toast.makeText(Register.this, "E-mail sent successfully", Toast.LENGTH_SHORT).show())
+                            .addOnFailureListener(aVoid -> Toast.makeText(Register.this, "E-mail not sent (" + aVoid.getMessage() +")", Toast.LENGTH_SHORT).show());
+
                     Toast.makeText(Register.this, "User created successfully", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 }
