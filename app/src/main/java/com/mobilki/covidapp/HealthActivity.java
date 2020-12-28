@@ -34,6 +34,7 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
 
     public static final int SWIPE_THRESHOLD = 100;
     public static final int SWIPE_VELOCITY_THRESHOLD = 100;
+    public static final int DURATION_MILLIS = 500;
     Button exerciseSetBtn;
     Button addDataBtn;
     Button notificationsSettingsBtn;
@@ -41,6 +42,7 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     BarChart barChart;
     BarDataSet barDataSet;
     BarData barData;
+    private GestureDetector gestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,52 +57,15 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         preferencesBtn = findViewById(R.id.healthPreferencesBtn);
         barChart = findViewById(R.id.barchart);
 
-
         InitBarChart();
-
 
         exerciseSetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ArrayList<BarEntry> entries = new ArrayList<>();
-                entries.add(new BarEntry(0f, 121));
-                entries.add(new BarEntry(1f, 121));
-                entries.add(new BarEntry(2f, 221));
-                entries.add(new BarEntry(3f, 321));
-                entries.add(new BarEntry(4f, 100));
-                entries.add(new BarEntry(5f, 121));
-                entries.add(new BarEntry(6f, 221));
 
-                barDataSet.setValues(entries);
-
-                barData = new BarData(barDataSet);
-
-
-                String[] labels = {"21-11", "22-11", "23-11", "24-11", "25-11", "26-11", "27-11"};
-                XAxis xAxis = barChart.getXAxis();
-//                xAxis.disableGridDashedLine();
-//                xAxis.disableAxisLineDashedLine();
-////                xAxis.setDrawAxisLine(false);
-//                xAxis.setDrawGridLinesBehindData(false);
-//                xAxis.setDrawGridLines(false);
-                xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
-
-
-//                YAxis yAxis = barChart.getAxisLeft();
-//                yAxis.disableAxisLineDashedLine();
-//                yAxis.disableGridDashedLine();
-////                yAxis.setDrawAxisLine(false);
-////                yAxis.setDrawGridLinesBehindData(false);
-////                yAxis.setDrawGridLines(false);
-
-
-                barChart.setData(barData);
-                barChart.setPaddingRelative(0,0,0,100);
-                barChart.animateXY(500, 500);
-                barChart.invalidate();
             }
         });
-
+        gestureDetector = new GestureDetector(this);
         start();
     }
 
@@ -138,46 +103,31 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         barChart.getAxisLeft().setAxisMinimum(0f);
 
 
-
-        barChart.animateXY(500, 500);
+        barChart.animateXY(DURATION_MILLIS, DURATION_MILLIS);
     }
 
     private void start() {
         //ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(HealthActivity.this, findViewById(R.id.textView3), HealthDataActivity.VIEW_NAME_HEADER_TITLE);
         addDataBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, HealthDataActivity.class)));
 
-        ArrayList<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0f, 4021));
-        entries.add(new BarEntry(1f, 3021));
-        entries.add(new BarEntry(2f, 2021));
-        entries.add(new BarEntry(3f, 5021));
-        entries.add(new BarEntry(4f, 6021));
-        entries.add(new BarEntry(5f, 2021));
-        entries.add(new BarEntry(6f, 3021));
-
-        barDataSet.setValues(entries);
-        barData = new BarData(barDataSet);
-
-        String[] labels = {"11-11", "12-11", "13-11", "14-11", "15-11", "16-11", "17-11"};
-        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
-
-        barChart.setData(barData);
+        onSwipeLeft();
     }
 
 
 
     @Override
     public boolean onFling(MotionEvent downEvent, MotionEvent moveEvent, float velocityX, float velocityY) {
-        float diffY = moveEvent.getY() - downEvent.getY();
         float diffX = moveEvent.getX() - downEvent.getX();
 
         //right or left swipe
-        if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+        if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD && downEvent.getY() > 160 && downEvent.getY() < 800) {
             if (diffX > 0) {
                 onSwipeRight();
             } else {
                 onSwipeLeft();
             }
+            System.out.println("aa" + moveEvent.getY() + "  " + downEvent.getY());
+            return true;
         }
 
 
@@ -187,11 +137,49 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     }
 
     private void onSwipeLeft() {
+        ArrayList<BarEntry> entries = new ArrayList<>();
+        entries.add(new BarEntry(0f, 4021));
+        entries.add(new BarEntry(1f, 3021));
+        entries.add(new BarEntry(2f, 2021));
+        entries.add(new BarEntry(3f, 5021));
+        entries.add(new BarEntry(4f, 6021));
+        entries.add(new BarEntry(5f, 2021));
+        entries.add(new BarEntry(6f, 3021));
 
+        String[] labels = {"11-11", "12-11", "13-11", "14-11", "15-11", "16-11", "17-11"};
+        setBarChart(entries, labels);
     }
 
     private void onSwipeRight() {
+        ArrayList<BarEntry> entries = new ArrayList<>();
+        entries.add(new BarEntry(0f, 121));
+        entries.add(new BarEntry(1f, 121));
+        entries.add(new BarEntry(2f, 221));
+        entries.add(new BarEntry(3f, 321));
+        entries.add(new BarEntry(4f, 100));
+        entries.add(new BarEntry(5f, 121));
+        entries.add(new BarEntry(6f, 221));
 
+        String[] labels = {"21-11", "22-11", "23-11", "24-11", "25-11", "26-11", "27-11"};
+        setBarChart(entries, labels);
+    }
+
+    public void setBarChart(ArrayList<BarEntry> entries, String[] labels) {
+        barDataSet.setValues(entries);
+        barData = new BarData(barDataSet);
+
+        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
+
+        barChart.setData(barData);
+        barChart.animateXY(DURATION_MILLIS, DURATION_MILLIS);
+        barChart.invalidate();
+    }
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        gestureDetector.onTouchEvent(event);
+        return super.onTouchEvent(event);
     }
 
     @Override
