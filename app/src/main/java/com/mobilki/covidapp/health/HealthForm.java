@@ -1,11 +1,12 @@
-package com.mobilki.covidapp;
+package com.mobilki.covidapp.health;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 
 import androidx.annotation.Nullable;
+
+import com.mobilki.covidapp.R;
 
 public class HealthForm extends Activity {
     @Override

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#03A9F4"
-    tools:context=".HealthActivity">
+    tools:context=".health.HealthActivity">
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/barchart"
@@ -23,10 +23,16 @@
 
     <Button
         android:id="@+id/exerciseSetBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:text="@string/exercises_set_panel"
         android:textSize="30sp"
+        android:background="@drawable/green_btn"
+
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="210dp"
+        android:layout_marginTop="350dp"
+        android:layout_marginBottom="220dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,10 +41,17 @@
 
     <Button
         android:id="@+id/addDataBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:text="@string/add_data_panel"
         android:textSize="30sp"
+
+        android:background="@drawable/green_btn"
+        android:layout_marginStart="210dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="350dp"
+        android:layout_marginBottom="220dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,10 +60,17 @@
 
     <Button
         android:id="@+id/healthPreferencesBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:text="@string/preferences_panel"
-        android:textSize="30sp"
+        android:textSize="24sp"
+
+        android:background="@drawable/green_btn"
+        android:layout_marginStart="210dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="530dp"
+        android:layout_marginBottom="40dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,26 +79,22 @@
 
     <Button
         android:id="@+id/healthNotificationsSettingsBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:text="@string/notifications_settings_panel"
-        android:textSize="30sp"
+        android:textSize="24sp"
+
+        android:background="@drawable/green_btn"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="210dp"
+        android:layout_marginTop="530dp"
+        android:layout_marginBottom="40dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.80" />
 
-    <Button
-        android:id="@+id/entertainmentPreferencesBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/preferences_panel"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/healthPreferencesBtn"
-        app:layout_constraintVertical_bias="0.2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,5 @@
 package com.mobilki.covidapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,9 +8,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.mobilki.covidapp.authentication.Login;
-import com.mobilki.covidapp.authentication.Register;
+import com.mobilki.covidapp.health.HealthActivity;
+import com.mobilki.covidapp.health.HealthForm;
 
 public class MainActivity extends AppCompatActivity {
 
