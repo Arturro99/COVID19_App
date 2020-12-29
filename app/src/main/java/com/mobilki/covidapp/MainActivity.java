@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -20,7 +22,8 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.mobilki.covidapp.authentication.Login;
-import com.mobilki.covidapp.authentication.Register;
+import com.mobilki.covidapp.health.HealthActivity;
+import com.mobilki.covidapp.health.HealthForm;
 
 import javax.annotation.Nullable;
 

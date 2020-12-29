@@ -23,9 +23,9 @@
         <activity android:name=".exceptions.BookDetailsActivity" />
         <activity android:name=".EntertainmentSettingsActivity" />
         <activity android:name=".FilmDetailsActivity" />
-        <activity android:name=".HealthDataActivity" />
+        <activity android:name=".health.HealthDataActivity" />
         <activity android:name=".EntertainmentActivity" />
-        <activity android:name=".HealthActivity"/>
+        <activity android:name=".health.HealthActivity"/>
         <activity android:name=".MainActivity">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -33,7 +33,7 @@
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
 <!--            </intent-filter>-->
         </activity>
-        <activity android:name=".HealthForm" android:theme="@android:style/Theme.Translucent.NoTitleBar">
+        <activity android:name=".health.HealthForm" android:theme="@android:style/Theme.Translucent.NoTitleBar">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 

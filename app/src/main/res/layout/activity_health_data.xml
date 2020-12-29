@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HealthDataActivity">
+    tools:context=".health.HealthDataActivity">
 
     <Switch
         android:id="@+id/waterDrunkSwitch"
@@ -13,22 +13,10 @@
         android:text="@string/water_drunk_switch"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintVertical_bias="0.85"/>
-
-    <Switch
-        android:id="@+id/currentWeightSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/current_weight_switch"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintVertical_bias="0.85" />
 
     <Switch
         android:id="@+id/stepCounterSwitch"
@@ -56,26 +44,26 @@
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintVertical_bias="0.6"/>
 
-<androidx.constraintlayout.widget.Group
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/weightGroup"
-    app:constraint_referenced_ids="previousDayWeightBtn, nextDayWeightBtn, currentWeightDate,
-    currentWeightValue, desiredWeightTxt, desiredWeightValue"
-    android:visibility="invisible"/>
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/weightGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="previousDayWeightBtn, nextDayWeightBtn, currentWeightDate,
+    currentWeightValue, desiredWeightTxt, desiredWeightValue" />
 
     <ImageButton
         android:id="@+id/previousDayWeightBtn"
         android:layout_width="28dp"
         android:layout_height="26dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="21dp"
         android:background="@drawable/left_arrow"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toTopOf="@+id/stepCounterSwitch"
-        app:layout_constraintEnd_toEndOf="@+id/currentWeightSwitch"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentWeightSwitch"
-        app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintVertical_bias="0.7"/>
+        app:layout_constraintTop_toBottomOf="@+id/currentWeightValue"
+        app:layout_constraintVertical_bias="0.044" />
 
     <TextView
         android:id="@+id/currentWeightDate"
@@ -83,22 +71,22 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/stepCounterSwitch"
         app:layout_constraintEnd_toStartOf="@+id/nextDayWeightBtn"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toEndOf="@+id/previousDayWeightBtn"
-        app:layout_constraintTop_toBottomOf="@+id/currentWeightSwitch"
-        app:layout_constraintVertical_bias="0.7"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.81" />
 
     <ImageButton
         android:id="@+id/nextDayWeightBtn"
         android:layout_width="28dp"
         android:layout_height="26dp"
+        android:layout_marginEnd="264dp"
         android:background="@drawable/right_arrow"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toTopOf="@+id/stepCounterSwitch"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/currentWeightSwitch"
-        app:layout_constraintTop_toBottomOf="@+id/currentWeightSwitch"
-        app:layout_constraintHorizontal_bias="0.3"
-        app:layout_constraintVertical_bias="0.7"/>
+        app:layout_constraintTop_toBottomOf="@+id/currentWeightValue"
+        app:layout_constraintVertical_bias="0.363" />
 
     <EditText
         android:id="@+id/currentWeightValue"
@@ -109,8 +97,10 @@
         android:text="200"
         app:layout_constraintBottom_toTopOf="@+id/currentWeightDate"
         app:layout_constraintEnd_toStartOf="@+id/nextDayWeightBtn"
+        app:layout_constraintHorizontal_bias="0.351"
         app:layout_constraintStart_toEndOf="@+id/previousDayWeightBtn"
-        app:layout_constraintTop_toBottomOf="@+id/currentWeightSwitch" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.784" />
 
     <EditText
         android:id="@+id/desiredWeightValue"
@@ -121,9 +111,10 @@
         android:text="200"
         app:layout_constraintBottom_toTopOf="@+id/currentWeightDate"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.908"
         app:layout_constraintStart_toEndOf="@+id/currentWeightValue"
-        app:layout_constraintTop_toBottomOf="@+id/currentWeightSwitch"
-        app:layout_constraintHorizontal_bias="0.9"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.834" />
 
     <TextView
         android:id="@+id/desiredWeightTxt"
@@ -133,16 +124,17 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/currentWeightDate"
         app:layout_constraintEnd_toStartOf="@+id/desiredWeightValue"
+        app:layout_constraintHorizontal_bias="0.775"
         app:layout_constraintStart_toEndOf="@+id/currentWeightValue"
-        app:layout_constraintTop_toBottomOf="@+id/currentWeightSwitch"
-        app:layout_constraintHorizontal_bias="0.8"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.808" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/stepGroup"
         android:layout_width="2dp"
         android:layout_height="2dp"
-        android:visibility="invisible"
-        app:constraint_referenced_ids="previousDayStepBtn, nextDayStepBtn, stepCounterDate" />
+        android:visibility="visible"
+        app:constraint_referenced_ids="previousDayStepBtn, nextDayStepBtn, stepCounterDate,currentStepsValue" />
 
 
     <ImageButton
@@ -182,13 +174,25 @@
         app:layout_constraintVertical_bias="0.7"/>
 
 
+    <EditText
+        android:id="@+id/currentStepsValue"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="296dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text="200"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.constraintlayout.widget.Group
+        android:id="@+id/sleepGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/sleepGroup"
+        android:visibility="visible"
         app:constraint_referenced_ids="previousDaySleepBtn, nextDaySleepBtn, sleepMeasuringDate,
-        currentSleepValue, desiredSleepTxt, desiredSleepValue"
-        android:visibility="invisible"/>
+        currentSleepValue, desiredSleepTxt, desiredSleepValue" />
 
 
     <ImageButton
@@ -267,12 +271,12 @@
 
 
     <androidx.constraintlayout.widget.Group
+        android:id="@+id/waterGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/waterGroup"
+        android:visibility="visible"
         app:constraint_referenced_ids="previousDayWaterBtn, nextDayWaterBtn, waterDrunkDate,
-        currentWaterValue, desiredWaterTxt, desiredWaterValue"
-        android:visibility="invisible"/>
+        currentWaterValue, desiredWaterTxt, desiredWaterValue" />
 
 
     <ImageButton
@@ -355,6 +359,16 @@
         android:layout_marginStart="178dp"
         android:layout_marginTop="25dp"
         android:text="Dodaj dane"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="256dp"
+        android:layout_marginTop="196dp"
+        android:text="Button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
