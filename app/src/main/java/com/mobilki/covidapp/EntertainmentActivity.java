@@ -3,6 +3,7 @@ package com.mobilki.covidapp;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
@@ -19,7 +20,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.mobilki.covidapp.api.*;
@@ -113,8 +113,8 @@ public class EntertainmentActivity extends AppCompatActivity {
 
         sharedPreferences = getApplication().getSharedPreferences("Prefs", Context.MODE_PRIVATE);
 
-        mToolbar = findViewById(R.id.entertainmentToolbar);
-        setActionBar(mToolbar);
+        mToolbar = findViewById(R.id.finalToolbar);
+        setSupportActionBar(mToolbar);
 
         notificationsSettingsBtn = findViewById(R.id.entertainmentNotificationsSettingsBtn);
         preferencesBtn = findViewById(R.id.entertainmentPreferencesBtn);

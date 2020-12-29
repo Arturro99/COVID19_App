@@ -5,16 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EntertainmentActivity">
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/finalToolbar"
+            layout="@layout/entertainment_toolbar"/>
 
         <TextView
             android:id="@+id/textViewMovies"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Filmy"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            android:layout_below="@id/finalToolbar"/>
 
         <HorizontalScrollView
             android:id="@+id/moviesScrollView"
