@@ -14,11 +14,11 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".authentication.Login"/>
         <activity android:name=".authentication.Register" >
-<!--            <intent-filter>
+               <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
         </activity>
         <activity android:name=".exceptions.BookDetailsActivity" />
         <activity android:name=".EntertainmentSettingsActivity" />
@@ -28,11 +28,11 @@
         <activity android:name=".health.HealthActivity"/>
         <activity android:name=".health.ExerciseSet"/>
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity android:name=".health.HealthForm" android:theme="@android:style/Theme.Translucent.NoTitleBar">
 <!--            <intent-filter>-->
