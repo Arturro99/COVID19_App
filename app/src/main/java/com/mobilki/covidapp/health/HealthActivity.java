@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -85,12 +84,7 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         dict.put(2, "Ilość snu [min]");
         dict.put(3, "Wypita woda [ml]");
 
-        exerciseSetBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
         gestureDetector = new GestureDetector(this);
         start();
     }
@@ -99,11 +93,11 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void start() {
+        exerciseSetBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, ExerciseSet.class)));
         //ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(HealthActivity.this, findViewById(R.id.textView3), HealthDataActivity.VIEW_NAME_HEADER_TITLE);
         addDataBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, HealthDataActivity.class)));
 
         setEntries();
-
     }
 
     @Override
