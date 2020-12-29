@@ -59,8 +59,6 @@ public class HealthDataActivity extends AppCompatActivity {
     SimpleDateFormat sdf;
     Calendar calendar;
     public static final String VIEW_NAME_HEADER_TITLE = "activity:header:title";
-    private FirebaseAuth mFirebaseAuth;
-    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,8 +134,8 @@ public class HealthDataActivity extends AppCompatActivity {
     }
 
     private void addToDb(String date, String value, Integer intValue) {
-        db = FirebaseFirestore.getInstance();
-        mFirebaseAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
         db.collection("users").document(mFirebaseAuth.getCurrentUser().getUid()).collection("health_data").document(date).set(new HashMap<String, Integer>()
         {
             {

@@ -2,6 +2,7 @@ package com.mobilki.covidapp.health;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -18,9 +20,18 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Source;
 import com.mobilki.covidapp.R;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class HealthActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
@@ -35,7 +46,15 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     BarDataSet barDataSet;
     BarData barData;
     private GestureDetector gestureDetector;
+    ArrayList<BarEntry> weightEntries;
+    ArrayList<BarEntry> stepsEntries;
+    ArrayList<BarEntry> sleepEntries;
+    ArrayList<BarEntry> waterEntries;
+    ArrayList<ArrayList<BarEntry>> entries;
+    int entry;
+    String[] labels;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +67,15 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         notificationsSettingsBtn = findViewById(R.id.healthNotificationsSettingsBtn);
         preferencesBtn = findViewById(R.id.healthPreferencesBtn);
         barChart = findViewById(R.id.barchart);
-
+        labels = new String[7];
         InitBarChart();
+        weightEntries = new ArrayList<>();
+        stepsEntries = new ArrayList<>();
+        sleepEntries = new ArrayList<>();
+        waterEntries = new ArrayList<>();
+        entries = new ArrayList<>();
+
+
 
         exerciseSetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,11 +124,13 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         barChart.animateXY(DURATION_MILLIS, DURATION_MILLIS);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void start() {
         //ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(HealthActivity.this, findViewById(R.id.textView3), HealthDataActivity.VIEW_NAME_HEADER_TITLE);
         addDataBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, HealthDataActivity.class)));
 
-        onSwipeLeft();
+        setEntries();
+
     }
 
 
@@ -110,7 +138,6 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     @Override
     public boolean onFling(MotionEvent downEvent, MotionEvent moveEvent, float velocityX, float velocityY) {
         float diffX = moveEvent.getX() - downEvent.getX();
-
         //right or left swipe
         if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD && downEvent.getY() > 160 && downEvent.getY() < 800) {
             if (diffX > 0) {
@@ -118,42 +145,178 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
             } else {
                 onSwipeLeft();
             }
-            System.out.println("aa" + moveEvent.getY() + "  " + downEvent.getY());
             return true;
         }
-
-
-
-
         return false;
     }
 
     private void onSwipeLeft() {
-        ArrayList<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0f, 4021));
-        entries.add(new BarEntry(1f, 3021));
-        entries.add(new BarEntry(2f, 2021));
-        entries.add(new BarEntry(3f, 5021));
-        entries.add(new BarEntry(4f, 6021));
-        entries.add(new BarEntry(5f, 2021));
-        entries.add(new BarEntry(6f, 3021));
-
-        String[] labels = {"11-11", "12-11", "13-11", "14-11", "15-11", "16-11", "17-11"};
-        setBarChart(entries, labels);
+        if (entry == 3)
+            entry = 0;
+        else
+            entry += 1;
+        setBarChart(entries.get(entry), labels);
     }
 
     private void onSwipeRight() {
-        ArrayList<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0f, 121));
-        entries.add(new BarEntry(1f, 121));
-        entries.add(new BarEntry(2f, 221));
-        entries.add(new BarEntry(3f, 321));
-        entries.add(new BarEntry(4f, 100));
-        entries.add(new BarEntry(5f, 121));
-        entries.add(new BarEntry(6f, 221));
+        if (entry == 0)
+            entry = 3;
+        else
+            entry -= 1;
+        setBarChart(entries.get(entry), labels);
+    }
 
-        String[] labels = {"21-11", "22-11", "23-11", "24-11", "25-11", "26-11", "27-11"};
-        setBarChart(entries, labels);
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void setEntries() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        Instant firstDay = Instant.now().minus(6, ChronoUnit.DAYS);
+        Date myDate = Date.from(firstDay);
+        String formattedDate = sdf.format(myDate);
+        Source source = Source.SERVER;
+        for (int i = 0; i < 7; i++) {
+            DocumentReference docRef = db.collection("users").document(mFirebaseAuth.getCurrentUser().getUid()).collection("health_data").document(formattedDate);
+            int finalI = i;
+/*            db.collection("users").document(mFirebaseAuth.getCurrentUser().getUid()).collection("health_data").document("28-12-2020").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    System.out.println("jestem");
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Log.d("DocSnippets", "DocumentSnapshot data: " + document.getData());
+                            if (document.contains("weight")) {
+                                weightEntries.add(new BarEntry(finalI, (Integer) document.get("weight")));
+                            } else {
+                                weightEntries.add(new BarEntry(finalI, 0));
+                            }
+                            if (document.contains("steps")) {
+                                stepsEntries.add(new BarEntry(finalI, (Integer) document.get("steps")));
+                            } else {
+                                stepsEntries.add(new BarEntry(finalI, 0));
+                            }
+                            if (document.contains("sleep")) {
+                                sleepEntries.add(new BarEntry(finalI, (Integer) document.get("sleep")));
+                            } else {
+                                sleepEntries.add(new BarEntry(finalI, 0));
+                            }
+                            if (document.contains("water")) {
+                                waterEntries.add(new BarEntry(finalI, (Integer) document.get("water")));
+                            } else {
+                                waterEntries.add(new BarEntry(finalI, 0));
+                            }
+                            System.out.println("dziala");
+                        } else {
+                            System.out.println("dziala ale nie");
+                            Log.d("DocSnippets", "No such document");
+                            weightEntries.add(new BarEntry(finalI, 0));
+                            stepsEntries.add(new BarEntry(finalI, 0));
+                            sleepEntries.add(new BarEntry(finalI, 0));
+                            waterEntries.add(new BarEntry(finalI, 0));
+                        }
+                    } else {
+                        System.out.println("nie dziala");
+                        Log.d("DocSnippets", "get failed with ", task.getException());
+                    }
+                }
+            });*/
+
+/*            db.collection("users").document(mFirebaseAuth.getCurrentUser().getUid()).collection("health_data").document("28-12-2020").get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                System.out.println("jestem");
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        //Log.d("DocSnippets", "DocumentSnapshot data: " + document.getData());
+                        if (document.contains("weight")) {
+                            weightEntries.add(new BarEntry(finalI, (Integer) document.get("weight")));
+                        } else {
+                            weightEntries.add(new BarEntry(finalI, 0));
+                        }
+                        if (document.contains("steps")) {
+                            stepsEntries.add(new BarEntry(finalI, (Integer) document.get("steps")));
+                        } else {
+                            stepsEntries.add(new BarEntry(finalI, 0));
+                        }
+                        if (document.contains("sleep")) {
+                            sleepEntries.add(new BarEntry(finalI, (Integer) document.get("sleep")));
+                        } else {
+                            sleepEntries.add(new BarEntry(finalI, 0));
+                        }
+                        if (document.contains("water")) {
+                            waterEntries.add(new BarEntry(finalI, (Integer) document.get("water")));
+                        } else {
+                            waterEntries.add(new BarEntry(finalI, 0));
+                        }
+                        System.out.println("dziala");
+                    } else {
+                        System.out.println("dziala ale nie");
+                        //Log.d("DocSnippets", "No such document");
+                        weightEntries.add(new BarEntry(finalI, 0));
+                        stepsEntries.add(new BarEntry(finalI, 0));
+                        sleepEntries.add(new BarEntry(finalI, 0));
+                        waterEntries.add(new BarEntry(finalI, 0));
+                    }
+                } else {
+                    System.out.println("nie dziala");
+                    //Log.d("DocSnippets", "get failed with ", task.getException());
+                }
+            }
+            });*/
+
+
+            docRef.get().addOnSuccessListener(document -> {
+                if (document.exists()) {
+                    System.out.println("Ok documentXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+                    if (document.contains("weight")) {
+                        weightEntries.add(new BarEntry(finalI, Integer.parseInt(document.getLong("weight").toString())));
+                    } else {
+                        weightEntries.add(new BarEntry(finalI, 0));
+                    }
+                    if (document.contains("steps")) {
+                        stepsEntries.add(new BarEntry(finalI, Integer.parseInt(document.getLong("steps").toString())));
+                    } else {
+                        stepsEntries.add(new BarEntry(finalI, 0));
+                    }
+                    if (document.contains("sleep")) {
+                        sleepEntries.add(new BarEntry(finalI, Integer.parseInt(document.getLong("sleep").toString())));
+                    } else {
+                        sleepEntries.add(new BarEntry(finalI, 0));
+                    }
+                    if (document.contains("water")) {
+                        waterEntries.add(new BarEntry(finalI, Integer.parseInt(document.getLong("water").toString())));
+                    } else {
+                        waterEntries.add(new BarEntry(finalI, 0));
+                    }
+
+                } else {
+                        System.out.println("No such documentXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+                        weightEntries.add(new BarEntry(finalI, 0));
+                        stepsEntries.add(new BarEntry(finalI, 0));
+                        sleepEntries.add(new BarEntry(finalI, 0));
+                        waterEntries.add(new BarEntry(finalI, 0));
+                }
+                if (finalI == 6) {
+                    entries.add(weightEntries);
+                    entries.add(stepsEntries);
+                    entries.add(sleepEntries);
+                    entries.add(waterEntries);
+                    setBarChart(stepsEntries, labels);
+                    entry = 1;
+                }
+            }).addOnFailureListener(e -> {
+                System.out.println(e.toString());
+                System.out.println("No Noooo NOOOO documentXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+            });
+            labels[i] = formattedDate.substring(0, 5);
+            firstDay = firstDay.plus(1, ChronoUnit.DAYS);
+            myDate = Date.from(firstDay);
+            formattedDate = sdf.format(myDate);
+
+
+        }
     }
 
     public void setBarChart(ArrayList<BarEntry> entries, String[] labels) {
