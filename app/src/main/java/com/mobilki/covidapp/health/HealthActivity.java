@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +32,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.Locale;
 
 public class HealthActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
@@ -51,8 +53,10 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     ArrayList<BarEntry> sleepEntries;
     ArrayList<BarEntry> waterEntries;
     ArrayList<ArrayList<BarEntry>> entries;
+    TextView healthBarChartTitle;
     int entry;
     String[] labels;
+    Hashtable<Integer, String> dict = new Hashtable<Integer, String>();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -74,8 +78,12 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         sleepEntries = new ArrayList<>();
         waterEntries = new ArrayList<>();
         entries = new ArrayList<>();
+        healthBarChartTitle = findViewById(R.id.healthBarChartTitle);
 
-
+        dict.put(0, "Waga [kg]");
+        dict.put(1, "Liczba kroków");
+        dict.put(2, "Ilość snu [min]");
+        dict.put(3, "Wypita woda [ml]");
 
         exerciseSetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +127,7 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         else
             entry += 1;
         setBarChart(entries.get(entry), labels);
+        healthBarChartTitle.setText(dict.get(entry));
     }
 
     private void onSwipeRight() {
@@ -127,6 +136,7 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         else
             entry -= 1;
         setBarChart(entries.get(entry), labels);
+        healthBarChartTitle.setText(dict.get(entry));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -178,6 +188,7 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
                     entries.add(waterEntries);
                     setBarChart(stepsEntries, labels);
                     entry = 1;
+                    healthBarChartTitle.setText(dict.get(1));
                 }
             }).addOnFailureListener(e -> System.err.println(e.toString()));
             labels[i] = formattedDate.substring(0, 5);
