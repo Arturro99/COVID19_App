@@ -26,6 +26,7 @@
         <activity android:name=".health.HealthDataActivity" />
         <activity android:name=".EntertainmentActivity" />
         <activity android:name=".health.HealthActivity"/>
+        <activity android:name=".health.ExerciseSet"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

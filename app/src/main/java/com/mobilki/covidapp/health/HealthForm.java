@@ -9,6 +9,12 @@ import androidx.annotation.Nullable;
 import com.mobilki.covidapp.R;
 
 public class HealthForm extends Activity {
+//    Boolean functionalLeg = false;
+//    Boolean functionalArm = false;
+//    Boolean functional = false;
+//    Boolean functional = false;
+//    Boolean functional = false;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
