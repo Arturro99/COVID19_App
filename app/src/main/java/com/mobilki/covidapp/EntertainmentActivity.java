@@ -1,6 +1,7 @@
 package com.mobilki.covidapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -23,10 +24,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.mobilki.covidapp.api.*;
 import com.mobilki.covidapp.api.customThreads.FilmByGenresSorter;
 import com.mobilki.covidapp.api.customThreads.FilmByValuesSorter;
 import com.mobilki.covidapp.api.customThreads.GenresSetter;
+import com.mobilki.covidapp.api.model.Game;
+import com.mobilki.covidapp.api.repository.GameRepository;
 import com.mobilki.covidapp.exceptions.BookDetailsActivity;
 import com.squareup.picasso.Picasso;
 
@@ -34,6 +47,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CountDownLatch;
 
 import lombok.SneakyThrows;
 
@@ -52,46 +66,64 @@ public class EntertainmentActivity extends AppCompatActivity {
 
 
     //FILMS
-    TextView []filmTitleList;
-    TextView []filmGenresList;
+    TextView[] filmTitleList;
+    TextView[] filmGenresList;
 
-    ImageButton []filmPhotosList;
+    ImageButton[] filmPhotosList;
 
-    TextView []filmDirectorList;
-    TextView []filmDirectorTxtList;
+    TextView[] filmDirectorList;
+    TextView[] filmDirectorTxtList;
 
-    TextView []filmReleaseYearList;
-    TextView []filmReleaseYearTxtList;
+    TextView[] filmReleaseYearList;
+    TextView[] filmReleaseYearTxtList;
 
-    TextView []filmDurationList;
-    TextView []filmDurationTxtList;
+    TextView[] filmDurationList;
+    TextView[] filmDurationTxtList;
 
-    TextView []filmRatingList;
-    TextView []filmRatingTxtList;
+    TextView[] filmRatingList;
+    TextView[] filmRatingTxtList;
 
-    ConstraintLayout []filmConstraintLayoutList;
+    ConstraintLayout[] filmConstraintLayoutList;
     /////////////////////////////////////////////////////////
 
     //BOOKS
-    TextView []bookTitleList;
-    TextView []bookGenresList;
+    TextView[] bookTitleList;
+    TextView[] bookGenresList;
 
-    ImageButton []bookPhotosList;
+    ImageButton[] bookPhotosList;
 
-    TextView []bookAuthorList;
-    TextView []bookAuthorTxtList;
+    TextView[] bookAuthorList;
+    TextView[] bookAuthorTxtList;
 
-    TextView []bookPublicationDateList;
-    TextView []bookPublicationDateTxtList;
+    TextView[] bookPublicationDateList;
+    TextView[] bookPublicationDateTxtList;
 
-    TextView []bookPagesList;
-    TextView []bookPagesTxtList;
+    TextView[] bookPagesList;
+    TextView[] bookPagesTxtList;
 
-    TextView []bookRatingList;
-    TextView []bookRatingTxtList;
+    TextView[] bookRatingList;
+    TextView[] bookRatingTxtList;
 
-    ConstraintLayout []bookConstraintLayoutList;
+    ConstraintLayout[] bookConstraintLayoutList;
     /////////////////////////////////////////////////////////////
+
+    //GAMES
+    TextView[] gameTitleList;
+    TextView[] gameGenresList;
+
+    ImageButton[] gamePhotosList;
+
+    TextView[] gamePlayersList;
+    TextView[] gamePlayersTxtList;
+
+    TextView[] gameAgeList;
+    TextView[] gameAgeTxtList;
+
+    TextView[] gameTimeList;
+    TextView[] gameTimeTxtList;
+
+    ConstraintLayout[] gameConstraintLayoutList;
+    //////////////////////////////////////////////////////////////
 
     private Toolbar mToolbar;
 
@@ -105,6 +137,8 @@ public class EntertainmentActivity extends AppCompatActivity {
     private int bookDigit;
     private int filmDigit;
 
+    private GameRepository gameRepository;
+
     @SneakyThrows
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -113,6 +147,7 @@ public class EntertainmentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_entertainment);
 
         sharedPreferences = getApplication().getSharedPreferences("Prefs", Context.MODE_PRIVATE);
+        gameRepository = new GameRepository();
 
         mToolbar = findViewById(R.id.finalToolbar);
         setSupportActionBar(mToolbar);
@@ -131,9 +166,11 @@ public class EntertainmentActivity extends AppCompatActivity {
 
         booksFieldInitialization(bookDigit);
         filmsFieldInitialization(filmDigit);
+        gamesFieldInitialization();
 
         setFilms(filmDigit);
         setBooks(bookDigit);
+        setGames();
         imdbApi = new ImdbApi();
         googleApi = new GoogleBooksApi();
 
@@ -145,8 +182,7 @@ public class EntertainmentActivity extends AppCompatActivity {
             filmByValuesSorter = new Thread(new FilmByValuesSorter(imdbApi, getSortingValue(Objects.requireNonNull(sharedPreferences.getString("filmSortingByValuesType", "Most popular"))), filmDigit), "filmValuesSorter");
             filmByValuesSorter.start();
             filmByValuesSorter.join(3000L);
-        }
-        else {
+        } else {
             filmByGenresSorter = new Thread(new FilmByGenresSorter(imdbApi, sharedPreferences.getString("filmGenre", "Drama"), filmDigit), "filmGenresSorter");
             filmByGenresSorter.start();
             filmByGenresSorter.join(3000L);
@@ -156,9 +192,8 @@ public class EntertainmentActivity extends AppCompatActivity {
         initiateFilms(sharedPreferences.getInt("filmDigit", 10));
         initiateBooks(sharedPreferences.getInt("bookDigit", 10));
 
-        start();
+        fetchGames();
     }
-
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -208,8 +243,7 @@ public class EntertainmentActivity extends AppCompatActivity {
         if (id == R.id.menuEntertainmentSettings) {
             startActivity(new Intent(this, EntertainmentSettingsActivity.class));
             return true;
-        }
-        else if (id == R.id.menuEntertainmentRefresh) {
+        } else if (id == R.id.menuEntertainmentRefresh) {
             if (sharedPreferences.getString("filmSortingMethod", "KK").equals("sortByValues")) {
                 filmByValuesSorter = new FilmByValuesSorter(imdbApi, getSortingValue(Objects.requireNonNull(sharedPreferences.getString("filmSortingByValuesType", "Most popular"))), filmDigit);
                 filmByValuesSorter.start();
@@ -218,8 +252,7 @@ public class EntertainmentActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            }
-            else {
+            } else {
                 filmByGenresSorter = new FilmByGenresSorter(imdbApi, sharedPreferences.getString("filmGenre", "Drama"), filmDigit);
                 filmByGenresSorter.start();
                 try {
@@ -244,20 +277,19 @@ public class EntertainmentActivity extends AppCompatActivity {
 
     private FilmSortingType getSortingValue(String type) {
         switch (type) {
-            case("Top rated"):
+            case ("Top rated"):
                 return FilmSortingType.TOP_RATED;
             case ("Most popular"):
                 return FilmSortingType.MOST_POPULAR;
-            case("Upcoming"):
+            case ("Upcoming"):
                 return FilmSortingType.UPCOMING;
-            case("Now playing"):
+            case ("Now playing"):
                 return FilmSortingType.NOW_PLAYING;
         }
         return FilmSortingType.MOST_POPULAR;
     }
 
     private void booksFieldInitialization(int number) {
-        //BOOKS
         bookTitleList = new TextView[number];
         bookGenresList = new TextView[number];
 
@@ -279,7 +311,6 @@ public class EntertainmentActivity extends AppCompatActivity {
     }
 
     private void filmsFieldInitialization(int number) {
-        //FILMS
         filmTitleList = new TextView[number];
         filmGenresList = new TextView[number];
 
@@ -298,7 +329,24 @@ public class EntertainmentActivity extends AppCompatActivity {
         filmRatingTxtList = new TextView[number];
 
         filmConstraintLayoutList = new ConstraintLayout[number];
-        Log.d("TAG", "filmsFieldInitialization: ");
+    }
+
+    private void gamesFieldInitialization() {
+        gameTitleList = new TextView[8];
+        gameGenresList = new TextView[8];
+
+        gamePhotosList = new ImageButton[8];
+
+        gameAgeList = new TextView[8];
+        gameAgeTxtList = new TextView[8];
+
+        gamePlayersList = new TextView[8];
+        gamePlayersTxtList = new TextView[8];
+
+        gameTimeList = new TextView[8];
+        gameTimeTxtList = new TextView[8];
+
+        gameConstraintLayoutList = new ConstraintLayout[8];
     }
 
     private void initiateFilms(int number) {
@@ -332,6 +380,18 @@ public class EntertainmentActivity extends AppCompatActivity {
                     .replace("]", "")
                     .replace(", ", "\n"));
             Glide.with(this).load(googleApi.getAll().get(i).getImageUrl()).placeholder(R.drawable.placeholder).into(bookPhotosList[i]);
+        }
+    }
+
+    private void initiateGames() {
+        for (int i = 0; i < 8; i++) {
+            gameTitleList[i].setText(gameRepository.getAll().get(i).getTitleEn());
+            gameAgeList[i].setText(gameRepository.getAll().get(i).getAgeMin() + "-" + gameRepository.getAll().get(i).getAgeMax());
+            gamePlayersList[i].setText(gameRepository.getAll().get(i).getPlayersMin() + "-" + gameRepository.getAll().get(i).getPlayersMax());
+            gameTimeList[i].setText(gameRepository.getAll().get(i).getTime() + "seconds");
+            bookGenresList[i].setText(String.valueOf(gameRepository.getAll().get(i).getGenreEn())
+                    .replace(", ", "\n"));
+            Glide.with(this).load(gameRepository.getAll().get(i).getImgLink()).placeholder(R.drawable.placeholder).into(gamePhotosList[i]);
         }
     }
 
@@ -487,7 +547,6 @@ public class EntertainmentActivity extends AppCompatActivity {
 
             constraintSet.applyTo(constraintLayout);
         }
-        Log.d("TAG", "setFilms: ");
     }
 
     private void setBooks(int bookDigit) {
@@ -642,4 +701,152 @@ public class EntertainmentActivity extends AppCompatActivity {
             constraintSet.applyTo(constraintLayout);
         }
     }
+
+    private void setGames() {
+        int gameTitleInitiateId = 21000;
+
+        int gameAgeInitiateId = 22000;
+        int gameAgeTxtInitiateId = 22500;
+
+        int gamePhotoInitiateId = 23000;
+
+        int gamePlayersInitiateId = 24000;
+        int gamePlayersTxtInitiateId = 24500;
+
+        int gameTimeInitiateId = 25000;
+        int gameTimeTxtInitiateId = 25500;
+
+        int gameGenresInitiateId = 26000;
+
+        int gameConstraintLayoutInitiateId = 20000;
+
+        ConstraintLayout constraintLayout;
+
+        gamesLayout.removeAllViews();
+        for (int i = 0; i < 8; i++) {
+            View anotherLayout = inflater.inflate(R.layout.game_overview, null, true);
+            gamesLayout.addView(anotherLayout);
+
+            gameConstraintLayoutList[i] = findViewById(R.id.gameConstraintLayout);
+            gameTitleList[i] = findViewById(R.id.gameTitle);
+            gamePhotosList[i] = findViewById(R.id.gamePhoto);
+            gameGenresList[i] = findViewById(R.id.gameGenres);
+
+            gameAgeList[i] = findViewById(R.id.gameAge);
+            gameAgeTxtList[i] = findViewById(R.id.gameAgeTxt);
+
+            gamePlayersList[i] = findViewById(R.id.gamePlayers);
+            gamePlayersTxtList[i] = findViewById(R.id.gamePlayersTxt);
+
+            gameTimeList[i] = findViewById(R.id.gameTime);
+            gameTimeTxtList[i] = findViewById(R.id.gameTimeTxt);
+
+            gameConstraintLayoutList[i].setId(gameConstraintLayoutInitiateId + i);
+            gameTitleList[i].setId(gameTitleInitiateId + i);
+            gamePhotosList[i].setId(gamePhotoInitiateId + i);
+            gameGenresList[i].setId(gameGenresInitiateId + i);
+
+            gameAgeList[i].setId(gameAgeInitiateId + i);
+            gameAgeTxtList[i].setId(gameAgeTxtInitiateId + i);
+
+            gamePlayersList[i].setId(gamePlayersInitiateId + i);
+            gamePlayersTxtList[i].setId(gamePlayersTxtInitiateId + i);
+
+            gameTimeList[i].setId(gameTimeInitiateId + i);
+            gameTimeTxtList[i].setId(gameTimeTxtInitiateId + i);
+
+
+            constraintLayout = findViewById(gameConstraintLayoutInitiateId + i);
+            constraintLayout.setMinWidth(1200);
+            ConstraintSet constraintSet = new ConstraintSet();
+            constraintSet.clone(constraintLayout);
+
+            //IMAGE
+            constraintSet.connect(gamePhotoInitiateId + i, ConstraintSet.START, gamePhotoInitiateId + i, ConstraintSet.START);
+            constraintSet.connect(gamePhotoInitiateId + i, ConstraintSet.TOP, gamePhotoInitiateId + i, ConstraintSet.TOP);
+
+            //TITLE
+            constraintSet.connect(gameTitleInitiateId + i, ConstraintSet.BOTTOM, gameConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
+            constraintSet.connect(gameTitleInitiateId + i, ConstraintSet.END, gamePhotoInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(gameTitleInitiateId + i, ConstraintSet.START, gamePhotoInitiateId + i, ConstraintSet.START);
+            constraintSet.connect(gameTitleInitiateId + i, ConstraintSet.TOP, gamePhotoInitiateId + i, ConstraintSet.BOTTOM);
+
+
+            //AGE TXT
+            constraintSet.connect(gameAgeTxtInitiateId + i, ConstraintSet.BOTTOM, gameConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
+            constraintSet.connect(gameAgeTxtInitiateId + i, ConstraintSet.END, gameConstraintLayoutInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(gameAgeTxtInitiateId + i, ConstraintSet.START, gamePhotoInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(gameAgeTxtInitiateId + i, ConstraintSet.TOP, gamePhotoInitiateId + i, ConstraintSet.TOP);
+            constraintSet.setVerticalBias(gameAgeTxtInitiateId + i, 0.2f);
+            constraintSet.setHorizontalBias(gameAgeTxtInitiateId + i, 0.1f);
+
+            //AGE
+            constraintSet.connect(gameAgeInitiateId + i, ConstraintSet.BOTTOM, gameConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
+            constraintSet.connect(gameAgeInitiateId + i, ConstraintSet.END, gameConstraintLayoutInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(gameAgeInitiateId + i, ConstraintSet.START, gamePhotoInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(gameAgeInitiateId + i, ConstraintSet.TOP, gamePhotoInitiateId + i, ConstraintSet.TOP);
+            constraintSet.setVerticalBias(gameAgeInitiateId + i, 0.2f);
+            constraintSet.setHorizontalBias(gameAgeInitiateId + i, 0.6f);
+
+            //Players TXT
+            constraintSet.connect(gamePlayersTxtInitiateId + i, ConstraintSet.BOTTOM, gameConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
+            constraintSet.connect(gamePlayersTxtInitiateId + i, ConstraintSet.END, gameConstraintLayoutInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(gamePlayersTxtInitiateId + i, ConstraintSet.START, gamePhotoInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(gamePlayersTxtInitiateId + i, ConstraintSet.TOP, gamePhotoInitiateId + i, ConstraintSet.TOP);
+            constraintSet.setVerticalBias(gamePlayersTxtInitiateId + i, 0.3f);
+            constraintSet.setHorizontalBias(gamePlayersTxtInitiateId + i, 0.1f);
+
+            //Players
+            constraintSet.connect(gamePlayersInitiateId + i, ConstraintSet.BOTTOM, gameConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
+            constraintSet.connect(gamePlayersInitiateId + i, ConstraintSet.END, gameConstraintLayoutInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(gamePlayersInitiateId + i, ConstraintSet.START, gamePhotoInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(gamePlayersInitiateId + i, ConstraintSet.TOP, gamePhotoInitiateId + i, ConstraintSet.TOP);
+            constraintSet.setVerticalBias(gamePlayersInitiateId + i, 0.3f);
+            constraintSet.setHorizontalBias(gamePlayersInitiateId + i, 0.6f);
+
+            //TIME TXT
+            constraintSet.connect(gameTimeTxtInitiateId + i, ConstraintSet.BOTTOM, gameConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
+            constraintSet.connect(gameTimeTxtInitiateId + i, ConstraintSet.END, gameConstraintLayoutInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(gameTimeTxtInitiateId + i, ConstraintSet.START, gamePhotoInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(gameTimeTxtInitiateId + i, ConstraintSet.TOP, gamePhotoInitiateId + i, ConstraintSet.TOP);
+            constraintSet.setVerticalBias(gameTimeTxtInitiateId + i, 0.4f);
+            constraintSet.setHorizontalBias(gameTimeTxtInitiateId + i, 0.1f);
+
+            //TIME
+            constraintSet.connect(gameTimeInitiateId + i, ConstraintSet.BOTTOM, gameConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
+            constraintSet.connect(gameTimeInitiateId + i, ConstraintSet.END, gameConstraintLayoutInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(gameTimeInitiateId + i, ConstraintSet.START, gamePhotoInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(gameTimeInitiateId + i, ConstraintSet.TOP, gamePhotoInitiateId + i, ConstraintSet.TOP);
+            constraintSet.setVerticalBias(gameTimeInitiateId + i, 0.4f);
+            constraintSet.setHorizontalBias(gameTimeInitiateId + i, 0.6f);
+
+            //Genres
+            constraintSet.connect(gameGenresInitiateId + i, ConstraintSet.BOTTOM, gameConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
+            constraintSet.connect(gameGenresInitiateId + i, ConstraintSet.END, gameConstraintLayoutInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(gameGenresInitiateId + i, ConstraintSet.START, gamePhotoInitiateId + i, ConstraintSet.END);
+            constraintSet.connect(gameGenresInitiateId + i, ConstraintSet.TOP, gamePhotoInitiateId + i, ConstraintSet.TOP);
+            constraintSet.setVerticalBias(gameGenresInitiateId + i, 0.7f);
+
+            constraintSet.applyTo(constraintLayout);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void fetchGames() {
+        FirebaseFirestore.getInstance().collection("games").get().addOnCompleteListener(task -> {
+            Log.d("TAG", "fetchGamesFromDataBase: ");
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot doc : task.getResult()) {
+                    Game game = doc.toObject(Game.class);
+                    gameRepository.add(game);
+                    Log.d("TAG", "fetchGamesFromDataBase: ");
+                }
+            } else {
+                Log.d("ERR", "Cannot import games from db");
+            }
+            initiateGames();
+            start();
+        });
+    }
+
 }
