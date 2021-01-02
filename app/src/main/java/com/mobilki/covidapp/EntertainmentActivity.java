@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -133,12 +134,12 @@ public class EntertainmentActivity extends AppCompatActivity {
 
         setFilms(filmDigit);
         setBooks(bookDigit);
+        imdbApi = new ImdbApi();
+        googleApi = new GoogleBooksApi();
 
-        System.out.println(Thread.currentThread().getName());
         genresSetter = new Thread(new GenresSetter(imdbApi), "genresSetter");
         genresSetter.start();
         genresSetter.join();
-        System.out.println(Thread.currentThread().getName());
 
         if (sharedPreferences.getString("filmSortingMethod", "KK").equals("sortByValues")) {
             filmByValuesSorter = new Thread(new FilmByValuesSorter(imdbApi, getSortingValue(Objects.requireNonNull(sharedPreferences.getString("filmSortingByValuesType", "Most popular"))), filmDigit), "filmValuesSorter");
@@ -163,7 +164,7 @@ public class EntertainmentActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void start() {
 
-        for (int i = 0; i < filmDigit; i++) {
+        for (int i = 0; i < sharedPreferences.getInt("filmDigit", 10); i++) {
             int finalFilmI = i;
             filmPhotosList[i].setOnClickListener(view -> {
                 Intent intent = new Intent(this, FilmDetailsActivity.class);
@@ -173,7 +174,7 @@ public class EntertainmentActivity extends AppCompatActivity {
             });
         }
 
-        for (int i = 0; i < bookDigit; i++) {
+        for (int i = 0; i < sharedPreferences.getInt("bookDigit", 10); i++) {
             int finalBookI = i;
             bookPhotosList[i].setOnClickListener(view -> {
                 Intent intent = new Intent(this, BookDetailsActivity.class);
@@ -201,6 +202,8 @@ public class EntertainmentActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        filmDigit = sharedPreferences.getInt("filmDigit", 10);
+        bookDigit = sharedPreferences.getInt("bookDigit", 10);
 
         if (id == R.id.menuEntertainmentSettings) {
             startActivity(new Intent(this, EntertainmentSettingsActivity.class));
@@ -215,7 +218,6 @@ public class EntertainmentActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                initiateFilms(sharedPreferences.getInt("filmDigit", 10));
             }
             else {
                 filmByGenresSorter = new FilmByGenresSorter(imdbApi, sharedPreferences.getString("filmGenre", "Drama"), filmDigit);
@@ -225,12 +227,16 @@ public class EntertainmentActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                initiateFilms(sharedPreferences.getInt("filmDigit", 10));
 
             }
-            googleApi.getByGenre(sharedPreferences.getString("bookGenre", "drama"), bookDigit);
-            initiateBooks(sharedPreferences.getInt("bookDigit", 10));
+            filmsFieldInitialization(filmDigit);
+            setFilms(filmDigit);
+            initiateFilms(filmDigit);
 
+            googleApi.getByGenre(sharedPreferences.getString("bookGenre", "drama"), bookDigit);
+            booksFieldInitialization(bookDigit);
+            setBooks(bookDigit);
+            initiateBooks(bookDigit);
         }
 
         return super.onOptionsItemSelected(item);
@@ -292,6 +298,7 @@ public class EntertainmentActivity extends AppCompatActivity {
         filmRatingTxtList = new TextView[number];
 
         filmConstraintLayoutList = new ConstraintLayout[number];
+        Log.d("TAG", "filmsFieldInitialization: ");
     }
 
     private void initiateFilms(int number) {
@@ -352,7 +359,7 @@ public class EntertainmentActivity extends AppCompatActivity {
         ConstraintLayout constraintLayout;
 
 
-
+        filmsLayout.removeAllViews();
         for (int i = 0; i < filmDigit; i++) {
             View anotherLayout = inflater.inflate(R.layout.film_overview, null, true);
             filmsLayout.addView(anotherLayout);
@@ -480,7 +487,7 @@ public class EntertainmentActivity extends AppCompatActivity {
 
             constraintSet.applyTo(constraintLayout);
         }
-        imdbApi = new ImdbApi();
+        Log.d("TAG", "setFilms: ");
     }
 
     private void setBooks(int bookDigit) {
@@ -506,6 +513,7 @@ public class EntertainmentActivity extends AppCompatActivity {
 
         ConstraintLayout constraintLayout;
 
+        booksLayout.removeAllViews();
         for (int i = 0; i < bookDigit; i++) {
             View anotherLayout = inflater.inflate(R.layout.book_overview, null, true);
             booksLayout.addView(anotherLayout);
@@ -633,6 +641,5 @@ public class EntertainmentActivity extends AppCompatActivity {
 
             constraintSet.applyTo(constraintLayout);
         }
-        googleApi = new GoogleBooksApi();
     }
 }

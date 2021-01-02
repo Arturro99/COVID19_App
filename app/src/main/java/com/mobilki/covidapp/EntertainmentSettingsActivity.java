@@ -165,7 +165,6 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
             editor.putString("filmSortingMethod", "sortByValues");
         }
         editor.apply();
-        Toast.makeText(this, "filmGenre :" + filmGenre, Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "sortingMethod :" + sharedPreferences.getString("filmSortingMethod", "NOTOK"), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "film digit :" + filmDigit, Toast.LENGTH_SHORT).show();
     }
 }
