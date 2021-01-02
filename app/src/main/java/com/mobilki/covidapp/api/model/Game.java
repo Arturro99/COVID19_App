@@ -20,4 +20,5 @@ public class Game {
     private String genreEn;
     private String time;
     private String link;
+    private String imgLink;
 }

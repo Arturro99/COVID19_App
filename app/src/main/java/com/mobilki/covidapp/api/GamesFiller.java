@@ -31,7 +31,8 @@ public class GamesFiller {
                             "The game has numerous house rules, and hundreds of different editions exist, as well as many spin-offs and related media. " +
                             "Monopoly has become a part of international popular culture, having been licensed locally in more than 103 countries and printed in more than 37 languages.",
                     6, 2, 99, 8, "Strategia i taktyka, planszowe", "Strategy and tactics, board game", "60-180",
-                    "https://www.amazon.com/Hasbro-Gaming-C1009-Monopoly-Classic/dp/B01MU9K3XU"),
+                    "https://www.amazon.com/Hasbro-Gaming-C1009-Monopoly-Classic/dp/B01MU9K3XU",
+                    "https://images-na.ssl-images-amazon.com/images/I/81qy%2BMXuxDL._AC_SL1392_.jpg"),
             new Game("Chińczyk",
                     "Ludo",
                     "Jest to popularna gra planszowa, przeznaczona dla dwóch, trzech lub czterech osób. " +
@@ -46,7 +47,8 @@ public class GamesFiller {
                             "The players to the left follow in turn going clockwise. On each player’s turn, the player rolls the die to determine a move. " +
                             "The goal of the game is to move all four of the player’s pieces clockwise once around the board, up the home column, and into the home triangle.",
                     4, 2, 99, 4, "Strategia, planszowe", "Strategy, board game", "30-90",
-                    "https://www.amazon.com/MY-Traditional-Games-Ludo-Game/dp/B00N5TQ3CC"),
+                    "https://www.amazon.com/MY-Traditional-Games-Ludo-Game/dp/B00N5TQ3CC",
+                    "https://images-na.ssl-images-amazon.com/images/I/81gb3h91pML._AC_SL1500_.jpg"),
             new Game("Scrabble",
                     "Scrabble",
                     "Scrabble to gra słowna, w którą grać może od dwóch do 4 osób. Każda z nich na wstępie rozgrywki losuje 7 literek zapisanych na płytkach, które nie są widoczne dla innych graczy. " +
@@ -58,7 +60,8 @@ public class GamesFiller {
                     "Scrabble is a word game in which two to four players score points by placing tiles, each bearing a single letter, onto a game board divided into a 15×15 grid of squares. " +
                             "The tiles must form words that, in crossword fashion, read left to right in rows or downward in columns, and be included in a standard dictionary or lexicon.",
                     4, 2, 99, 7, "Strategia, słownictwo, planszowe", "Strategy, vocabulary, board game", "25-50",
-                    "https://www.amazon.com/Hasbro-Gaming-A8166-Scrabble-Game/dp/B00IL5XY9K"),
+                    "https://www.amazon.com/Hasbro-Gaming-A8166-Scrabble-Game/dp/B00IL5XY9K",
+                    "https://images-na.ssl-images-amazon.com/images/I/81OjLGNO5VL._AC_SL1500_.jpg"),
             new Game("Warcaby",
                     "Checkers",
                     "To bardzo znana i lubiana gra planszowa na całym świecie. Stanowi ona pewną pochodną od szachów, ale jest od nich zdecydowanie łatwiejsza. " +
@@ -71,7 +74,8 @@ public class GamesFiller {
                             "Each player controls its own army of pieces (men)." +
                             "The goal in the checkers game is either to capture all of the opponent's pieces or to blockade them. If neither player can accomplish the above, the game is a draw.",
                     2, 2, 99, 5, "Strategia i taktyka, planszowe", "Strategy and tactics, board game", "30-120",
-                    "https://www.amazon.com/Popular-Game-Draughts-Checkers/dp/B00IN6O2KW"),
+                    "https://www.amazon.com/Popular-Game-Draughts-Checkers/dp/B00IN6O2KW",
+                    "https://images-na.ssl-images-amazon.com/images/I/915266VRjuL._AC_SL1500_.jpg"),
             new Game("Dobble",
                     "Dobble",
                     "Spójrz na pierwszą kartę, którą trzymasz w ręku oraz na tę, która leży na środku stołu. Znajdź na nich wspólny symbol, nazwij go i szybko pozbądź się swojej karty. " +
@@ -79,7 +83,8 @@ public class GamesFiller {
                     "Dobble is a game in which players have to find symbols in common between two cards. It was the UK’s best-selling game in 2018 and 2019." +
                             "The game uses a deck of 55 cards, each printed with eight different symbols. Any two cards always share one, and only one, matching symbol. The object of the game is to be the first to announce the drawing in common between two given cards.",
                     8, 2, 99, 5, "Pamięciowe, zręcznościowe, karciane", "Memory, physical skill, card game", "15",
-                    "https://www.amazon.com/Asmodee-ASMDOBB01EN-Dobble-Card-Game/dp/B0031QBHMA"),
+                    "https://www.amazon.com/Asmodee-ASMDOBB01EN-Dobble-Card-Game/dp/B0031QBHMA",
+                    "https://images-na.ssl-images-amazon.com/images/I/71bdqWTRM1L._AC_SL1500_.jpg"),
             new Game("Jungle Speed, złap totem!",
                     "Jungle Speed",
                     "Szalona gra towarzyska w zwariowanej odsłonie Nowe wydanie gry, w której liczy się zręczność, spostrzegawczość i szybkość! " +
@@ -90,7 +95,8 @@ public class GamesFiller {
                     "In Jungle Speed, each player tries to grab the Totem first when the symbol on their card matches somebody else’s.\n" +
                             "Jungle Speed is an explosive game, easy to transport thanks to its travel bag, for quick on-the-go games!",
                     10, 2, 99, 7, "Imprezowe, karciane", "Party game, card game", "10-15",
-                    "https://www.amazon.com/Asmodee-01JSUSASM-Jungle-Speed/dp/B005PXGTV6"),
+                    "https://www.amazon.com/Asmodee-01JSUSASM-Jungle-Speed/dp/B005PXGTV6",
+                    "https://images-na.ssl-images-amazon.com/images/I/71cfxGtJagL._AC_SL1200_.jpg"),
             new Game("Osadnicy z Catanu",
                     "Settlers of Catan",
                     "Gracze są osadnikami na niedawno odkrytej wyspie Catan. Każdy z nich przewodzi świeżo założonej kolonii i rozbudowuje ją stawiając na dostępnych obszarach nowe drogi i miasta. " +
@@ -107,7 +113,8 @@ public class GamesFiller {
                             "- thief management\n" +
                             "Catan is both a tactical and strategical game, with a strong \"social\" component.",
                     4, 3, 99, 10, "Strategia, ekonomia", "Strategy, economy", "90-120",
-                    "https://www.amazon.com/Catan-Studios-cantan2017/dp/B00U26V4VQ"),
+                    "https://www.amazon.com/Catan-Studios-cantan2017/dp/B00U26V4VQ",
+                    "https://images-na.ssl-images-amazon.com/images/I/81%2Bokm4IpfL._AC_SL1500_.jpg"),
             new Game("Jenga",
                     "Jenga",
                     "Popularna gra Jenga powraca!\n" +
@@ -120,7 +127,8 @@ public class GamesFiller {
                             "Practice stacking skills, building the tower and trying not to let it come tumbling down\n" +
                             "Great party game - liven up a party by bringing out the Jenga game. This classic block stacking game is simple, easy to learn, and makes a great birthday or holiday gift for adults and kids",
                     99, 2, 99, 6, "Zręcznościowe", "Physical skill", "5-15",
-                    "https://www.amazon.com/Jenga-A2120EU4-Classic-Game/dp/B00ABA0ZOA")
+                    "https://www.amazon.com/Jenga-A2120EU4-Classic-Game/dp/B00ABA0ZOA",
+                    "https://images-na.ssl-images-amazon.com/images/I/81OAWwX3djL._AC_SL1500_.jpg")
     };
 
     public static void fillDataBase() {
@@ -143,6 +151,7 @@ public class GamesFiller {
             game.put("genreEn", value.getGenreEn());
             game.put("time", value.getTime());
             game.put("link", value.getLink());
+            game.put("imgLink", value.getImgLink());
             documentReference.set(game);
         }
     }
