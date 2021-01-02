@@ -21,6 +21,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.mobilki.covidapp.api.GamesFiller;
 import com.mobilki.covidapp.authentication.Login;
 import com.mobilki.covidapp.health.HealthActivity;
 import com.mobilki.covidapp.health.HealthForm;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         resendVerification = findViewById(R.id.resendVerification);
         resendVerificationTxt = findViewById(R.id.resendVerificationTxt);
         user = firebaseAuth.getCurrentUser();
+        //GamesFiller.fillDataBase();
 
         start();
     }

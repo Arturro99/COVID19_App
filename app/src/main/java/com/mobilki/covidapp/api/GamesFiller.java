@@ -1,12 +1,21 @@
 package com.mobilki.covidapp.api;
 
+import android.util.Log;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.mobilki.covidapp.api.model.Game;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
+import static android.content.ContentValues.TAG;
 
 public class GamesFiller {
-    Game games[] = {
+    static FirebaseAuth firebaseAuth;
+    static FirebaseFirestore firebaseFirestore;
+    static Game games[] = {
             new Game("Monopoly",
                     "Monopoly",
                     "Monopoly – klasyczna gra polegająca na handlu nieruchomościami. " +
@@ -36,7 +45,7 @@ public class GamesFiller {
                             "Each takes turns throwing the die, and the player with the highest roll plays first. " +
                             "The players to the left follow in turn going clockwise. On each player’s turn, the player rolls the die to determine a move. " +
                             "The goal of the game is to move all four of the player’s pieces clockwise once around the board, up the home column, and into the home triangle.",
-                    4, 2, 99, 4, "Strategia, planszowe", "Strategy, board game", "30",
+                    4, 2, 99, 4, "Strategia, planszowe", "Strategy, board game", "30-90",
                     "https://www.amazon.com/MY-Traditional-Games-Ludo-Game/dp/B00N5TQ3CC"),
             new Game("Scrabble",
                     "Scrabble",
@@ -48,7 +57,7 @@ public class GamesFiller {
                             "Scrabble to niełatwa gra, wymagająca logicznego myślenia i szerokiego zasobu słownictwa.",
                     "Scrabble is a word game in which two to four players score points by placing tiles, each bearing a single letter, onto a game board divided into a 15×15 grid of squares. " +
                             "The tiles must form words that, in crossword fashion, read left to right in rows or downward in columns, and be included in a standard dictionary or lexicon.",
-                    4, 2, 99, 7, "Strategia, słownictwo, planszowe", "Strategy, vocabulary, board game", "50",
+                    4, 2, 99, 7, "Strategia, słownictwo, planszowe", "Strategy, vocabulary, board game", "25-50",
                     "https://www.amazon.com/Hasbro-Gaming-A8166-Scrabble-Game/dp/B00IL5XY9K"),
             new Game("Warcaby",
                     "Checkers",
@@ -69,6 +78,72 @@ public class GamesFiller {
                             "Teraz następna!",
                     "Dobble is a game in which players have to find symbols in common between two cards. It was the UK’s best-selling game in 2018 and 2019." +
                             "The game uses a deck of 55 cards, each printed with eight different symbols. Any two cards always share one, and only one, matching symbol. The object of the game is to be the first to announce the drawing in common between two given cards.",
-                    8, 2, 99, 5, "Pamięciowe, zręcznościowe, karciane", "Memory, arcade, card game", "15",
-                    "https://www.amazon.com/Asmodee-ASMDOBB01EN-Dobble-Card-Game/dp/B0031QBHMA")};
+                    8, 2, 99, 5, "Pamięciowe, zręcznościowe, karciane", "Memory, physical skill, card game", "15",
+                    "https://www.amazon.com/Asmodee-ASMDOBB01EN-Dobble-Card-Game/dp/B0031QBHMA"),
+            new Game("Jungle Speed, złap totem!",
+                    "Jungle Speed",
+                    "Szalona gra towarzyska w zwariowanej odsłonie Nowe wydanie gry, w której liczy się zręczność, spostrzegawczość i szybkość! " +
+                            "Gry, gdzie każdy stara się jak najszybciej pozbyć swoich kart - aby to zrobić, musi w odpowiednim momencie złapać drewniany, przepięknie zdobiony totem. " +
+                            "Jeśli gracz złapie go w złym momencie, albo w ogóle tego nie zrobi - będzie musiał wziąć karty od swoich przeciwników!  Dlaczego ta gra jest taka rewelacyjna?! " +
+                            "Pozwala siąść zupełnie obcym ludziom przy stole i razem świetnie się bawić! Nie wymaga żmudnego tłumaczenia zasad ani ich zapamiętywania " +
+                            "Jest idealna na imprezę, pod namiot i rodzinne spotkanie, gdzie trudno znaleźć wspólny mianownik dla osób o różnych upodobaniach i w różnym wieku! Pozwala grać nieograniczonej liczbie osób!",
+                    "In Jungle Speed, each player tries to grab the Totem first when the symbol on their card matches somebody else’s.\n" +
+                            "Jungle Speed is an explosive game, easy to transport thanks to its travel bag, for quick on-the-go games!",
+                    10, 2, 99, 7, "Imprezowe, karciane", "Party game, card game", "10-15",
+                    "https://www.amazon.com/Asmodee-01JSUSASM-Jungle-Speed/dp/B005PXGTV6"),
+            new Game("Osadnicy z Catanu",
+                    "Settlers of Catan",
+                    "Gracze są osadnikami na niedawno odkrytej wyspie Catan. Każdy z nich przewodzi świeżo założonej kolonii i rozbudowuje ją stawiając na dostępnych obszarach nowe drogi i miasta. " +
+                            "Każda kolonia zbiera dostępne dobra naturalne, które są niezbędne do rozbudowy osiedli.\n" +
+                            "Gracz musi rozważnie stawiać nowe osiedla i drogi, aby zapewnić sobie dostateczny, ale zrównoważony dopływ zasobów, a jeśli ma ich nadmiar - prowadzić handel z innymi graczami " +
+                            "sprzedając im owce, drewno, cegły, zboże lub żelazo a pozyskując od nich te zasoby, których ciągle mu brakuje.\n" +
+                            "Pierwszy z graczy, który uzyska dziesięć punktów z wybudowanych przez siebie dróg, osiedli i specjalnych kart - wygrywa.",
+                    "With 20 million copies sold since it was first published by Kosmos in 1995, Catan is the biggest best-seller among modern board games. " +
+                            "Catan is widely regarded as the game that put board games back in the spotlight.\n" +
+                            "In Catan, players develop a colony.\n" +
+                            "The most interesting thing about Catan is the permanent interaction between players:\n" +
+                            "- negotiation to exchange resources\n" +
+                            "- competition to get the best spots first\n" +
+                            "- thief management\n" +
+                            "Catan is both a tactical and strategical game, with a strong \"social\" component.",
+                    4, 3, 99, 10, "Strategia, ekonomia", "Strategy, economy", "90-120",
+                    "https://www.amazon.com/Catan-Studios-cantan2017/dp/B00U26V4VQ"),
+            new Game("Jenga",
+                    "Jenga",
+                    "Popularna gra Jenga powraca!\n" +
+                            "- Ułóż wieżę, aż do samego nieba!\n" +
+                            "- Wyciągaj klocki jedną ręką i układaj je na szczycie wieży.\n" +
+                            "- Osoba, która przewróci wieżę, przegrywa.\n" +
+                            "Gra zręcznościowa dla dzieci powyżej 6 roku życia.",
+                    "Pull out a block, place it on top, but don't let the tower fall; This fun, challenging game is a great game for families and kids 6 and up.\n" +
+                            "Available to play for 1 on more players - no friends around, no problem. Play Jenga solo. " +
+                            "Practice stacking skills, building the tower and trying not to let it come tumbling down\n" +
+                            "Great party game - liven up a party by bringing out the Jenga game. This classic block stacking game is simple, easy to learn, and makes a great birthday or holiday gift for adults and kids",
+                    99, 2, 99, 6, "Zręcznościowe", "Physical skill", "5-15",
+                    "https://www.amazon.com/Jenga-A2120EU4-Classic-Game/dp/B00ABA0ZOA")
+    };
+
+    public static void fillDataBase() {
+        Log.d(TAG, "fillDataBase: DDD");
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        DocumentReference documentReference;
+        Map<String, Object> game;
+        for (Game value : games) {
+            documentReference = firebaseFirestore.collection("games").document(value.getTitleEn());
+            game = new HashMap<>();
+            game.put("titlePl", value.getTitlePl());
+            game.put("descriptionPl", value.getDescriptionPl());
+            game.put("descriptionEn", value.getDescriptionEn());
+            game.put("playersMin", value.getPlayersMin());
+            game.put("playersMax", value.getPlayersMax());
+            game.put("ageMin", value.getAgeMin());
+            game.put("ageMax", value.getAgeMax());
+            game.put("genrePl", value.getGenrePl());
+            game.put("genreEn", value.getGenreEn());
+            game.put("time", value.getTime());
+            game.put("link", value.getLink());
+            documentReference.set(game);
+        }
     }
+}
