@@ -125,14 +125,11 @@ public class EntertainmentActivity extends AppCompatActivity {
     ConstraintLayout[] gameConstraintLayoutList;
     //////////////////////////////////////////////////////////////
 
-    private Toolbar mToolbar;
-
     private ImdbApi imdbApi;
     private GoogleBooksApi googleApi;
     private Thread genresSetter;
     private Thread filmByGenresSorter;
     private Thread filmByValuesSorter;
-    private List synchedList = Collections.synchronizedList(new LinkedList<>());
 
     private int bookDigit;
     private int filmDigit;
@@ -149,7 +146,7 @@ public class EntertainmentActivity extends AppCompatActivity {
         sharedPreferences = getApplication().getSharedPreferences("Prefs", Context.MODE_PRIVATE);
         gameRepository = new GameRepository();
 
-        mToolbar = findViewById(R.id.finalToolbar);
+        Toolbar mToolbar = findViewById(R.id.finalToolbar);
         setSupportActionBar(mToolbar);
 
         notificationsSettingsBtn = findViewById(R.id.entertainmentNotificationsSettingsBtn);
@@ -387,15 +384,17 @@ public class EntertainmentActivity extends AppCompatActivity {
         for (int i = 0; i < 8; i++) {
             gameTitleList[i].setText(gameRepository.getAll().get(i).getTitleEn());
             gameAgeList[i].setText(gameRepository.getAll().get(i).getAgeMin() + "-" + gameRepository.getAll().get(i).getAgeMax());
-            gamePlayersList[i].setText(gameRepository.getAll().get(i).getPlayersMin() + "-" + gameRepository.getAll().get(i).getPlayersMax());
-            gameTimeList[i].setText(gameRepository.getAll().get(i).getTime() + "seconds");
-            bookGenresList[i].setText(String.valueOf(gameRepository.getAll().get(i).getGenreEn())
+            gamePlayersList[i].setText(gameRepository.getAll().get(i).getPlayersMin() == gameRepository.getAll().get(i).getPlayersMax() ?
+                    String.valueOf(gameRepository.getAll().get(i).getPlayersMin()) :
+                    gameRepository.getAll().get(i).getPlayersMin() + "-" + gameRepository.getAll().get(i).getPlayersMax());
+            gameTimeList[i].setText(gameRepository.getAll().get(i).getTime() + " minutes");
+            gameGenresList[i].setText(String.valueOf(gameRepository.getAll().get(i).getGenreEn())
                     .replace(", ", "\n"));
             Glide.with(this).load(gameRepository.getAll().get(i).getImgLink()).placeholder(R.drawable.placeholder).into(gamePhotosList[i]);
         }
     }
 
-    private void setFilms(int filmDigit) throws InterruptedException {
+    private void setFilms(int filmDigit) {
         int filmTitleInitiateId = 1000;
 
         int filmReleaseYearInitiateId = 2000;
@@ -718,7 +717,7 @@ public class EntertainmentActivity extends AppCompatActivity {
 
         int gameGenresInitiateId = 26000;
 
-        int gameConstraintLayoutInitiateId = 20000;
+        int gameConstraintLayoutInitiateId = 30000;
 
         ConstraintLayout constraintLayout;
 
@@ -760,10 +759,11 @@ public class EntertainmentActivity extends AppCompatActivity {
             constraintLayout.setMinWidth(1200);
             ConstraintSet constraintSet = new ConstraintSet();
             constraintSet.clone(constraintLayout);
+            constraintSet.constrainMaxHeight(R.id.gamePhoto, 15);
 
             //IMAGE
-            constraintSet.connect(gamePhotoInitiateId + i, ConstraintSet.START, gamePhotoInitiateId + i, ConstraintSet.START);
-            constraintSet.connect(gamePhotoInitiateId + i, ConstraintSet.TOP, gamePhotoInitiateId + i, ConstraintSet.TOP);
+            constraintSet.connect(gamePhotoInitiateId + i, ConstraintSet.START, gameConstraintLayoutInitiateId + i, ConstraintSet.START);
+            constraintSet.connect(gamePhotoInitiateId + i, ConstraintSet.TOP, gameConstraintLayoutInitiateId + i, ConstraintSet.TOP);
 
             //TITLE
             constraintSet.connect(gameTitleInitiateId + i, ConstraintSet.BOTTOM, gameConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
