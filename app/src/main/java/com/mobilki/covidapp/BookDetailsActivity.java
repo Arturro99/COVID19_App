@@ -1,4 +1,4 @@
-package com.mobilki.covidapp.exceptions;
+package com.mobilki.covidapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,26 +12,18 @@ import com.mobilki.covidapp.api.model.Book;
 
 public class BookDetailsActivity extends AppCompatActivity {
 
-    private RatingBar ratingBar;
-    private TextView title;
-    private TextView ratingsCount;
-    private TextView description;
-    private TextView pdfAvailability;
-
-    private Book book;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_details);
 
-        book = (Book) getIntent().getSerializableExtra("book");
+        Book book = (Book) getIntent().getSerializableExtra("book");
 
-        ratingBar =  findViewById(R.id.bookRatingBar);
-        title = findViewById(R.id.bookDetailedTitle);
-        ratingsCount = findViewById(R.id.bookDetailedRatingsCount);
-        description = findViewById(R.id.bookDetailedDescription);
-        pdfAvailability = findViewById(R.id.pdfAvailable);
+        RatingBar ratingBar = findViewById(R.id.bookRatingBar);
+        TextView title = findViewById(R.id.bookDetailedTitle);
+        TextView ratingsCount = findViewById(R.id.bookDetailedRatingsCount);
+        TextView description = findViewById(R.id.bookDetailedDescription);
+        TextView pdfAvailability = findViewById(R.id.pdfAvailable);
 
         if (!book.getRatings().equals("no data")) {
             ratingBar.setRating(Float.parseFloat(book.getRatings()));

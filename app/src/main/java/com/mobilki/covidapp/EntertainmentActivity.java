@@ -1,7 +1,6 @@
 package com.mobilki.covidapp;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -24,30 +23,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.mobilki.covidapp.api.*;
 import com.mobilki.covidapp.api.customThreads.FilmByGenresSorter;
 import com.mobilki.covidapp.api.customThreads.FilmByValuesSorter;
 import com.mobilki.covidapp.api.customThreads.GenresSetter;
 import com.mobilki.covidapp.api.model.Game;
 import com.mobilki.covidapp.api.repository.GameRepository;
-import com.mobilki.covidapp.exceptions.BookDetailsActivity;
 import com.squareup.picasso.Picasso;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.CountDownLatch;
 
 import lombok.SneakyThrows;
 
@@ -196,25 +182,7 @@ public class EntertainmentActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void start() {
 
-        for (int i = 0; i < sharedPreferences.getInt("filmDigit", 10); i++) {
-            int finalFilmI = i;
-            filmPhotosList[i].setOnClickListener(view -> {
-                Intent intent = new Intent(this, FilmDetailsActivity.class);
-
-                intent.putExtra("film", imdbApi.getAll().get(finalFilmI));
-                startActivity(intent);
-            });
-        }
-
-        for (int i = 0; i < sharedPreferences.getInt("bookDigit", 10); i++) {
-            int finalBookI = i;
-            bookPhotosList[i].setOnClickListener(view -> {
-                Intent intent = new Intent(this, BookDetailsActivity.class);
-
-                intent.putExtra("book", googleApi.getAll().get(finalBookI));
-                startActivity(intent);
-            });
-        }
+        setPhotosClickable();
 
         notificationsSettingsBtn.setOnClickListener(view -> {
 
@@ -230,6 +198,7 @@ public class EntertainmentActivity extends AppCompatActivity {
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @SneakyThrows
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -267,6 +236,8 @@ public class EntertainmentActivity extends AppCompatActivity {
             booksFieldInitialization(bookDigit);
             setBooks(bookDigit);
             initiateBooks(bookDigit);
+
+            setPhotosClickable();
         }
 
         return super.onOptionsItemSelected(item);
@@ -847,6 +818,38 @@ public class EntertainmentActivity extends AppCompatActivity {
             initiateGames();
             start();
         });
+    }
+
+    private void setPhotosClickable() {
+        for (int i = 0; i < sharedPreferences.getInt("filmDigit", 10); i++) {
+            int finalFilmI = i;
+            filmPhotosList[i].setOnClickListener(view -> {
+                Intent intent = new Intent(this, FilmDetailsActivity.class);
+
+                intent.putExtra("film", imdbApi.getAll().get(finalFilmI));
+                startActivity(intent);
+            });
+        }
+
+        for (int i = 0; i < sharedPreferences.getInt("bookDigit", 10); i++) {
+            int finalBookI = i;
+            bookPhotosList[i].setOnClickListener(view -> {
+                Intent intent = new Intent(this, BookDetailsActivity.class);
+
+                intent.putExtra("book", googleApi.getAll().get(finalBookI));
+                startActivity(intent);
+            });
+        }
+
+        for (int i = 0; i < 8; i++) {
+            int finalGameI = i;
+            gamePhotosList[i].setOnClickListener(view -> {
+                Intent intent = new Intent(this, GameDetailsActivity.class);
+
+                intent.putExtra("game", gameRepository.getAll().get(finalGameI));
+                startActivity(intent);
+            });
+        }
     }
 
 }

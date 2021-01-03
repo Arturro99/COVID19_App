@@ -12,36 +12,42 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".authentication.Login"/>
-        <activity android:name=".authentication.Register" >
-               <intent-filter>
+        <activity android:name=".GameDetailsActivity"></activity>
+        <activity android:name=".authentication.Login" />
+        <activity android:name=".authentication.Register">
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".exceptions.BookDetailsActivity" />
+        <activity android:name=".BookDetailsActivity" />
         <activity android:name=".EntertainmentSettingsActivity" />
         <activity android:name=".FilmDetailsActivity" />
         <activity android:name=".health.HealthDataActivity" />
         <activity android:name=".EntertainmentActivity" />
-        <activity android:name=".health.HealthActivity"/>
-        <activity android:name=".health.ExerciseSet"/>
+        <activity android:name=".health.HealthActivity" />
+        <activity android:name=".health.ExerciseSet" />
         <activity android:name=".MainActivity">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".health.HealthForm" android:theme="@android:style/Theme.Translucent.NoTitleBar">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+        <activity
+            android:name=".health.HealthForm"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity><!--android:theme="@style/AppTheme.CustomTheme"-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
 
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity> <!-- android:theme="@style/AppTheme.CustomTheme" -->
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
