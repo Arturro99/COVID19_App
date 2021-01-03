@@ -9,6 +9,7 @@ import com.mobilki.covidapp.api.model.Game;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import static android.content.ContentValues.TAG;
 
@@ -16,7 +17,8 @@ public class GamesFiller {
     static FirebaseAuth firebaseAuth;
     static FirebaseFirestore firebaseFirestore;
     static Game games[] = {
-            new Game("Monopoly",
+            new Game(UUID.randomUUID(),
+                    "Monopoly",
                     "Monopoly",
                     "Monopoly – klasyczna gra polegająca na handlu nieruchomościami. " +
                             "Wymyślona w Stanach Zjednoczonych w okresie Wielkiego Kryzysu przez Elizabeth Magie. " +
@@ -33,7 +35,8 @@ public class GamesFiller {
                     6, 2, 99, 8, "Strategia i taktyka, planszowe", "Strategy and tactics, board game", "60-180",
                     "https://www.amazon.com/Hasbro-Gaming-C1009-Monopoly-Classic/dp/B01MU9K3XU",
                     "https://images-na.ssl-images-amazon.com/images/I/81qy%2BMXuxDL._AC_SL1392_.jpg"),
-            new Game("Chińczyk",
+            new Game(UUID.randomUUID(),
+                    "Chińczyk",
                     "Ludo",
                     "Jest to popularna gra planszowa, przeznaczona dla dwóch, trzech lub czterech osób. " +
                             "To doskonała gra towarzyska, idealna na niedzielne popołudnia czy deszczowe dni. " +
@@ -49,7 +52,8 @@ public class GamesFiller {
                     4, 2, 99, 4, "Strategia, planszowe", "Strategy, board game", "30-90",
                     "https://www.amazon.com/MY-Traditional-Games-Ludo-Game/dp/B00N5TQ3CC",
                     "https://images-na.ssl-images-amazon.com/images/I/81gb3h91pML._AC_SL1500_.jpg"),
-            new Game("Scrabble",
+            new Game(UUID.randomUUID(),
+                    "Scrabble",
                     "Scrabble",
                     "Scrabble to gra słowna, w którą grać może od dwóch do 4 osób. Każda z nich na wstępie rozgrywki losuje 7 literek zapisanych na płytkach, które nie są widoczne dla innych graczy. " +
                             "Trzeba z nich układać wyrazy, ale biorąc pod uwagę słowa widniejące już na planszy. Jeden wyraz powstaje w oparciu o już istniejący. " +
@@ -62,7 +66,8 @@ public class GamesFiller {
                     4, 2, 99, 7, "Strategia, słownictwo, planszowe", "Strategy, vocabulary, board game", "25-50",
                     "https://www.amazon.com/Hasbro-Gaming-A8166-Scrabble-Game/dp/B00IL5XY9K",
                     "https://images-na.ssl-images-amazon.com/images/I/81OjLGNO5VL._AC_SL1500_.jpg"),
-            new Game("Warcaby",
+            new Game(UUID.randomUUID(),
+                    "Warcaby",
                     "Checkers",
                     "To bardzo znana i lubiana gra planszowa na całym świecie. Stanowi ona pewną pochodną od szachów, ale jest od nich zdecydowanie łatwiejsza. " +
                             "Warcaby zostały rozpowszechnione w Europie już w XI wieku. Istnieje wiele odmian tejże gry, aczkolwiek za dyscyplinę sportową uważane są warcaby polskie, określane również jako warcaby międzynarodowe. " +
@@ -76,7 +81,8 @@ public class GamesFiller {
                     2, 2, 99, 5, "Strategia i taktyka, planszowe", "Strategy and tactics, board game", "30-120",
                     "https://www.amazon.com/Popular-Game-Draughts-Checkers/dp/B00IN6O2KW",
                     "https://images-na.ssl-images-amazon.com/images/I/915266VRjuL._AC_SL1500_.jpg"),
-            new Game("Dobble",
+            new Game(UUID.randomUUID(),
+                    "Dobble",
                     "Dobble",
                     "Spójrz na pierwszą kartę, którą trzymasz w ręku oraz na tę, która leży na środku stołu. Znajdź na nich wspólny symbol, nazwij go i szybko pozbądź się swojej karty. " +
                             "Teraz następna!",
@@ -85,7 +91,8 @@ public class GamesFiller {
                     8, 2, 99, 5, "Pamięciowe, zręcznościowe, karciane", "Memory, physical skill, card game", "15",
                     "https://www.amazon.com/Asmodee-ASMDOBB01EN-Dobble-Card-Game/dp/B0031QBHMA",
                     "https://images-na.ssl-images-amazon.com/images/I/71bdqWTRM1L._AC_SL1500_.jpg"),
-            new Game("Jungle Speed, złap totem!",
+            new Game(UUID.randomUUID(),
+                    "Jungle Speed, złap totem!",
                     "Jungle Speed",
                     "Szalona gra towarzyska w zwariowanej odsłonie Nowe wydanie gry, w której liczy się zręczność, spostrzegawczość i szybkość! " +
                             "Gry, gdzie każdy stara się jak najszybciej pozbyć swoich kart - aby to zrobić, musi w odpowiednim momencie złapać drewniany, przepięknie zdobiony totem. " +
@@ -97,7 +104,8 @@ public class GamesFiller {
                     10, 2, 99, 7, "Imprezowe, karciane", "Party game, card game", "10-15",
                     "https://www.amazon.com/Asmodee-01JSUSASM-Jungle-Speed/dp/B005PXGTV6",
                     "https://images-na.ssl-images-amazon.com/images/I/71cfxGtJagL._AC_SL1200_.jpg"),
-            new Game("Osadnicy z Catanu",
+            new Game(UUID.randomUUID(),
+                    "Osadnicy z Catanu",
                     "Settlers of Catan",
                     "Gracze są osadnikami na niedawno odkrytej wyspie Catan. Każdy z nich przewodzi świeżo założonej kolonii i rozbudowuje ją stawiając na dostępnych obszarach nowe drogi i miasta. " +
                             "Każda kolonia zbiera dostępne dobra naturalne, które są niezbędne do rozbudowy osiedli.\n" +
@@ -115,7 +123,8 @@ public class GamesFiller {
                     4, 3, 99, 10, "Strategia, ekonomia", "Strategy, economy", "90-120",
                     "https://www.amazon.com/Catan-Studios-cantan2017/dp/B00U26V4VQ",
                     "https://images-na.ssl-images-amazon.com/images/I/81%2Bokm4IpfL._AC_SL1500_.jpg"),
-            new Game("Jenga",
+            new Game(UUID.randomUUID(),
+                    "Jenga",
                     "Jenga",
                     "Popularna gra Jenga powraca!\n" +
                             "- Ułóż wieżę, aż do samego nieba!\n" +
@@ -138,9 +147,10 @@ public class GamesFiller {
         DocumentReference documentReference;
         Map<String, Object> game;
         for (Game value : games) {
-            documentReference = firebaseFirestore.collection("games").document(value.getTitleEn());
+            documentReference = firebaseFirestore.collection("games").document(value.getUuid().toString());
             game = new HashMap<>();
             game.put("titlePl", value.getTitlePl());
+            game.put("titleEn", value.getTitleEn());
             game.put("descriptionPl", value.getDescriptionPl());
             game.put("descriptionEn", value.getDescriptionEn());
             game.put("playersMin", value.getPlayersMin());

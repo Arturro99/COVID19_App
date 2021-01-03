@@ -1,5 +1,8 @@
 package com.mobilki.covidapp.api.model;
 
+import java.io.Serializable;
+import java.util.UUID;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +10,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Game {
+public class Game implements Serializable {
+    private UUID uuid;
     private String titlePl;
     private String titleEn;
     private String descriptionPl;
