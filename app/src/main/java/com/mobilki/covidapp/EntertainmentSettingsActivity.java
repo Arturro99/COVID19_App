@@ -1,35 +1,25 @@
 package com.mobilki.covidapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mobilki.covidapp.api.repository.FilmGenresRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class EntertainmentSettingsActivity extends AppCompatActivity {
 
-    LinearLayout filmsNumberLayout;
-    LayoutInflater inflater;
-    TextView filmDigit;
-    TextView bookDigit;
+    NumberPicker filmDigit;
+    NumberPicker bookDigit;
     Button applySettings;
     Spinner bookGenresSpinner;
     Spinner filmGenresSpinner;
@@ -55,16 +45,6 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
         sharedPreferences = context.getSharedPreferences("Prefs", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-
-//        filmsNumberLayout = findViewById(R.id.filmsNumberLayout);
-//        inflater = LayoutInflater.from(this);
-
-//        filmDigit = findViewById(R.id.digit);
-//
-//        for (int i = 0; i < 20; i++) {
-//            View filmNumber = inflater.inflate(R.layout.digit, null, true);
-//            filmsNumberLayout.addView(filmNumber);
-//        }
 
         filmDigit = findViewById(R.id.filmDigit);
         bookDigit = findViewById(R.id.bookDigit);
@@ -97,8 +77,12 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
         filmGenresSpinner.setEnabled(false);
 
 
-        filmDigit.setText(String.valueOf(sharedPreferences.getInt("filmDigit", 10)));
-        bookDigit.setText(String.valueOf(sharedPreferences.getInt("bookDigit", 10)));
+        bookDigit.setMinValue(5);
+        bookDigit.setMaxValue(10);
+        filmDigit.setMinValue(5);
+        filmDigit.setMaxValue(20);
+        filmDigit.setValue(sharedPreferences.getInt("filmDigit", 10));
+        bookDigit.setValue(sharedPreferences.getInt("bookDigit", 10));
 
         start();
 
@@ -112,9 +96,7 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
 
         });
 
-        sortByGenres.setOnCheckedChangeListener((compoundButton, b) -> {
-            filmGenresSpinner.setEnabled(compoundButton.isChecked());
-        });
+        sortByGenres.setOnCheckedChangeListener((compoundButton, b) -> filmGenresSpinner.setEnabled(compoundButton.isChecked()));
 
         applySettings.setOnClickListener(view -> saveOptions());
 
@@ -140,13 +122,15 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
 
             }
         });
+
+        bookDigit.setOnValueChangedListener((numberPicker, i, i1) -> { });
+        filmDigit.setOnValueChangedListener((numberPicker, i, i1) -> { });
     }
 
 
-
     private void saveOptions() {
-        editor.putInt("bookDigit", Integer.parseInt(bookDigit.getText().toString()));
-        editor.putInt("filmDigit", Integer.parseInt(filmDigit.getText().toString()));
+        editor.putInt("bookDigit", bookDigit.getValue());
+        editor.putInt("filmDigit", filmDigit.getValue());
         editor.putString("bookGenre", bookGenre);
 
         if (sortByValues.isChecked()) {
@@ -165,6 +149,5 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
             editor.putString("filmSortingMethod", "sortByValues");
         }
         editor.apply();
-        Toast.makeText(this, "film digit :" + filmDigit, Toast.LENGTH_SHORT).show();
     }
 }

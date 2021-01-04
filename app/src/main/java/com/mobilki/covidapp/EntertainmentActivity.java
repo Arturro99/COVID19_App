@@ -33,6 +33,7 @@ import com.mobilki.covidapp.api.model.Game;
 import com.mobilki.covidapp.api.repository.GameRepository;
 import com.squareup.picasso.Picasso;
 
+import java.util.Locale;
 import java.util.Objects;
 
 import lombok.SneakyThrows;
@@ -41,9 +42,6 @@ import lombok.SneakyThrows;
 public class EntertainmentActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
-
-    Button notificationsSettingsBtn;
-    Button preferencesBtn;
 
     LinearLayout filmsLayout;
     LinearLayout booksLayout;
@@ -135,9 +133,6 @@ public class EntertainmentActivity extends AppCompatActivity {
         Toolbar mToolbar = findViewById(R.id.finalToolbar);
         setSupportActionBar(mToolbar);
 
-        notificationsSettingsBtn = findViewById(R.id.entertainmentNotificationsSettingsBtn);
-        preferencesBtn = findViewById(R.id.entertainmentPreferencesBtn);
-
         filmsLayout = findViewById(R.id.filmsLinearLayout);
         booksLayout = findViewById(R.id.booksLinearLayout);
         gamesLayout = findViewById(R.id.gamesLinearLayout);
@@ -183,13 +178,6 @@ public class EntertainmentActivity extends AppCompatActivity {
     private void start() {
 
         setPhotosClickable();
-
-        notificationsSettingsBtn.setOnClickListener(view -> {
-
-        });
-        preferencesBtn.setOnClickListener(view -> {
-
-        });
     }
 
     @Override
@@ -354,11 +342,11 @@ public class EntertainmentActivity extends AppCompatActivity {
     private void initiateGames() {
         for (int i = 0; i < 8; i++) {
             gameTitleList[i].setText(gameRepository.getAll().get(i).getTitleEn());
-            gameAgeList[i].setText(gameRepository.getAll().get(i).getAgeMin() + "-" + gameRepository.getAll().get(i).getAgeMax());
+            gameAgeList[i].setText(String.format(Locale.US,"%d-%d", gameRepository.getAll().get(i).getAgeMin(), gameRepository.getAll().get(i).getAgeMax()));
             gamePlayersList[i].setText(gameRepository.getAll().get(i).getPlayersMin() == gameRepository.getAll().get(i).getPlayersMax() ?
                     String.valueOf(gameRepository.getAll().get(i).getPlayersMin()) :
                     gameRepository.getAll().get(i).getPlayersMin() + "-" + gameRepository.getAll().get(i).getPlayersMax());
-            gameTimeList[i].setText(gameRepository.getAll().get(i).getTime() + " minutes");
+            gameTimeList[i].setText(String.format(Locale.US,"%s minutes", gameRepository.getAll().get(i).getTime()));
             gameGenresList[i].setText(String.valueOf(gameRepository.getAll().get(i).getGenreEn())
                     .replace(", ", "\n"));
             Glide.with(this).load(gameRepository.getAll().get(i).getImgLink()).placeholder(R.drawable.placeholder).into(gamePhotosList[i]);

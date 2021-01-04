@@ -91,23 +91,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/gamesScrollView"
             android:weightSum="1">
-
-            <Button
-                android:id="@+id/entertainmentNotificationsSettingsBtn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:text="@string/notifications_settings_panel"
-                android:textSize="20sp" />
-
-            <Button
-                android:id="@+id/entertainmentPreferencesBtn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:text="@string/preferences_panel"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/entertainmentNotificationsSettingsBtn" />
         </LinearLayout>
 
     </RelativeLayout>

@@ -24,51 +24,46 @@
         android:id="@+id/bookDigitTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Number of displayed books (5-10):"
+        android:text="Number of displayed books:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.02" />
 
-    <EditText
+    <NumberPicker
         android:id="@+id/bookDigit"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="2"
-        android:inputType="numberDecimal"
+        android:layout_height="50dp"
         tools:layout_editor_absoluteX="58dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
-        android:text="7"
-        />
+        app:layout_constraintStart_toEndOf="@id/bookDigitTxt"
+        app:layout_constraintHorizontal_bias="0.05"
+        android:scaleX="0.8"
+        android:scaleY="0.8" />
 
     <TextView
         android:id="@+id/filmDigitTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Number of displayed films (5-20):"
-        android:layout_below="@id/bookDigit"
-        app:layout_constraintTop_toTopOf="parent"
+        android:text="Number of displayed films:"
+        app:layout_constraintTop_toBottomOf="@id/bookDigitTxt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_bias="0.07" />
 
-    <EditText
+    <NumberPicker
         android:id="@+id/filmDigit"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="2"
-        android:inputType="numberDecimal"
-        tools:layout_editor_absoluteX="58dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toEndOf="@id/bookDigitTxt"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bookDigit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintVertical_bias="0.05"
-        android:text="7"/>
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintVertical_bias="0.02"
+        android:scaleX="0.8"
+        android:scaleY="0.8" />
 
     <RadioGroup
         android:id="@+id/typeOfSorting"
