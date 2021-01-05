@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".GameDetailsActivity"></activity>
+        <activity android:name=".health.NotificationHealth"/>
         <activity android:name=".authentication.Login" />
         <activity android:name=".authentication.Register">
             <intent-filter>
@@ -21,6 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".GameDetailsActivity"/>
         <activity android:name=".BookDetailsActivity" />
         <activity android:name=".EntertainmentSettingsActivity" />
         <activity android:name=".FilmDetailsActivity" />
@@ -29,25 +30,20 @@
         <activity android:name=".health.HealthActivity" />
         <activity android:name=".health.ExerciseSet" />
         <activity android:name=".MainActivity">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
-        <activity
-            android:name=".health.HealthForm"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+        <activity android:name=".health.HealthForm" android:theme="@android:style/Theme.Translucent.NoTitleBar">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity><!--android:theme="@style/AppTheme.CustomTheme"-->
 
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity> <!-- android:theme="@style/AppTheme.CustomTheme" -->
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

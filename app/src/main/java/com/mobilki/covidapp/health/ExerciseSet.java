@@ -1,39 +1,41 @@
 package com.mobilki.covidapp.health;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.util.Pair;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.mobilki.covidapp.R;
-import com.mobilki.covidapp.notification.NotificationHelper;
+import com.mobilki.covidapp.api.repository.ExerciseRepository;
 
 public class ExerciseSet extends Activity {
-    Button button;
-    public static final String PERSONAL_CHANNEL_ID = "PERSONAL";
+    TextView ex1;
+    TextView ex2;
+    TextView ex3;
+
+    @SuppressLint("SetTextI18n")
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.exercise_set);
+        ex1 = findViewById(R.id.exer1);
+        ex2 = findViewById(R.id.exer2);
+        ex3 = findViewById(R.id.exer3);
 
-        button = (Button) findViewById(R.id.button2);
-        button.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onClick(View view) {
-                EditText tx = (EditText) findViewById(R.id.czas);
-                String[] t = tx.getText().toString().split(":");
-                NotificationHelper.setNotification(getApplicationContext(),Integer.parseInt(t[0]), Integer.parseInt(t[1]), "title to jest", "bodddy");
-//                final NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
-//                notificationUtils.createChannel(PERSONAL_CHANNEL_ID, "CovidApp");
-//
-//                notificationHelper.createCustomNotification(notificationUtils, getApplicationContext());
-            }
-        });
+        Pair<String, Integer> pair = ExerciseRepository.getRandomExercise(ExerciseRepository.exercisesShouldersNormal);
+        ex1.setText(pair.first + " " + pair.second);
+//        pair = ExerciseRepository.getRandomExercise(ExerciseRepository.exercisesShouldersStretching);
+//        ex1.setText(pair.first + " " + pair.second);
+//        pair = ExerciseRepository.getRandomExercise(ExerciseRepository.exercisesWristNormal);
+//        ex1.setText(pair.first + " " + pair.second);
     }
+
+
+
 }

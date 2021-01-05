@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.WindowManager;
@@ -20,11 +21,18 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Source;
 import com.mobilki.covidapp.R;
+import com.mobilki.covidapp.api.model.Exercise;
+import com.mobilki.covidapp.api.repository.ExerciseRepository;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -57,6 +65,8 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     String[] labels;
     Hashtable<Integer, String> dict = new Hashtable<Integer, String>();
 
+    ExerciseRepository exerciseRepository;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +93,7 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         dict.put(1, "Liczba kroków");
         dict.put(2, "Ilość snu [min]");
         dict.put(3, "Wypita woda [ml]");
-
+        exerciseRepository = new ExerciseRepository();
 
         gestureDetector = new GestureDetector(this);
         start();
@@ -98,6 +108,7 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         addDataBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, HealthDataActivity.class)));
 
         setEntries();
+        fetchExercises();
     }
 
     @Override
@@ -245,6 +256,42 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         gestureDetector.onTouchEvent(event);
         return super.onTouchEvent(event);
     }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void fetchExercises() {
+
+        FirebaseFirestore.getInstance().collection("exercises").get().addOnCompleteListener(task -> {
+            Log.d("TAG", "fetchExercisesFromDataBase: ");
+            if (task.isSuccessful()) {
+
+                for (QueryDocumentSnapshot doc : task.getResult()) {
+                    CollectionReference collectionReference = doc.getReference().collection("normal");
+                    Task<QuerySnapshot> querySnapshotTask =  collectionReference.get();
+                    querySnapshotTask.addOnSuccessListener(document -> {
+                        for (DocumentSnapshot normalDoc : document.getDocuments()) {
+                            Exercise exercises = normalDoc.toObject(Exercise.class);
+                            ExerciseRepository.add(doc.getId(), "normal", exercises);
+                        }
+                    });
+                    CollectionReference collectionReference2 = doc.getReference().collection("stretching");
+                    Task<QuerySnapshot> querySnapshotTask2 =  collectionReference2.get();
+                    querySnapshotTask2.addOnSuccessListener(document -> {
+                        for (DocumentSnapshot normalDoc : document.getDocuments()) {
+                            Exercise exercises = normalDoc.toObject(Exercise.class);
+                            ExerciseRepository.add(doc.getId(), "stretching", exercises);
+                        }
+                    });
+                    Log.d("TAG", "fetchExercisesFromDataBase:");
+                }
+            } else {
+                Log.d("ERR", "Cannot import exercises from db");
+            }
+//            initiateGames();
+//            start();
+        });
+    }
+
 
     @Override
     public boolean onDown(MotionEvent motionEvent) {
