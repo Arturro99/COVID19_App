@@ -1,10 +1,12 @@
 package com.mobilki.covidapp;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,8 +15,19 @@ import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.mobilki.covidapp.api.repository.FilmGenresRepository;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
 public class EntertainmentSettingsActivity extends AppCompatActivity {
 
@@ -24,9 +37,10 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
     Spinner bookGenresSpinner;
     Spinner filmGenresSpinner;
 
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
-    Context context;
+    FirebaseFirestore mFirestore;
+    FirebaseAuth mAuth;
+    FirebaseUser mUser;
+    CollectionReference collectionReference;
 
     String bookGenre;
     String filmGenre;
@@ -36,32 +50,40 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
     RadioButton sortByValues;
     RadioButton sortByGenres;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entertainment_settings);
 
-        context = getApplicationContext();
-        sharedPreferences = context.getSharedPreferences("Prefs", Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
+        mFirestore = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        collectionReference = mFirestore
+                .collection("users").document(mUser.getUid())
+                .collection("settings");
 
 
         filmDigit = findViewById(R.id.filmDigit);
         bookDigit = findViewById(R.id.bookDigit);
         applySettings = findViewById(R.id.applyEntertainmentSettings);
-
         sortingGroup = findViewById(R.id.sortingGroup);
-
         sortByValues = findViewById(R.id.sortByValues);
         sortByGenres = findViewById(R.id.sortByGenres);
 
         //Book Spinner initialization
         bookGenresSpinner = findViewById(R.id.bookGenresSpinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+        ArrayAdapter<CharSequence> bookAdapter = ArrayAdapter.createFromResource(
                 this, R.array.book_genres, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        bookGenresSpinner.setAdapter(adapter);
-        bookGenresSpinner.setSelection(adapter.getPosition(sharedPreferences.getString("bookGenre", "drama")));
+        bookAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        bookGenresSpinner.setAdapter(bookAdapter);
+        //bookGenresSpinner.setSelection(adapter.getPosition(collectionReference.document("filters").get().toString()));
+        collectionReference.document("filters").addSnapshotListener((documentSnapshot, e) -> {
+            if (documentSnapshot != null)
+                bookGenresSpinner.setSelection(bookAdapter.getPosition(documentSnapshot.getString("bookGenre")));
+            else
+                Log.d("TAG", "NULL in setter");
+        });
 
 
         //Film Spinner initialization
@@ -73,7 +95,6 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
         );
         filmAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         filmGenresSpinner.setAdapter(filmAdapter);
-        filmGenresSpinner.setSelection(filmAdapter.getPosition(sharedPreferences.getString("filmGenre", "Drama")));
         filmGenresSpinner.setEnabled(false);
 
 
@@ -81,11 +102,19 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
         bookDigit.setMaxValue(10);
         filmDigit.setMinValue(5);
         filmDigit.setMaxValue(20);
-        filmDigit.setValue(sharedPreferences.getInt("filmDigit", 10));
-        bookDigit.setValue(sharedPreferences.getInt("bookDigit", 10));
+
+        collectionReference.document("filters").get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot != null) {
+                filmGenresSpinner.setSelection(filmAdapter.getPosition(Optional.ofNullable(documentSnapshot.getString("filmGenre")).orElse("War")));
+                bookGenresSpinner.setSelection(bookAdapter.getPosition(Optional.ofNullable(documentSnapshot.getString("bookGenre")).orElse("drama")));
+                filmDigit.setValue(Optional.ofNullable(documentSnapshot.getLong("filmDigit")).orElse(10L).intValue());
+                bookDigit.setValue(Optional.ofNullable(documentSnapshot.getLong("bookDigit")).orElse(10L).intValue());
+            }
+            else
+                Log.d("TAG", "NULL in setter");
+        });
 
         start();
-
     }
 
     private void start() {
@@ -98,7 +127,10 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
 
         sortByGenres.setOnCheckedChangeListener((compoundButton, b) -> filmGenresSpinner.setEnabled(compoundButton.isChecked()));
 
-        applySettings.setOnClickListener(view -> saveOptions());
+        applySettings.setOnClickListener(view -> {
+            saveOptions();
+            startActivity(new Intent(this, EntertainmentActivity.class));
+        });
 
         bookGenresSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -129,25 +161,25 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
 
 
     private void saveOptions() {
-        editor.putInt("bookDigit", bookDigit.getValue());
-        editor.putInt("filmDigit", filmDigit.getValue());
-        editor.putString("bookGenre", bookGenre);
-
+        DocumentReference documentReference = collectionReference.document("filters");
+        Map<String, Object> settings = new HashMap<>();
+        settings.put("bookGenre", bookGenre);
+        settings.put("filmGenre", filmGenre);
+        settings.put("bookDigit", bookDigit.getValue());
+        settings.put("filmDigit", filmDigit.getValue());
         if (sortByValues.isChecked()) {
+            settings.put("filmSortingMethod", "sortByValues");
             if (sortingGroup.getCheckedRadioButtonId() != -1) {
                 int id = sortingGroup.getCheckedRadioButtonId();
                 RadioButton radioButton = findViewById(id);
-                editor.putString("filmSortingByValuesType", radioButton.getText().toString());
+                settings.put("filmSortingByValuesType", radioButton.getText().toString());
             }
         }
+        else if (sortByGenres.isChecked()){
+            settings.put("filmSortingMethod", "sortByGenres");
+            settings.put("filmGenre", filmGenre);
+        }
 
-        if (sortByGenres.isChecked()) {
-            editor.putString("filmSortingMethod", "sortByGenres");
-            editor.putString("filmGenre", filmGenre);
-        }
-        else if (sortByValues.isChecked()) {
-            editor.putString("filmSortingMethod", "sortByValues");
-        }
-        editor.apply();
+        documentReference.set(settings).addOnSuccessListener(x -> Toast.makeText(this, "Settings successfully saved", Toast.LENGTH_SHORT).show());
     }
 }

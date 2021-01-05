@@ -23,6 +23,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.mobilki.covidapp.api.*;
@@ -35,13 +40,17 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.OptionalLong;
 
 import lombok.SneakyThrows;
 
 
 public class EntertainmentActivity extends AppCompatActivity {
 
-    SharedPreferences sharedPreferences;
+    FirebaseFirestore mFirestore;
+    FirebaseUser mUser;
+    FirebaseAuth mAuth;
 
     LinearLayout filmsLayout;
     LinearLayout booksLayout;
@@ -117,6 +126,11 @@ public class EntertainmentActivity extends AppCompatActivity {
 
     private int bookDigit;
     private int filmDigit;
+    private String filmSortingMethod;
+    private String filmSortingByValuesType;
+    private String filmGenre;
+    private String bookGenre;
+    private DocumentReference filters;
 
     private GameRepository gameRepository;
 
@@ -127,8 +141,14 @@ public class EntertainmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entertainment);
 
-        sharedPreferences = getApplication().getSharedPreferences("Prefs", Context.MODE_PRIVATE);
+        mFirestore = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        filters = mFirestore.collection("users").document(mUser.getUid()).collection("settings").document("filters");
+
         gameRepository = new GameRepository();
+        imdbApi = new ImdbApi();
+        googleApi = new GoogleBooksApi();
 
         Toolbar mToolbar = findViewById(R.id.finalToolbar);
         setSupportActionBar(mToolbar);
@@ -139,38 +159,24 @@ public class EntertainmentActivity extends AppCompatActivity {
 
         inflater = LayoutInflater.from(this);
 
-        bookDigit = sharedPreferences.getInt("bookDigit", 10);
-        filmDigit = sharedPreferences.getInt("filmDigit", 10);
 
-        booksFieldInitialization(bookDigit);
-        filmsFieldInitialization(filmDigit);
-        gamesFieldInitialization();
-
-        setFilms(filmDigit);
-        setBooks(bookDigit);
-        setGames();
-        imdbApi = new ImdbApi();
-        googleApi = new GoogleBooksApi();
-
-        genresSetter = new Thread(new GenresSetter(imdbApi), "genresSetter");
-        genresSetter.start();
-        genresSetter.join();
-
-        if (sharedPreferences.getString("filmSortingMethod", "KK").equals("sortByValues")) {
-            filmByValuesSorter = new Thread(new FilmByValuesSorter(imdbApi, getSortingValue(Objects.requireNonNull(sharedPreferences.getString("filmSortingByValuesType", "Most popular"))), filmDigit), "filmValuesSorter");
-            filmByValuesSorter.start();
-            filmByValuesSorter.join(3000L);
-        } else {
-            filmByGenresSorter = new Thread(new FilmByGenresSorter(imdbApi, sharedPreferences.getString("filmGenre", "Drama"), filmDigit), "filmGenresSorter");
-            filmByGenresSorter.start();
-            filmByGenresSorter.join(3000L);
-        }
-        googleApi.getByGenre(sharedPreferences.getString("bookGenre", "drama"), bookDigit);
-
-        initiateFilms(sharedPreferences.getInt("filmDigit", 10));
-        initiateBooks(sharedPreferences.getInt("bookDigit", 10));
-
-        fetchGames();
+        filters.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot != null) {
+                filmDigit = Optional.ofNullable(documentSnapshot.getLong("filmDigit")).orElse(10L).intValue();
+                bookDigit = Optional.ofNullable(documentSnapshot.getLong("bookDigit")).orElse(10L).intValue();
+                filmSortingMethod = Optional.ofNullable(documentSnapshot.getString("filmSortingMethod")).orElse("sortByValues");
+                filmSortingByValuesType = Optional.ofNullable(documentSnapshot.getString("filmSortingByValuesType")).orElse("Most popular");
+                filmGenre = Optional.ofNullable(documentSnapshot.getString("filmGenre")).orElse("War");
+                bookGenre = Optional.ofNullable(documentSnapshot.getString("bookGenre")).orElse("drama");
+                try {
+                    setUp();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            else
+                Log.d("TAG", "NULL in setters");
+        });
     }
 
 
@@ -191,44 +197,48 @@ public class EntertainmentActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        filmDigit = sharedPreferences.getInt("filmDigit", 10);
-        bookDigit = sharedPreferences.getInt("bookDigit", 10);
 
         if (id == R.id.menuEntertainmentSettings) {
             startActivity(new Intent(this, EntertainmentSettingsActivity.class));
             return true;
-        } else if (id == R.id.menuEntertainmentRefresh) {
-            if (sharedPreferences.getString("filmSortingMethod", "KK").equals("sortByValues")) {
-                filmByValuesSorter = new FilmByValuesSorter(imdbApi, getSortingValue(Objects.requireNonNull(sharedPreferences.getString("filmSortingByValuesType", "Most popular"))), filmDigit);
-                filmByValuesSorter.start();
-                try {
-                    filmByValuesSorter.join(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                filmByGenresSorter = new FilmByGenresSorter(imdbApi, sharedPreferences.getString("filmGenre", "Drama"), filmDigit);
-                filmByGenresSorter.start();
-                try {
-                    filmByGenresSorter.join(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-            }
-            filmsFieldInitialization(filmDigit);
-            setFilms(filmDigit);
-            initiateFilms(filmDigit);
-
-            googleApi.getByGenre(sharedPreferences.getString("bookGenre", "drama"), bookDigit);
-            booksFieldInitialization(bookDigit);
-            setBooks(bookDigit);
-            initiateBooks(bookDigit);
-
-            setPhotosClickable();
+        }
+        else if (id == R.id.menuEntertainmentBack) {
+            startActivity(new Intent(this, MainActivity.class));
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void setUp() throws InterruptedException {
+        booksFieldInitialization(bookDigit);
+        filmsFieldInitialization(filmDigit);
+        gamesFieldInitialization();
+
+        setFilms(filmDigit);
+        setBooks(bookDigit);
+        setGames();
+
+        genresSetter = new Thread(new GenresSetter(imdbApi), "genresSetter");
+        genresSetter.start();
+        genresSetter.join();
+
+        if (filmSortingMethod.equals("sortByValues")) {
+            filmByValuesSorter = new Thread(new FilmByValuesSorter(imdbApi, getSortingValue(filmSortingByValuesType), filmDigit), "filmValuesSorter");
+            filmByValuesSorter.start();
+            filmByValuesSorter.join(3000L);
+        } else {
+            filmByGenresSorter = new Thread(new FilmByGenresSorter(imdbApi, filmGenre, filmDigit), "filmGenresSorter");
+            filmByGenresSorter.start();
+            filmByGenresSorter.join(3000L);
+        }
+        googleApi.getByGenre(bookGenre, bookDigit);
+
+        initiateFilms(filmDigit);
+        initiateBooks(bookDigit);
+
+        fetchGames();
     }
 
     private FilmSortingType getSortingValue(String type) {
@@ -809,7 +819,7 @@ public class EntertainmentActivity extends AppCompatActivity {
     }
 
     private void setPhotosClickable() {
-        for (int i = 0; i < sharedPreferences.getInt("filmDigit", 10); i++) {
+        for (int i = 0; i < filmDigit; i++) {
             int finalFilmI = i;
             filmPhotosList[i].setOnClickListener(view -> {
                 Intent intent = new Intent(this, FilmDetailsActivity.class);
@@ -819,7 +829,7 @@ public class EntertainmentActivity extends AppCompatActivity {
             });
         }
 
-        for (int i = 0; i < sharedPreferences.getInt("bookDigit", 10); i++) {
+        for (int i = 0; i < bookDigit; i++) {
             int finalBookI = i;
             bookPhotosList[i].setOnClickListener(view -> {
                 Intent intent = new Intent(this, BookDetailsActivity.class);

@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         resendVerification = findViewById(R.id.resendVerification);
         resendVerificationTxt = findViewById(R.id.resendVerificationTxt);
         user = firebaseAuth.getCurrentUser();
-        //GamesFiller.fillDataBase();
 
         start();
     }
