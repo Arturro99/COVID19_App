@@ -17,9 +17,9 @@
         android:orderInCategory="1"/>
 
     <item
-        android:id="@+id/menuEntertainmentRefresh"
+        android:id="@+id/menuEntertainmentBack"
         android:title="Notifications"
-        android:icon="@drawable/refresh"
+        android:icon="@drawable/back"
         app:showAsAction="always"
         android:orderInCategory="0"/>
 
