@@ -20,7 +20,8 @@
             android:layout_height="wrap_content"
             android:text="Filmy"
             android:textSize="40sp"
-            android:layout_below="@id/finalToolbar"/>
+            android:layout_below="@id/finalToolbar"
+            android:fontFamily="@font/aclonica"/>
 
         <HorizontalScrollView
             android:id="@+id/moviesScrollView"
@@ -44,7 +45,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/moviesScrollView"
             android:text="Książki"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            android:fontFamily="@font/aclonica"/>
 
         <HorizontalScrollView
             android:id="@+id/booksScrollView"
@@ -68,7 +70,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/booksScrollView"
             android:text="Gry familijne"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            android:fontFamily="@font/aclonica"/>
 
         <HorizontalScrollView
             android:id="@+id/gamesScrollView"
