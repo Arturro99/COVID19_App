@@ -35,51 +35,9 @@ public class GoogleBooksApi {
     private static JSONObject jsonObject;
     private BookRepository bookRepository = new BookRepository();
 
-//    public void getDetails(String filmId) {
-//        Request request = new Request.Builder()
-//                .url(imgFirstPartUrl + "/volumes?q" + filmId)
-//                .get()
-//                .build();
-//
-//        client.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                try {
-//                    throw new incorrectRequestException("Incorrect request.");
-//                } catch (incorrectRequestException ex) {
-//                    ex.printStackTrace();
-//                }
-//            }
-//
-//            @RequiresApi(api = Build.VERSION_CODES.R)
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                if (response.body() != null) {
-//                    jsonString = response.body().string();
-//                    try {
-//                        jsonObject = new JSONObject(jsonString);
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                } else {
-//                    try {
-//                        throw new emptyResponseBodyException("Empty body in response.");
-//                    } catch (emptyResponseBodyException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//                try {
-//                    printLog(jsonObject);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//    }
-
-    public void getByGenre(String genre, int bookDigit) throws InterruptedException {
+    public void getByGenre(String genre, int bookDigit, String language) throws InterruptedException {
         Request request = new Request.Builder()
-                .url(imgFirstPartUrl + "/volumes?q=subject:" + genre)
+                .url(imgFirstPartUrl + "/volumes?q=subject:" + genre + "&langRestrict=" + language)
                 .get()
                 .build();
 
@@ -133,7 +91,8 @@ public class GoogleBooksApi {
             book.setTitle(o.getJSONObject("volumeInfo").getString("title"));
             JSONObject volumeInfo = o.getJSONObject("volumeInfo");
             if (volumeInfo.has("publishedDate")) {
-                book.setPublicationDate(volumeInfo.getString("publishedDate"));
+                book.setPublicationDate(volumeInfo.getString("publishedDate").length() > 10 ?
+                        volumeInfo.getString("publishedDate").substring(0, 10) : volumeInfo.getString("publishedDate"));
             }
             else {
                 book.setPublicationDate("no data");

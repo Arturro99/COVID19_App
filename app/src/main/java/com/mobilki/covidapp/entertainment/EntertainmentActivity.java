@@ -229,7 +229,7 @@ public class EntertainmentActivity extends AppCompatActivity {
             filmByGenresSorter.start();
             filmByGenresSorter.join(3000L);
         }
-        googleApi.getByGenre(bookGenre, bookDigit);
+        googleApi.getByGenre(bookGenre, bookDigit, "pl");
 
         initiateFilms(filmDigit);
         initiateBooks(bookDigit);
