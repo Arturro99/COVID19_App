@@ -1,4 +1,4 @@
-package com.mobilki.covidapp;
+package com.mobilki.covidapp.entertainment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -7,9 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,19 +15,18 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.mobilki.covidapp.MainActivity;
+import com.mobilki.covidapp.R;
 import com.mobilki.covidapp.api.*;
 import com.mobilki.covidapp.api.customThreads.FilmByGenresSorter;
 import com.mobilki.covidapp.api.customThreads.FilmByValuesSorter;
@@ -39,9 +36,7 @@ import com.mobilki.covidapp.api.repository.GameRepository;
 import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.OptionalLong;
 
 import lombok.SneakyThrows;
 
@@ -198,15 +193,16 @@ public class EntertainmentActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.menuEntertainmentSettings) {
-            startActivity(new Intent(this, EntertainmentSettingsActivity.class));
-            return true;
+        switch(id) {
+            case (R.id.menuEntertainmentSettings):
+                startActivity(new Intent(this, EntertainmentSettingsActivity.class));
+                return true;
+            case (R.id.menuEntertainmentBack):
+                startActivity(new Intent(this, MainActivity.class));
+                return true;
+            case (R.id.menuEntertainmentNotifications):
+                startActivity(new Intent(this, EntertainmentNotificationsActivity.class));
         }
-        else if (id == R.id.menuEntertainmentBack) {
-            startActivity(new Intent(this, MainActivity.class));
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
