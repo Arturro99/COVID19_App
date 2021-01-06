@@ -114,7 +114,7 @@ public class EntertainmentNotificationsActivity extends AppCompatActivity {
             notifications.put("enableSound", enableSound.isChecked());
             notifications.put("hour", hourPicker.getValue());
             notifications.put("minute", minutePicker.getValue());
-            NotificationHelper.setNotification(getApplicationContext(), hourPicker.getValue(), minutePicker.getValue(), "Ogłoszenie parafialne", "Co łaska", enableSound.isChecked(), enableVibrations.isChecked());
+            NotificationHelper.setNotification(getApplicationContext(), hourPicker.getValue(), minutePicker.getValue(), "Notyfikacja o rozrywce", "Weź coś obejrz", enableSound.isChecked(), enableVibrations.isChecked());
         }
         documentReference.set(notifications).addOnSuccessListener(x -> Toast.makeText(this, "Settings saved", Toast.LENGTH_SHORT).show());
     }

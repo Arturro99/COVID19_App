@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -51,6 +52,8 @@ public class EntertainmentActivity extends AppCompatActivity {
     LinearLayout booksLayout;
     LinearLayout gamesLayout;
     LayoutInflater inflater;
+
+    ProgressBar mProgressBar;
 
 
     //FILMS
@@ -152,8 +155,11 @@ public class EntertainmentActivity extends AppCompatActivity {
         booksLayout = findViewById(R.id.booksLinearLayout);
         gamesLayout = findViewById(R.id.gamesLinearLayout);
 
+        mProgressBar = findViewById(R.id.loading);
+
         inflater = LayoutInflater.from(this);
 
+        mProgressBar.setVisibility(View.VISIBLE);
 
         filters.get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot != null) {
@@ -177,7 +183,6 @@ public class EntertainmentActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void start() {
-
         setPhotosClickable();
     }
 
@@ -229,12 +234,13 @@ public class EntertainmentActivity extends AppCompatActivity {
             filmByGenresSorter.start();
             filmByGenresSorter.join(3000L);
         }
-        googleApi.getByGenre(bookGenre, bookDigit, "pl");
+        googleApi.getByGenre(bookGenre, bookDigit, "en");
 
         initiateFilms(filmDigit);
         initiateBooks(bookDigit);
 
         fetchGames();
+        mProgressBar.setVisibility(View.GONE);
     }
 
     private FilmSortingType getSortingValue(String type) {

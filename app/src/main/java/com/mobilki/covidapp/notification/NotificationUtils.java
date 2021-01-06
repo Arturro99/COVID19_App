@@ -26,8 +26,6 @@ public class NotificationUtils extends ContextWrapper {
 
     String pkgName = "notification.channel";
 
-    Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
 
     public NotificationUtils(Context context) {
         super(context);
@@ -56,20 +54,14 @@ public class NotificationUtils extends ContextWrapper {
     public void createChannel(String CHANNEL_ID, String CHANNEL_NAME, boolean enableVibrations, boolean enableSound) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // create android channel
-            NotificationChannel newChannel;
+            NotificationChannel newChannel = new NotificationChannel(CHANNEL_ID,
+                    CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
             if (enableSound) {
                 Log.d("TAG", "createChannel: with sound");
-                newChannel = new NotificationChannel(CHANNEL_ID,
-                        CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
-                newChannel.setSound(alarmSound, new AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
-                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .build());
             }
             else {
                 Log.d("TAG", "createChannel: no sound");
-                newChannel = new NotificationChannel(CHANNEL_ID,
-                        CHANNEL_NAME, NotificationManager.IMPORTANCE_LOW);
+                newChannel.setSound(null, null);
             }
             // Sets whether notifications posted to this channel should display notification lights
             newChannel.enableLights(true);
