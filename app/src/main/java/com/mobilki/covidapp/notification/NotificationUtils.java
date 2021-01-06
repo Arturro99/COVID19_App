@@ -8,7 +8,11 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.AudioAttributes;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
@@ -21,6 +25,8 @@ public class NotificationUtils extends ContextWrapper {
     String DEFAULT_CHANNEL_NAME = "DEFAULT CHANNEL";
 
     String pkgName = "notification.channel";
+
+    Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
 
     public NotificationUtils(Context context) {
@@ -39,6 +45,36 @@ public class NotificationUtils extends ContextWrapper {
             newChannel.enableLights(true);
             // Sets whether notification posted to this channel should vibrate.
             newChannel.enableVibration(true);
+            // Sets the notification light color for notifications posted to this channel
+            newChannel.setLightColor(Color.GREEN);
+            // Sets whether notifications posted to this channel appear on the lockscreen or not
+            newChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+            getNotificationManager().createNotificationChannel(newChannel);
+        }
+    }
+
+    public void createChannel(String CHANNEL_ID, String CHANNEL_NAME, boolean enableVibrations, boolean enableSound) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // create android channel
+            NotificationChannel newChannel;
+            if (enableSound) {
+                Log.d("TAG", "createChannel: with sound");
+                newChannel = new NotificationChannel(CHANNEL_ID,
+                        CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+                newChannel.setSound(alarmSound, new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build());
+            }
+            else {
+                Log.d("TAG", "createChannel: no sound");
+                newChannel = new NotificationChannel(CHANNEL_ID,
+                        CHANNEL_NAME, NotificationManager.IMPORTANCE_LOW);
+            }
+            // Sets whether notifications posted to this channel should display notification lights
+            newChannel.enableLights(true);
+            // Sets whether notification posted to this channel should vibrate.
+            newChannel.enableVibration(enableVibrations);
             // Sets the notification light color for notifications posted to this channel
             newChannel.setLightColor(Color.GREEN);
             // Sets whether notifications posted to this channel appear on the lockscreen or not
