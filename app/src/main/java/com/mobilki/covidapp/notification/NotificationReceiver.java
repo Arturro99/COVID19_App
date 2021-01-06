@@ -19,6 +19,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         final NotificationUtils notificationUtils = new NotificationUtils(context);
         notificationUtils.createChannel(PERSONAL_CHANNEL_ID, "PERSONAL");
         createCustomNotification(notificationUtils , context, intent);
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

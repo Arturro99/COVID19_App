@@ -106,7 +106,7 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         exerciseSetBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, ExerciseSet.class)));
         //ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(HealthActivity.this, findViewById(R.id.textView3), HealthDataActivity.VIEW_NAME_HEADER_TITLE);
         addDataBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, HealthDataActivity.class)));
-        notificationsSettingsBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, NotificationHealth.class)));
+        notificationsSettingsBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, HealthNotification.class)));
         setEntries();
         fetchExercises();
     }

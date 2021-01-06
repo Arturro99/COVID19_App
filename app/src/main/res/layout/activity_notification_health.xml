@@ -2,34 +2,184 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/czas"
-        android:layout_width="260dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="520dp"
-        android:ems="10"
-        android:inputType="time"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.105"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.219" />
-
-    <Button
-        android:id="@+id/button2"
+    <Switch
+        android:id="@+id/enableNotiExercises"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="27dp"
-        android:layout_marginBottom="520dp"
-        android:text="noti"
+        android:fontFamily="@font/aclonica"
+        android:text="Enable notifications \n exercises"
+        android:textAlignment="center"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.617"
-        app:layout_constraintStart_toEndOf="@+id/czas"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.054" />
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.478"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/exerGroupNoti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="chooseTimeTxt3,minutesExer,hoursExer,setNotiExer,colon3"
+        tools:visibility="visible" />
+
+    <NumberPicker
+        android:id="@+id/minutesExer"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:scaleX="0.9"
+        android:scaleY="0.9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.57"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enableNotiExercises"
+        app:layout_constraintVertical_bias="0.214" />
+
+    <Button
+        android:id="@+id/setNotiExer"
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+        android:text="Set"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.442"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colon3"
+        app:layout_constraintVertical_bias="0.17" />
+
+    <NumberPicker
+        android:id="@+id/hoursExer"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:scaleX="0.9"
+        android:scaleY="0.9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.334"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enableNotiExercises"
+        app:layout_constraintVertical_bias="0.214" />
+
+    <TextView
+        android:id="@+id/colon3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/aclonica"
+        android:text=":"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/minutesExer"
+        app:layout_constraintHorizontal_bias="0.266"
+        app:layout_constraintStart_toEndOf="@+id/hoursExer"
+        app:layout_constraintTop_toTopOf="@+id/hoursExer" />
+
+    <TextView
+        android:id="@+id/chooseTimeTxt3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/aclonica"
+        android:text="Choose time"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/colon3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.459"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enableNotiExercises"
+        app:layout_constraintVertical_bias="0.442" />
+
+    <Switch
+        android:id="@+id/enableNotiWater"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/aclonica"
+        android:text="Enable notifications \n water"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.063"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/waterGroupNoti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="setWaterNoti,colon2,hoursWater,chooseTimeTxt2,minutesWater"
+        tools:visibility="visible" />
+
+    <NumberPicker
+        android:id="@+id/minutesWater"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:scaleX="0.9"
+        android:scaleY="0.9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.57"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enableNotiWater"
+        app:layout_constraintVertical_bias="0.091" />
+
+    <NumberPicker
+        android:id="@+id/hoursWater"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:scaleX="0.9"
+        android:scaleY="0.9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.334"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enableNotiWater"
+        app:layout_constraintVertical_bias="0.089" />
+
+    <Button
+        android:id="@+id/setWaterNoti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.442"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colon2"
+        app:layout_constraintVertical_bias="0.08" />
+
+    <TextView
+        android:id="@+id/chooseTimeTxt2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/aclonica"
+        android:text="Choose time"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/colon2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.459"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enableNotiWater"
+        app:layout_constraintVertical_bias="0.346" />
+
+    <TextView
+        android:id="@+id/colon2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/aclonica"
+        android:text=":"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/minutesWater"
+        app:layout_constraintEnd_toStartOf="@+id/minutesWater"
+        app:layout_constraintStart_toEndOf="@+id/hoursWater"
+        app:layout_constraintTop_toTopOf="@+id/hoursWater"
+        app:layout_constraintVertical_bias="0.395" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

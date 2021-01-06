@@ -13,8 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".entertainment.EntertainmentNotificationsActivity"></activity>
-        <activity android:name=".health.NotificationHealth" />
+        <activity android:name=".entertainment.EntertainmentNotificationsActivity" />
+        <activity android:name=".health.HealthNotification" />
         <activity android:name=".authentication.Login" />
         <activity android:name=".authentication.Register">
             <intent-filter>
