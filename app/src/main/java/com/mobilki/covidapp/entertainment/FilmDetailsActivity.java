@@ -1,4 +1,4 @@
-package com.mobilki.covidapp;
+package com.mobilki.covidapp.entertainment;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.mobilki.covidapp.R;
 import com.mobilki.covidapp.api.imageslistview.CustomAdapter;
 import com.mobilki.covidapp.api.model.Actor;
 import com.mobilki.covidapp.api.model.Film;

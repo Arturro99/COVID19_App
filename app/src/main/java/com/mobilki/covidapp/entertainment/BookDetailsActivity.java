@@ -1,4 +1,4 @@
-package com.mobilki.covidapp;
+package com.mobilki.covidapp.entertainment;
 
 import androidx.appcompat.app.AppCompatActivity;
 

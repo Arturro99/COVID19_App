@@ -1,4 +1,4 @@
-package com.mobilki.covidapp;
+package com.mobilki.covidapp.entertainment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 
+import com.mobilki.covidapp.R;
 import com.mobilki.covidapp.api.model.Game;
 
 public class GameDetailsActivity extends AppCompatActivity {
