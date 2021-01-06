@@ -13,24 +13,38 @@ public class ExerciseRepository {
     public static List<Exercise> exercisesShouldersStretching = new ArrayList<>();
     public static List<Exercise> exercisesWristNormal = new ArrayList<>();
     public static List<Exercise> exercisesWristStretching = new ArrayList<>();
+    public static List<Exercise> exercisesBackNormal = new ArrayList<>();
+    public static List<Exercise> exercisesBackStretching = new ArrayList<>();
+    public static List<Exercise> exercisesStomachNormal = new ArrayList<>();
+    public static List<Exercise> exercisesStomachStretching = new ArrayList<>();
+    public static List<Exercise> exercisesKneesNormal = new ArrayList<>();
+    public static List<Exercise> exercisesKneesStretching = new ArrayList<>();
 
 
     public static void add(String id, String normal, Exercise exercises) {
         if (normal.equals("normal")) {
             if (id.equals("shoulders")) {
                 exercisesShouldersNormal.add(exercises);
-                System.out.println("1");
             } else if (id.equals("wrist")) {
                 exercisesWristNormal.add(exercises);
-                System.out.println("2");
+            } else if (id.equals("back")) {
+                exercisesBackNormal.add(exercises);
+            } else if (id.equals("stomach")) {
+                exercisesStomachNormal.add(exercises);
+            } else if (id.equals("knees")) {
+                exercisesKneesNormal.add(exercises);
             }
         } else {
             if (id.equals("shoulders")) {
                 exercisesShouldersStretching.add(exercises);
-                System.out.println("3");
             } else if (id.equals("wrist")) {
                 exercisesWristStretching.add(exercises);
-                System.out.println("4");
+            } else if (id.equals("back")) {
+                exercisesBackStretching.add(exercises);
+            } else if (id.equals("stomach")) {
+                exercisesStomachStretching.add(exercises);
+            } else if (id.equals("knees")) {
+                exercisesKneesStretching.add(exercises);
             }
         }
     }
