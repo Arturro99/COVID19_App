@@ -1,13 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="backgroundColor">@color/colorBackgroundLight</item>
+        <item name="textColor">@color/colorTextLight</item>
+        <item name="defaultColor">@color/colorDefaultLight</item>
         <item name="android:windowActivityTransitions">true</item>
-<!--        <item name="android:windowEnterTransition">@transition/explode</item>
-<item name="android:windowExitTransition">@transition/explode</item>-->
         <item name="android:windowSharedElementEnterTransition" tools:ignore="NewApi">
             @transition/grid_detail_transition
         </item>
@@ -16,8 +14,24 @@
         </item>
     </style>
 
-    <style name="AppTheme.CustomTheme">
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowCloseOnTouchOutside">false</item>
+    <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="backgroundColor">@color/colorBackgroundDark</item>
+        <item name="textColor">@color/colorTextDark</item>
+        <item name="defaultColor">@color/colorDefaultDark</item>
+        <item name="android:background">@color/colorBackgroundDark</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:buttonStyle">@style/ButtonStyle</item>
+        <item name="android:windowSharedElementEnterTransition" tools:ignore="NewApi">
+            @transition/grid_detail_transition
+        </item>
+        <item name="android:windowSharedElementExitTransition" tools:ignore="NewApi">
+            @transition/grid_detail_transition
+        </item>
+    </style>
+
+    <style name="ButtonStyle" parent="TextAppearance.AppCompat.Widget.Button">
+        <item name="android:background">@drawable/button_shape</item>
+        <item name="android:textColor">?attr/textColor</item>
+        <item name="android:textAlignment">center</item>
     </style>
 </resources>
