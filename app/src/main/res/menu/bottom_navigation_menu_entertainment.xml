@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/filmPage"
+        android:enabled="true"
+        android:icon="@drawable/placeholder"
+        android:title="Films"/>
+    <item
+        android:id="@+id/bookPage"
+        android:enabled="true"
+        android:icon="@drawable/placeholder"
+        android:title="Books"/>
+    <item
+        android:id="@+id/gamePage"
+        android:enabled="true"
+        android:icon="@drawable/placeholder"
+        android:title="Games"/>
+</menu>

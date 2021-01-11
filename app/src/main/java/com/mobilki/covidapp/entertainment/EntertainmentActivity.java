@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Build;
@@ -21,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -34,6 +37,7 @@ import com.mobilki.covidapp.api.customThreads.FilmByValuesSorter;
 import com.mobilki.covidapp.api.customThreads.GenresSetter;
 import com.mobilki.covidapp.api.model.Game;
 import com.mobilki.covidapp.api.repository.GameRepository;
+import com.mobilki.covidapp.entertainment.fragments.FilmFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
@@ -54,6 +58,7 @@ public class EntertainmentActivity extends AppCompatActivity {
     LayoutInflater inflater;
 
     ProgressBar mProgressBar;
+    BottomNavigationView bottomNavigationView;
 
 
     //FILMS
@@ -139,6 +144,11 @@ public class EntertainmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entertainment);
 
+//            getSupportFragmentManager().beginTransaction()
+//                    .setReorderingAllowed(true)
+//                    .add(R.id.filmsLinearLayout, new FilmFragment())
+//                    .commit();
+
         mFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -150,6 +160,7 @@ public class EntertainmentActivity extends AppCompatActivity {
 
         Toolbar mToolbar = findViewById(R.id.finalToolbar);
         setSupportActionBar(mToolbar);
+        bottomNavigationView = findViewById(R.id.bottomNavigation);
 
         filmsLayout = findViewById(R.id.filmsLinearLayout);
         booksLayout = findViewById(R.id.booksLinearLayout);
@@ -183,7 +194,18 @@ public class EntertainmentActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void start() {
+
         setPhotosClickable();
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+//            switch (item.getItemId()) {
+//                case (R.id.filmPage) {
+//                    fragmentManager.beginTransaction().replace()
+//                    break;
+//                }
+//            }
+//        });
+
     }
 
     @Override
@@ -389,10 +411,11 @@ public class EntertainmentActivity extends AppCompatActivity {
         ConstraintLayout constraintLayout;
 
 
-        filmsLayout.removeAllViews();
         for (int i = 0; i < filmDigit; i++) {
-            View anotherLayout = inflater.inflate(R.layout.film_overview, null, true);
-            filmsLayout.addView(anotherLayout);
+//            View anotherLayout = inflater.inflate(R.layout.film_overview, null, true);
+//            filmsLayout.addView(anotherLayout);
+
+            switchFragment(new FilmFragment());
 
             filmConstraintLayoutList[i] = findViewById(R.id.movieConstraintLayout);
             filmTitleList[i] = findViewById(R.id.filmTitle);
@@ -850,6 +873,13 @@ public class EntertainmentActivity extends AppCompatActivity {
                 startActivity(intent);
             });
         }
+    }
+
+    private void switchFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .add(R.id.filmsLinearLayout, fragment)
+                .commitNow();
     }
 
 }

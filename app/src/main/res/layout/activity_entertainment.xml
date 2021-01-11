@@ -105,6 +105,13 @@
             android:layout_centerHorizontal="true"
             android:visibility="invisible"/>
 
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/bottom_navigation_menu_entertainment"
+            android:layout_alignParentBottom="true"/>
+
     </RelativeLayout>
 
 </ScrollView>
