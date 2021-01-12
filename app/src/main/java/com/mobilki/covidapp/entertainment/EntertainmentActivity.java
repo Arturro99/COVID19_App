@@ -35,9 +35,12 @@ import com.mobilki.covidapp.api.*;
 import com.mobilki.covidapp.api.customThreads.FilmByGenresSorter;
 import com.mobilki.covidapp.api.customThreads.FilmByValuesSorter;
 import com.mobilki.covidapp.api.customThreads.GenresSetter;
+import com.mobilki.covidapp.api.model.Book;
 import com.mobilki.covidapp.api.model.Game;
 import com.mobilki.covidapp.api.repository.GameRepository;
+import com.mobilki.covidapp.entertainment.fragments.BookFragment;
 import com.mobilki.covidapp.entertainment.fragments.FilmFragment;
+import com.mobilki.covidapp.entertainment.fragments.GameFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
@@ -60,26 +63,6 @@ public class EntertainmentActivity extends AppCompatActivity {
     ProgressBar mProgressBar;
     BottomNavigationView bottomNavigationView;
 
-
-    //FILMS
-    TextView[] filmTitleList;
-    TextView[] filmGenresList;
-
-    ImageButton[] filmPhotosList;
-
-    TextView[] filmDirectorList;
-    TextView[] filmDirectorTxtList;
-
-    TextView[] filmReleaseYearList;
-    TextView[] filmReleaseYearTxtList;
-
-    TextView[] filmDurationList;
-    TextView[] filmDurationTxtList;
-
-    TextView[] filmRatingList;
-    TextView[] filmRatingTxtList;
-
-    ConstraintLayout[] filmConstraintLayoutList;
     /////////////////////////////////////////////////////////
 
     //BOOKS
@@ -137,17 +120,16 @@ public class EntertainmentActivity extends AppCompatActivity {
 
     private GameRepository gameRepository;
 
+    private FilmFragment filmFragment;
+    private BookFragment bookFragment;
+    private GameFragment gameFragment;
+
     @SneakyThrows
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entertainment);
-
-//            getSupportFragmentManager().beginTransaction()
-//                    .setReorderingAllowed(true)
-//                    .add(R.id.filmsLinearLayout, new FilmFragment())
-//                    .commit();
 
         mFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -157,6 +139,7 @@ public class EntertainmentActivity extends AppCompatActivity {
         gameRepository = new GameRepository();
         imdbApi = new ImdbApi();
         googleApi = new GoogleBooksApi();
+
 
         Toolbar mToolbar = findViewById(R.id.finalToolbar);
         setSupportActionBar(mToolbar);
@@ -194,18 +177,30 @@ public class EntertainmentActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void start() {
-
         setPhotosClickable();
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-//            switch (item.getItemId()) {
-//                case (R.id.filmPage) {
-//                    fragmentManager.beginTransaction().replace()
-//                    break;
-//                }
-//            }
-//        });
-
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case (R.id.filmPage): {
+                        switchFragment(filmFragment);
+                        Log.d("TAG", "onNavigationItemSelected: FILM");
+                        return true;
+                    }
+                    case (R.id.bookPage): {
+                        switchFragment(new BookFragment());
+                        Log.d("TAG", "onNavigationItemSelected: BOOK");
+                        return true;
+                    }
+                    case (R.id.gamePage): {
+                        switchFragment(new GameFragment());
+                        Log.d("TAG", "onNavigationItemSelected: GAME");
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -236,10 +231,8 @@ public class EntertainmentActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setUp() throws InterruptedException {
         booksFieldInitialization(bookDigit);
-        filmsFieldInitialization(filmDigit);
         gamesFieldInitialization();
 
-        setFilms(filmDigit);
         setBooks(bookDigit);
         setGames();
 
@@ -258,8 +251,10 @@ public class EntertainmentActivity extends AppCompatActivity {
         }
         googleApi.getByGenre(bookGenre, bookDigit, "en");
 
-        initiateFilms(filmDigit);
         initiateBooks(bookDigit);
+
+        filmFragment = new FilmFragment(filmsLayout, 16, imdbApi);
+        switchFragment(filmFragment);
 
         fetchGames();
         mProgressBar.setVisibility(View.GONE);
@@ -300,27 +295,6 @@ public class EntertainmentActivity extends AppCompatActivity {
         bookConstraintLayoutList = new ConstraintLayout[number];
     }
 
-    private void filmsFieldInitialization(int number) {
-        filmTitleList = new TextView[number];
-        filmGenresList = new TextView[number];
-
-        filmPhotosList = new ImageButton[number];
-
-        filmDirectorList = new TextView[number];
-        filmDirectorTxtList = new TextView[number];
-
-        filmReleaseYearList = new TextView[number];
-        filmReleaseYearTxtList = new TextView[number];
-
-        filmDurationList = new TextView[number];
-        filmDurationTxtList = new TextView[number];
-
-        filmRatingList = new TextView[number];
-        filmRatingTxtList = new TextView[number];
-
-        filmConstraintLayoutList = new ConstraintLayout[number];
-    }
-
     private void gamesFieldInitialization() {
         gameTitleList = new TextView[8];
         gameGenresList = new TextView[8];
@@ -337,23 +311,6 @@ public class EntertainmentActivity extends AppCompatActivity {
         gameTimeTxtList = new TextView[8];
 
         gameConstraintLayoutList = new ConstraintLayout[8];
-    }
-
-    private void initiateFilms(int number) {
-        for (int i = 0; i < number; i++) {
-            filmTitleList[i].setText(imdbApi.getAll().get(i).getTitle());
-            filmReleaseYearList[i].setText(String.valueOf(imdbApi.getAll().get(i).getDateOfRelease()));
-            filmDurationList[i].setText(String.valueOf(imdbApi.getAll().get(i).getDuration()));
-            filmRatingList[i].setText(String.valueOf(imdbApi.getAll().get(i).getRatings()));
-            filmGenresList[i].setText(String.valueOf(imdbApi.getAll().get(i).getGenres())
-                    .replace("[", "")
-                    .replace("]", "")
-                    .replace(", ", "\n"));
-            filmDirectorList[i].setText(String.valueOf(imdbApi.getAll().get(i).getDirectors().values())
-                    .replace("[", "")
-                    .replace("]", ""));
-            Picasso.get().load(imdbApi.getAll().get(i).getImageUrl()).placeholder(R.drawable.placeholder).into(filmPhotosList[i]);
-        }
     }
 
     private void initiateBooks(int number) {
@@ -387,160 +344,7 @@ public class EntertainmentActivity extends AppCompatActivity {
         }
     }
 
-    private void setFilms(int filmDigit) {
-        int filmTitleInitiateId = 1000;
 
-        int filmReleaseYearInitiateId = 2000;
-        int filmReleaseYearTxtInitiateId = 2500;
-
-        int filmPhotoInitiateId = 3000;
-
-        int filmDirectorInitiateId = 4000;
-        int filmDirectorTxtInitiateId = 4500;
-
-        int filmDurationInitiateId = 5000;
-        int filmDurationTxtInitiateId = 5500;
-
-        int filmRatingInitiateId = 6000;
-        int filmRatingTxtInitiateId = 6500;
-
-        int filmGenresInitiateId = 7000;
-
-        int filmConstraintLayoutInitiateId = 10000;
-
-        ConstraintLayout constraintLayout;
-
-
-        for (int i = 0; i < filmDigit; i++) {
-//            View anotherLayout = inflater.inflate(R.layout.film_overview, null, true);
-//            filmsLayout.addView(anotherLayout);
-
-            switchFragment(new FilmFragment());
-
-            filmConstraintLayoutList[i] = findViewById(R.id.movieConstraintLayout);
-            filmTitleList[i] = findViewById(R.id.filmTitle);
-            filmPhotosList[i] = findViewById(R.id.mainFilmPhoto);
-            filmGenresList[i] = findViewById(R.id.filmGenres);
-
-            filmDirectorList[i] = findViewById(R.id.filmDirector);
-            filmDirectorTxtList[i] = findViewById(R.id.filmDirectorTxt);
-
-            filmRatingList[i] = findViewById(R.id.filmRating);
-            filmRatingTxtList[i] = findViewById(R.id.filmRatingTxt);
-
-            filmReleaseYearList[i] = findViewById(R.id.filmReleaseDate);
-            filmReleaseYearTxtList[i] = findViewById(R.id.filmReleaseDateTxt);
-
-            filmDurationList[i] = findViewById(R.id.filmDuration);
-            filmDurationTxtList[i] = findViewById(R.id.filmDurationTxt);
-
-
-            filmConstraintLayoutList[i].setId(filmConstraintLayoutInitiateId + i);
-            filmTitleList[i].setId(filmTitleInitiateId + i);
-            filmPhotosList[i].setId(filmPhotoInitiateId + i);
-            filmGenresList[i].setId(filmGenresInitiateId + i);
-
-            filmReleaseYearList[i].setId(filmReleaseYearInitiateId + i);
-            filmReleaseYearTxtList[i].setId(filmReleaseYearTxtInitiateId + i);
-
-            filmDirectorList[i].setId(filmDirectorInitiateId + i);
-            filmDirectorTxtList[i].setId(filmDirectorTxtInitiateId + i);
-
-            filmDurationList[i].setId(filmDurationInitiateId + i);
-            filmDurationTxtList[i].setId(filmDurationTxtInitiateId + i);
-
-            filmRatingList[i].setId(filmRatingInitiateId + i);
-            filmRatingTxtList[i].setId(filmRatingTxtInitiateId + i);
-
-            constraintLayout = findViewById(filmConstraintLayoutInitiateId + i);
-            constraintLayout.setMinWidth(1200);
-            ConstraintSet constraintSet = new ConstraintSet();
-            constraintSet.clone(constraintLayout);
-
-            //IMAGE
-            constraintSet.connect(filmPhotoInitiateId + i, ConstraintSet.START, filmPhotoInitiateId + i, ConstraintSet.START);
-            constraintSet.connect(filmPhotoInitiateId + i, ConstraintSet.TOP, filmPhotoInitiateId + i, ConstraintSet.TOP);
-
-            //TITLE
-            constraintSet.connect(filmTitleInitiateId + i, ConstraintSet.BOTTOM, filmConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
-            constraintSet.connect(filmTitleInitiateId + i, ConstraintSet.END, filmPhotoInitiateId + i, ConstraintSet.END);
-            constraintSet.connect(filmTitleInitiateId + i, ConstraintSet.START, filmPhotoInitiateId + i, ConstraintSet.START);
-            constraintSet.connect(filmTitleInitiateId + i, ConstraintSet.TOP, filmPhotoInitiateId + i, ConstraintSet.BOTTOM);
-
-
-            //DIRECTOR TXT
-            constraintSet.connect(filmDirectorTxtInitiateId + i, ConstraintSet.BOTTOM, filmConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
-            constraintSet.connect(filmDirectorTxtInitiateId + i, ConstraintSet.END, filmConstraintLayoutInitiateId + i, ConstraintSet.END);
-            constraintSet.connect(filmDirectorTxtInitiateId + i, ConstraintSet.START, filmPhotoInitiateId + i, ConstraintSet.END);
-            constraintSet.connect(filmDirectorTxtInitiateId + i, ConstraintSet.TOP, filmPhotoInitiateId + i, ConstraintSet.TOP);
-            constraintSet.setVerticalBias(filmDirectorTxtInitiateId + i, 0.05f);
-
-            //DIRECTOR
-            constraintSet.connect(filmDirectorInitiateId + i, ConstraintSet.BOTTOM, filmConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
-            constraintSet.connect(filmDirectorInitiateId + i, ConstraintSet.END, filmConstraintLayoutInitiateId + i, ConstraintSet.END);
-            constraintSet.connect(filmDirectorInitiateId + i, ConstraintSet.START, filmPhotoInitiateId + i, ConstraintSet.END);
-            constraintSet.connect(filmDirectorInitiateId + i, ConstraintSet.TOP, filmDirectorTxtInitiateId + i, ConstraintSet.BOTTOM);
-            constraintSet.setVerticalBias(filmDirectorInitiateId + i, 0.01f);
-
-            //RELEASE YEAR TXT
-            constraintSet.connect(filmReleaseYearTxtInitiateId + i, ConstraintSet.BOTTOM, filmConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
-            constraintSet.connect(filmReleaseYearTxtInitiateId + i, ConstraintSet.END, filmConstraintLayoutInitiateId + i, ConstraintSet.END);
-            constraintSet.connect(filmReleaseYearTxtInitiateId + i, ConstraintSet.START, filmPhotoInitiateId + i, ConstraintSet.END);
-            constraintSet.connect(filmReleaseYearTxtInitiateId + i, ConstraintSet.TOP, filmPhotoInitiateId + i, ConstraintSet.TOP);
-            constraintSet.setVerticalBias(filmReleaseYearTxtInitiateId + i, 0.3f);
-            constraintSet.setHorizontalBias(filmReleaseYearTxtInitiateId + i, 0.1f);
-
-            //RELEASE YEAR
-            constraintSet.connect(filmReleaseYearInitiateId + i, ConstraintSet.BOTTOM, filmConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
-            constraintSet.connect(filmReleaseYearInitiateId + i, ConstraintSet.END, filmConstraintLayoutInitiateId + i, ConstraintSet.END);
-            constraintSet.connect(filmReleaseYearInitiateId + i, ConstraintSet.START, filmPhotoInitiateId + i, ConstraintSet.END);
-            constraintSet.connect(filmReleaseYearInitiateId + i, ConstraintSet.TOP, filmPhotoInitiateId + i, ConstraintSet.TOP);
-            constraintSet.setVerticalBias(filmReleaseYearInitiateId + i, 0.3f);
-            constraintSet.setHorizontalBias(filmReleaseYearInitiateId + i, 0.6f);
-
-            //DURATION TXT
-            constraintSet.connect(filmDurationTxtInitiateId + i, ConstraintSet.BOTTOM, filmConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
-            constraintSet.connect(filmDurationTxtInitiateId + i, ConstraintSet.END, filmConstraintLayoutInitiateId + i, ConstraintSet.END);
-            constraintSet.connect(filmDurationTxtInitiateId + i, ConstraintSet.START, filmPhotoInitiateId + i, ConstraintSet.END);
-            constraintSet.connect(filmDurationTxtInitiateId + i, ConstraintSet.TOP, filmPhotoInitiateId + i, ConstraintSet.TOP);
-            constraintSet.setVerticalBias(filmDurationTxtInitiateId + i, 0.4f);
-            constraintSet.setHorizontalBias(filmDurationTxtInitiateId + i, 0.1f);
-
-            //DURATION
-            constraintSet.connect(filmDurationInitiateId + i, ConstraintSet.BOTTOM, filmConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
-            constraintSet.connect(filmDurationInitiateId + i, ConstraintSet.END, filmConstraintLayoutInitiateId + i, ConstraintSet.END);
-            constraintSet.connect(filmDurationInitiateId + i, ConstraintSet.START, filmPhotoInitiateId + i, ConstraintSet.END);
-            constraintSet.connect(filmDurationInitiateId + i, ConstraintSet.TOP, filmPhotoInitiateId + i, ConstraintSet.TOP);
-            constraintSet.setVerticalBias(filmDurationInitiateId + i, 0.4f);
-            constraintSet.setHorizontalBias(filmDurationInitiateId + i, 0.6f);
-
-            //RATINGS TXT
-            constraintSet.connect(filmRatingTxtInitiateId + i, ConstraintSet.BOTTOM, filmConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
-            constraintSet.connect(filmRatingTxtInitiateId + i, ConstraintSet.END, filmConstraintLayoutInitiateId + i, ConstraintSet.END);
-            constraintSet.connect(filmRatingTxtInitiateId + i, ConstraintSet.START, filmPhotoInitiateId + i, ConstraintSet.END);
-            constraintSet.connect(filmRatingTxtInitiateId + i, ConstraintSet.TOP, filmPhotoInitiateId + i, ConstraintSet.TOP);
-            constraintSet.setVerticalBias(filmRatingTxtInitiateId + i, 0.5f);
-            constraintSet.setHorizontalBias(filmRatingTxtInitiateId + i, 0.1f);
-
-            //RATINGS
-            constraintSet.connect(filmRatingInitiateId + i, ConstraintSet.BOTTOM, filmConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
-            constraintSet.connect(filmRatingInitiateId + i, ConstraintSet.END, filmConstraintLayoutInitiateId + i, ConstraintSet.END);
-            constraintSet.connect(filmRatingInitiateId + i, ConstraintSet.START, filmPhotoInitiateId + i, ConstraintSet.END);
-            constraintSet.connect(filmRatingInitiateId + i, ConstraintSet.TOP, filmPhotoInitiateId + i, ConstraintSet.TOP);
-            constraintSet.setVerticalBias(filmRatingInitiateId + i, 0.5f);
-            constraintSet.setHorizontalBias(filmRatingInitiateId + i, 0.6f);
-
-            //Genres
-            constraintSet.connect(filmGenresInitiateId + i, ConstraintSet.BOTTOM, filmConstraintLayoutInitiateId + i, ConstraintSet.BOTTOM);
-            constraintSet.connect(filmGenresInitiateId + i, ConstraintSet.END, filmConstraintLayoutInitiateId + i, ConstraintSet.END);
-            constraintSet.connect(filmGenresInitiateId + i, ConstraintSet.START, filmPhotoInitiateId + i, ConstraintSet.END);
-            constraintSet.connect(filmGenresInitiateId + i, ConstraintSet.TOP, filmPhotoInitiateId + i, ConstraintSet.TOP);
-            constraintSet.setVerticalBias(filmGenresInitiateId + i, 0.8f);
-            constraintSet.setHorizontalBias(filmGenresInitiateId + i, 0.1f);
-
-            constraintSet.applyTo(constraintLayout);
-        }
-    }
 
     private void setBooks(int bookDigit) {
         int bookTitleInitiateId = 11000;
@@ -846,7 +650,7 @@ public class EntertainmentActivity extends AppCompatActivity {
     private void setPhotosClickable() {
         for (int i = 0; i < filmDigit; i++) {
             int finalFilmI = i;
-            filmPhotosList[i].setOnClickListener(view -> {
+            filmFragment.getFilmPhoto(i).setOnClickListener(view -> {
                 Intent intent = new Intent(this, FilmDetailsActivity.class);
 
                 intent.putExtra("film", imdbApi.getAll().get(finalFilmI));
@@ -881,5 +685,4 @@ public class EntertainmentActivity extends AppCompatActivity {
                 .add(R.id.filmsLinearLayout, fragment)
                 .commitNow();
     }
-
 }
