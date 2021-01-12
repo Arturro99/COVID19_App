@@ -25,6 +25,10 @@
     <string name="recommended_movies_panel">Polecane filmy</string>
     <string name="recommended_books_panel">Polecane książki</string>
     <string name="familial_games_panel">Gry familijne</string>
+    <string name="director">Reżyser</string>
+    <string name="ratings">Ocena</string>
+    <string name="released">Premiera</string>
+    <string name="duration">Czas trwania</string>
 
     <!-- Common   -->
     <string name="preferences_panel">Preferencje</string>
