@@ -131,7 +131,7 @@ public class GameFragment extends Fragment implements FragmentEntity{
             gamesLayout.addView(linearLayout);
 
 
-            gameConstraintLayoutList[i].setMinWidth(1500);
+
             ConstraintSet constraintSet = new ConstraintSet();
             constraintSet.clone(gameConstraintLayoutList[i]);
 
@@ -139,10 +139,13 @@ public class GameFragment extends Fragment implements FragmentEntity{
             ((Activity)getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             int width = displayMetrics.widthPixels;
 
+            gameConstraintLayoutList[i].setMinWidth((int) Math.round(width*1.5));
+
             //IMAGE
             constraintSet.connect(gamePhotosList[i].getId(), ConstraintSet.START, gameConstraintLayoutList[i].getId(), ConstraintSet.START);
             constraintSet.connect(gamePhotosList[i].getId(), ConstraintSet.TOP, gameConstraintLayoutList[i].getId(), ConstraintSet.TOP);
             gamePhotosList[i].setMaxWidth(width/2);
+            gamePhotosList[i].setMinimumHeight(width/2);
 
             //TITLE
             constraintSet.connect(gameTitleList[i].getId(), ConstraintSet.END, gameConstraintLayoutList[i].getId(), ConstraintSet.END);
@@ -202,10 +205,9 @@ public class GameFragment extends Fragment implements FragmentEntity{
 
             //Genres
             constraintSet.connect(gameGenresList[i].getId(), ConstraintSet.BOTTOM, gameConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
-            constraintSet.connect(gameGenresList[i].getId(), ConstraintSet.END, gameConstraintLayoutList[i].getId(), ConstraintSet.END);
             constraintSet.connect(gameGenresList[i].getId(), ConstraintSet.START, gamePhotosList[i].getId(), ConstraintSet.END);
             constraintSet.connect(gameGenresList[i].getId(), ConstraintSet.TOP, gamePhotosList[i].getId(), ConstraintSet.TOP);
-            constraintSet.setVerticalBias(gameGenresList[i].getId(), 0.6f);
+            constraintSet.setVerticalBias(gameGenresList[i].getId(), 0.8f);
 
             constraintSet.applyTo(gameConstraintLayoutList[i]);
         }

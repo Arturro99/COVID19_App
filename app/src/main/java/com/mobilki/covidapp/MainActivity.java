@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.mobilki.covidapp.api.GamesFiller;
 import com.mobilki.covidapp.authentication.Login;
 import com.mobilki.covidapp.entertainment.EntertainmentActivity;
 import com.mobilki.covidapp.health.HealthActivity;

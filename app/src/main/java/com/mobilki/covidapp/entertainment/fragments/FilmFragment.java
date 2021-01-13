@@ -147,12 +147,14 @@ public class FilmFragment extends Fragment implements FragmentEntity{
             filmsLayout.addView(linearLayout);
 
             filmConstraintLayoutList[i].setMinWidth(1500);
+            filmConstraintLayoutList[i].setMinWidth(1500);
             ConstraintSet constraintSet = new ConstraintSet();
-            constraintSet.clone(filmConstraintLayoutList[i]);
 
             //IMAGE
             constraintSet.connect(filmPhotosList[i].getId(), ConstraintSet.START, filmConstraintLayoutList[i].getId(), ConstraintSet.START);
             constraintSet.connect(filmPhotosList[i].getId(), ConstraintSet.TOP, filmConstraintLayoutList[i].getId(), ConstraintSet.TOP);
+            filmPhotosList[i].setScaleX(1.5f);
+            filmPhotosList[i].setScaleY(1.5f);
 
             //TITLE
             constraintSet.connect(filmTitleList[i].getId(), ConstraintSet.END, filmConstraintLayoutList[i].getId(), ConstraintSet.END);
@@ -244,8 +246,7 @@ public class FilmFragment extends Fragment implements FragmentEntity{
             filmRatingList[i].setText(String.valueOf(imdbApi.getAll().get(i).getRatings()));
             filmGenresList[i].setText(String.valueOf(imdbApi.getAll().get(i).getGenres())
                     .replace("[", "")
-                    .replace("]", "")
-                    .replace(", ", "\n"));
+                    .replace("]", ""));
             filmDirectorList[i].setText(String.valueOf(imdbApi.getAll().get(i).getDirectors().values())
                     .replace("[", "")
                     .replace("]", ""));

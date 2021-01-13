@@ -9,11 +9,13 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -113,6 +115,7 @@ public class EntertainmentActivity extends AppCompatActivity {
 
             Toolbar mToolbar = findViewById(R.id.finalToolbar);
             setSupportActionBar(mToolbar);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
             bottomNavigationView = findViewById(R.id.bottomNavigation);
 
             filmsLayout = findViewById(R.id.filmsLinearLayout);
@@ -200,11 +203,9 @@ public class EntertainmentActivity extends AppCompatActivity {
             case (R.id.menuEntertainmentSettings):
                 startActivity(new Intent(this, EntertainmentSettingsActivity.class));
                 return true;
-            case (R.id.menuEntertainmentBack):
-                startActivity(new Intent(this, MainActivity.class));
-                return true;
             case (R.id.menuEntertainmentNotifications):
                 startActivity(new Intent(this, EntertainmentNotificationsActivity.class));
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -227,8 +228,8 @@ public class EntertainmentActivity extends AppCompatActivity {
         googleApi.getByGenre(bookGenre, bookDigit, "en");
 
 
-        filmFragment = new FilmFragment(filmsLayout, 16, imdbApi);
-        bookFragment = new BookFragment(booksLayout, 10, googleApi);
+        filmFragment = new FilmFragment(filmsLayout, filmDigit, imdbApi);
+        bookFragment = new BookFragment(booksLayout, bookDigit, googleApi);
         gameFragment = new GameFragment(gamesLayout, gameRepository);
 
         fetchGames();

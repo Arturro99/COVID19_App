@@ -1,8 +1,10 @@
 package com.mobilki.covidapp.entertainment.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -149,9 +151,14 @@ public class BookFragment extends Fragment implements FragmentEntity{
             ConstraintSet constraintSet = new ConstraintSet();
             constraintSet.clone(bookConstraintLayoutList[i]);
 
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            ((Activity)getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+            int width = displayMetrics.widthPixels;
+
             //IMAGE
             constraintSet.connect(bookPhotosList[i].getId(), ConstraintSet.START, bookConstraintLayoutList[i].getId(), ConstraintSet.START);
             constraintSet.connect(bookPhotosList[i].getId(), ConstraintSet.TOP, bookConstraintLayoutList[i].getId(), ConstraintSet.TOP);
+            constraintSet.constrainMaxWidth(bookPhotosList[i].getId(), width/2);
 
             //TITLE
             constraintSet.connect(bookTitleList[i].getId(), ConstraintSet.END, bookConstraintLayoutList[i].getId(), ConstraintSet.END);
@@ -164,16 +171,18 @@ public class BookFragment extends Fragment implements FragmentEntity{
             //AUTHOR TXT
             constraintSet.connect(bookAuthorTxtList[i].getId(), ConstraintSet.BOTTOM, bookConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.connect(bookAuthorTxtList[i].getId(), ConstraintSet.END, bookConstraintLayoutList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(bookAuthorTxtList[i].getId(), ConstraintSet.START, bookConstraintLayoutList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(bookAuthorTxtList[i].getId(), ConstraintSet.TOP, bookConstraintLayoutList[i].getId(), ConstraintSet.TOP);
+            constraintSet.connect(bookAuthorTxtList[i].getId(), ConstraintSet.START, bookPhotosList[i].getId(), ConstraintSet.END);
+            constraintSet.connect(bookAuthorTxtList[i].getId(), ConstraintSet.TOP, bookPhotosList[i].getId(), ConstraintSet.TOP);
             constraintSet.setVerticalBias(bookAuthorTxtList[i].getId(), 0.15f);
+            constraintSet.setHorizontalBias(bookAuthorTxtList[i].getId(), 0.1f);
 
             //AUTHOR
             constraintSet.connect(bookAuthorList[i].getId(), ConstraintSet.BOTTOM, bookConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.connect(bookAuthorList[i].getId(), ConstraintSet.END, bookConstraintLayoutList[i].getId(), ConstraintSet.END);
             constraintSet.connect(bookAuthorList[i].getId(), ConstraintSet.START, bookPhotosList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(bookAuthorList[i].getId(), ConstraintSet.TOP, bookPhotosList[i].getId(), ConstraintSet.BOTTOM);
-            constraintSet.setVerticalBias(bookAuthorList[i].getId(), 0.01f);
+            constraintSet.connect(bookAuthorList[i].getId(), ConstraintSet.TOP, bookPhotosList[i].getId(), ConstraintSet.TOP);
+            constraintSet.setVerticalBias(bookAuthorList[i].getId(), 0.15f);
+            constraintSet.setHorizontalBias(bookAuthorList[i].getId(), 0.6f);
 
             //PUBLICATION DATE TXT
             constraintSet.connect(bookPublicationDateTxtList[i].getId(), ConstraintSet.BOTTOM, bookConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
@@ -228,7 +237,7 @@ public class BookFragment extends Fragment implements FragmentEntity{
             constraintSet.connect(bookGenresList[i].getId(), ConstraintSet.END, bookConstraintLayoutList[i].getId(), ConstraintSet.END);
             constraintSet.connect(bookGenresList[i].getId(), ConstraintSet.START, bookPhotosList[i].getId(), ConstraintSet.END);
             constraintSet.connect(bookGenresList[i].getId(), ConstraintSet.TOP, bookPhotosList[i].getId(), ConstraintSet.TOP);
-            constraintSet.setVerticalBias(bookGenresList[i].getId(), 0.8f);
+            constraintSet.setVerticalBias(bookGenresList[i].getId(), 0.9f);
             constraintSet.setHorizontalBias(bookGenresList[i].getId(), 0.1f);
 
             constraintSet.applyTo(bookConstraintLayoutList[i]);
@@ -247,8 +256,7 @@ public class BookFragment extends Fragment implements FragmentEntity{
                     .replace("]", ""));
             bookGenresList[i].setText(String.valueOf(googleBooksApi.getAll().get(i).getGenres())
                     .replace("[", "")
-                    .replace("]", "")
-                    .replace(", ", "\n"));
+                    .replace("]", ""));
             Glide.with(this).load(googleBooksApi.getAll().get(i).getImageUrl()).placeholder(R.drawable.placeholder).into(bookPhotosList[i]);
 
             bookAuthorTxtList[i].setText(R.string.author);

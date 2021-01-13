@@ -6,6 +6,8 @@ import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -303,7 +305,12 @@ public class ImdbApi implements EntertainmentDatabaseApi<Film, FilmSortingType> 
             getDuration(id);
 
             film.setTitle(o.getString("title"));
-            film.setDateOfRelease(Date.valueOf(o.getString("release_date")));
+            if (o.has("release_date")) {
+                film.setDateOfRelease(Date.valueOf(o.getString("release_date")));
+            }
+            else {
+                film.setDateOfRelease(Date.valueOf("2020-01-15"));
+            }
             film.setRatingsCount(Integer.parseInt(o.getString("vote_count")));
             film.setRatings(Double.parseDouble(o.getString("vote_average")));
             film.setShortDescription(o.getString("overview"));
