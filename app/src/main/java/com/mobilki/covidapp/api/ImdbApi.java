@@ -366,7 +366,12 @@ public class ImdbApi implements EntertainmentDatabaseApi<Film, FilmSortingType> 
     }
 
     private void setDuration(JSONObject obj) throws JSONException {
-        filmRepository.get(obj.getString("id")).setDuration(obj.getInt("runtime"));
+        if (obj.has("runtime")) {
+            filmRepository.get(obj.getString("id")).setDuration(obj.getInt("runtime"));
+        }
+        else {
+            filmRepository.get(obj.getString("id")).setDuration(0);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

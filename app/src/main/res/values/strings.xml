@@ -26,19 +26,24 @@
     <string name="recommended_books_panel">Polecane książki</string>
     <string name="familial_games_panel">Gry familijne</string>
     <string name="director">Reżyser</string>
+    <string name="author">Autor</string>
     <string name="ratings">Ocena</string>
     <string name="released">Premiera</string>
     <string name="duration">Czas trwania</string>
+    <string name="pages">Liczba stron</string>
+    <string name="age">Przedział wiekowy</string>
+    <string name="players">Liczba graczy</string>
+    <string name="time">Czas rozgrywki</string>
 
     <!-- Common   -->
     <string name="preferences_panel">Preferencje</string>
     <string name="notifications_settings_panel">Ustawienia powiadomień</string>
 
     <!-- Film sorting methods -->
-    <string name="top_rated">Top rated</string>
-    <string name="most_popular">Most popular</string>
-    <string name="upcoming">Upcoming</string>
-    <string name="now_playing">Now playing</string>
+    <string name="top_rated">Najwyżej oceniane</string>
+    <string name="most_popular">Najbardziej popularne</string>
+    <string name="upcoming">Nadchodzące</string>
+    <string name="now_playing">Teraz grane</string>
 
     <!-- Book genres -->
     <string-array name="book_genres">
