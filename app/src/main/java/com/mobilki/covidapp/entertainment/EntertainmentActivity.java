@@ -233,6 +233,7 @@ public class EntertainmentActivity extends AppCompatActivity {
         gameFragment = new GameFragment(gamesLayout, gameRepository);
 
         fetchGames();
+        switchFragment(filmFragment, R.id.filmsLinearLayout);
         mProgressBar.setVisibility(View.GONE);
     }
 

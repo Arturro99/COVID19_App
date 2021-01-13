@@ -13,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -23,7 +22,6 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mobilki.covidapp.R;
-import com.mobilki.covidapp.api.repository.FilmGenresRepository;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +34,7 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
     Button applySettings;
     Spinner bookGenresSpinner;
     Spinner filmGenresSpinner;
+    Spinner filmOtherSpinner;
 
     FirebaseFirestore mFirestore;
     FirebaseAuth mAuth;
@@ -44,9 +43,9 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
 
     String bookGenre;
     String filmGenre;
+    String filmOtherFilters;
 
 
-    RadioGroup sortingGroup;
     RadioButton sortByValues;
     RadioButton sortByGenres;
 
@@ -67,7 +66,6 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
         filmDigit = findViewById(R.id.filmDigit);
         bookDigit = findViewById(R.id.bookDigit);
         applySettings = findViewById(R.id.applyEntertainmentSettings);
-        sortingGroup = findViewById(R.id.sortingGroup);
         sortByValues = findViewById(R.id.sortByValues);
         sortByGenres = findViewById(R.id.sortByGenres);
 
@@ -87,8 +85,13 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
         filmGenresSpinner.setAdapter(filmAdapter);
         filmGenresSpinner.setEnabled(false);
 
-        //Film popularities initialization
-
+        //Film other initialization
+        filmOtherSpinner = findViewById(R.id.filmOtherSpinner);
+        ArrayAdapter<CharSequence> filmOtherAdapter = ArrayAdapter.createFromResource(
+                this, R.array.film_other, android.R.layout.simple_spinner_item);
+        filmAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        filmOtherSpinner.setAdapter(filmOtherAdapter);
+        filmOtherSpinner.setEnabled(true);
 
         bookDigit.setMinValue(5);
         bookDigit.setMaxValue(10);
@@ -98,9 +101,14 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
         collectionReference.document("filters").get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot != null) {
                 filmGenresSpinner.setSelection(filmAdapter.getPosition(Optional.ofNullable(documentSnapshot.getString("filmGenre")).orElse("War")));
+                filmOtherSpinner.setSelection(filmOtherAdapter.getPosition(Optional.ofNullable(documentSnapshot.getString("filmSortingByValuesType")).orElse("Most popular")));
                 bookGenresSpinner.setSelection(bookAdapter.getPosition(Optional.ofNullable(documentSnapshot.getString("bookGenre")).orElse("drama")));
                 filmDigit.setValue(Optional.ofNullable(documentSnapshot.getLong("filmDigit")).orElse(10L).intValue());
                 bookDigit.setValue(Optional.ofNullable(documentSnapshot.getLong("bookDigit")).orElse(10L).intValue());
+                sortByGenres.setChecked(documentSnapshot.getString("filmSortingMethod").equals("sortByGenres"));
+                sortByValues.setChecked(documentSnapshot.getString("filmSortingMethod").equals("sortByValues"));
+                filmGenresSpinner.setEnabled(sortByGenres.isChecked());
+                filmOtherSpinner.setEnabled(sortByValues.isChecked());
             }
             else
                 Log.d("TAG", "NULL in setter");
@@ -110,14 +118,8 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
     }
 
     private void start() {
-        sortByValues.setOnCheckedChangeListener((compoundButton, b) -> {
-            for (int i = 0; i < sortingGroup.getChildCount(); i++) {
-                sortingGroup.getChildAt(i).setEnabled(compoundButton.isChecked());
-            }
-
-        });
-
         sortByGenres.setOnCheckedChangeListener((compoundButton, b) -> filmGenresSpinner.setEnabled(compoundButton.isChecked()));
+        sortByValues.setOnCheckedChangeListener((compoundButton, b) -> filmOtherSpinner.setEnabled(compoundButton.isChecked()));
 
         applySettings.setOnClickListener(view -> {
             saveOptions();
@@ -262,6 +264,39 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
 
             }
         });
+        filmOtherSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (adapterView.getItemAtPosition(i).toString()) {
+                    case ("Najwyżej oceniane"): {
+                        filmOtherFilters = "Top rated";
+                        break;
+                    }
+                    case ("Najbardziej popularne"): {
+                        filmOtherFilters = "Most popular";
+                        break;
+                    }
+                    case ("Nadchodzące"): {
+                        filmOtherFilters = "Upcoming";
+                        break;
+                    }
+                    case ("Teraz grane"): {
+                        filmOtherFilters = "Now playing";
+                        break;
+                    }
+                    default: {
+                        filmOtherFilters = adapterView.getItemAtPosition(i).toString();
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+
+        });
 
         bookDigit.setOnValueChangedListener((numberPicker, i, i1) -> { });
         filmDigit.setOnValueChangedListener((numberPicker, i, i1) -> { });
@@ -277,27 +312,7 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
         settings.put("filmDigit", filmDigit.getValue());
         if (sortByValues.isChecked()) {
             settings.put("filmSortingMethod", "sortByValues");
-            if (sortingGroup.getCheckedRadioButtonId() != -1) {
-                int id = sortingGroup.getCheckedRadioButtonId();
-                switch (id) {
-                    case(R.id.sort_most_popular): {
-                        settings.put("filmSortingByValuesType", "Most popular");
-                        break;
-                    }
-                    case(R.id.sort_now_playing): {
-                        settings.put("filmSortingByValuesType", "Now playing");
-                        break;
-                    }
-                    case(R.id.sort_top_rated): {
-                        settings.put("filmSortingByValuesType", "Top rated");
-                        break;
-                    }
-                    case(R.id.sort_upcoming): {
-                        settings.put("filmSortingByValuesType", "Upcoming");
-                        break;
-                    }
-                }
-            }
+            settings.put("filmSortingByValuesType", filmOtherFilters);
         }
         else if (sortByGenres.isChecked()){
             settings.put("filmSortingMethod", "sortByGenres");

@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,7 +94,7 @@ public class BookFragment extends Fragment implements FragmentEntity{
         int bookPublicationDateTxtInitiateId = 12500;
         int bookPhotoInitiateId = 13000;
         int bookAuthorInitiateId = 14000;
-        int bookAuthorTxtInitiateId = 14500;
+        //int bookAuthorTxtInitiateId = 14500;
         int bookPagesInitiateId = 15000;
         int bookPagesTxtInitiateId = 15500;
         int bookRatingInitiateId = 16000;
@@ -122,8 +121,8 @@ public class BookFragment extends Fragment implements FragmentEntity{
             bookPublicationDateTxtList[i].setId(bookPublicationDateTxtInitiateId + i);
             bookAuthorList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
             bookAuthorList[i].setId(bookAuthorInitiateId + i);
-            bookAuthorTxtList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
-            bookAuthorTxtList[i].setId(bookAuthorTxtInitiateId + i);
+            //bookAuthorTxtList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
+            //bookAuthorTxtList[i].setId(bookAuthorTxtInitiateId + i);
             bookPagesList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
             bookPagesList[i].setId(bookPagesInitiateId + i);
             bookPagesTxtList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
@@ -135,15 +134,15 @@ public class BookFragment extends Fragment implements FragmentEntity{
 
             bookConstraintLayoutList[i].addView(bookPhotosList[i], 0);
             bookConstraintLayoutList[i].addView(bookTitleList[i], 1);
-            bookConstraintLayoutList[i].addView(bookAuthorTxtList[i], 2);
-            bookConstraintLayoutList[i].addView(bookAuthorList[i], 3);
-            bookConstraintLayoutList[i].addView(bookRatingTxtList[i], 4);
-            bookConstraintLayoutList[i].addView(bookRatingList[i], 5);
-            bookConstraintLayoutList[i].addView(bookPublicationDateTxtList[i], 6);
-            bookConstraintLayoutList[i].addView(bookPublicationDateList[i], 7);
-            bookConstraintLayoutList[i].addView(bookPagesTxtList[i], 8);
-            bookConstraintLayoutList[i].addView(bookPagesList[i], 9);
-            bookConstraintLayoutList[i].addView(bookGenresList[i], 10);
+            //bookConstraintLayoutList[i].addView(bookAuthorTxtList[i], 2);
+            bookConstraintLayoutList[i].addView(bookAuthorList[i], 2);
+            bookConstraintLayoutList[i].addView(bookRatingTxtList[i], 3);
+            bookConstraintLayoutList[i].addView(bookRatingList[i], 4);
+            bookConstraintLayoutList[i].addView(bookPublicationDateTxtList[i], 5);
+            bookConstraintLayoutList[i].addView(bookPublicationDateList[i], 6);
+            bookConstraintLayoutList[i].addView(bookPagesTxtList[i], 7);
+            bookConstraintLayoutList[i].addView(bookPagesList[i], 8);
+            bookConstraintLayoutList[i].addView(bookGenresList[i], 9);
 
             booksLayout.addView(linearLayout);
 
@@ -169,12 +168,12 @@ public class BookFragment extends Fragment implements FragmentEntity{
 
 
             //AUTHOR TXT
-            constraintSet.connect(bookAuthorTxtList[i].getId(), ConstraintSet.BOTTOM, bookConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
-            constraintSet.connect(bookAuthorTxtList[i].getId(), ConstraintSet.END, bookConstraintLayoutList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(bookAuthorTxtList[i].getId(), ConstraintSet.START, bookPhotosList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(bookAuthorTxtList[i].getId(), ConstraintSet.TOP, bookPhotosList[i].getId(), ConstraintSet.TOP);
-            constraintSet.setVerticalBias(bookAuthorTxtList[i].getId(), 0.15f);
-            constraintSet.setHorizontalBias(bookAuthorTxtList[i].getId(), 0.1f);
+//            constraintSet.connect(bookAuthorTxtList[i].getId(), ConstraintSet.BOTTOM, bookConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
+//            constraintSet.connect(bookAuthorTxtList[i].getId(), ConstraintSet.END, bookConstraintLayoutList[i].getId(), ConstraintSet.END);
+//            constraintSet.connect(bookAuthorTxtList[i].getId(), ConstraintSet.START, bookPhotosList[i].getId(), ConstraintSet.END);
+//            constraintSet.connect(bookAuthorTxtList[i].getId(), ConstraintSet.TOP, bookPhotosList[i].getId(), ConstraintSet.TOP);
+//            constraintSet.setVerticalBias(bookAuthorTxtList[i].getId(), 0.15f);
+//            constraintSet.setHorizontalBias(bookAuthorTxtList[i].getId(), 0.1f);
 
             //AUTHOR
             constraintSet.connect(bookAuthorList[i].getId(), ConstraintSet.BOTTOM, bookConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
@@ -182,7 +181,7 @@ public class BookFragment extends Fragment implements FragmentEntity{
             constraintSet.connect(bookAuthorList[i].getId(), ConstraintSet.START, bookPhotosList[i].getId(), ConstraintSet.END);
             constraintSet.connect(bookAuthorList[i].getId(), ConstraintSet.TOP, bookPhotosList[i].getId(), ConstraintSet.TOP);
             constraintSet.setVerticalBias(bookAuthorList[i].getId(), 0.15f);
-            constraintSet.setHorizontalBias(bookAuthorList[i].getId(), 0.6f);
+//            constraintSet.setHorizontalBias(bookAuthorList[i].getId(), 0.6f);
 
             //PUBLICATION DATE TXT
             constraintSet.connect(bookPublicationDateTxtList[i].getId(), ConstraintSet.BOTTOM, bookConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
@@ -259,7 +258,7 @@ public class BookFragment extends Fragment implements FragmentEntity{
                     .replace("]", ""));
             Glide.with(this).load(googleBooksApi.getAll().get(i).getImageUrl()).placeholder(R.drawable.placeholder).into(bookPhotosList[i]);
 
-            bookAuthorTxtList[i].setText(R.string.author);
+            //bookAuthorTxtList[i].setText(R.string.author);
             bookPublicationDateTxtList[i].setText(R.string.released);
             bookPagesTxtList[i].setText(R.string.pages);
             bookRatingTxtList[i].setText(R.string.ratings);

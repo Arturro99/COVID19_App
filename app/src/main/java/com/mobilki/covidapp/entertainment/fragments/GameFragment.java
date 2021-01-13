@@ -145,7 +145,7 @@ public class GameFragment extends Fragment implements FragmentEntity{
             constraintSet.connect(gamePhotosList[i].getId(), ConstraintSet.START, gameConstraintLayoutList[i].getId(), ConstraintSet.START);
             constraintSet.connect(gamePhotosList[i].getId(), ConstraintSet.TOP, gameConstraintLayoutList[i].getId(), ConstraintSet.TOP);
             gamePhotosList[i].setMaxWidth(width/2);
-            gamePhotosList[i].setMinimumHeight(width/2);
+            gamePhotosList[i].setMinimumHeight(width);
 
             //TITLE
             constraintSet.connect(gameTitleList[i].getId(), ConstraintSet.END, gameConstraintLayoutList[i].getId(), ConstraintSet.END);

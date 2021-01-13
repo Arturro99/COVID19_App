@@ -10,7 +10,7 @@
         android:id="@+id/resendVerificationTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="E-mail not verified"
+        android:text="@string/not_verified"
         android:textColor="#8F0303"
         android:fontFamily="@font/aclonica"
         android:textSize="20sp"
@@ -32,8 +32,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.1"
         android:visibility="gone"
-        android:text="Resend e-mail"
-        android:background="@drawable/button_shape"
+        android:text="@string/resend_mail"
+        android:background="@drawable/button_gradient1"
         android:textColor="@android:color/white"
         />
 
@@ -101,11 +101,32 @@
         android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Logout"
+        android:text="@string/logout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:onClick="logout"/>
+
+    <Button
+        android:id="@+id/english"
+        android:layout_width="24pt"
+        android:layout_height="15pt"
+        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/flag_britishjpg"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/polish"
+        android:layout_width="24pt"
+        android:layout_height="15pt"
+        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/flag_poland"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

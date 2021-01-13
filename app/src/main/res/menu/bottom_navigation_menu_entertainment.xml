@@ -4,15 +4,15 @@
         android:id="@+id/filmPage"
         android:enabled="true"
         android:icon="@drawable/film_icon2"
-        android:title="Films"/>
+        android:title="@string/films"/>
     <item
         android:id="@+id/bookPage"
         android:enabled="true"
         android:icon="@drawable/book_icon2"
-        android:title="Books"/>
+        android:title="@string/books"/>
     <item
         android:id="@+id/gamePage"
         android:enabled="true"
         android:icon="@drawable/game_icon"
-        android:title="Games"/>
+        android:title="@string/games"/>
 </menu>

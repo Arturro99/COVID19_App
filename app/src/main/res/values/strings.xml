@@ -1,140 +1,111 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">CovidApp</string>
     <!--SharedPreferences-->
     <string name="shared_preferences">CovidAppPref</string>
 
 
     <!-- Main Activity   -->
-    <string name="health_panel">Zdrowie</string>
-    <string name="entertainment_panel">Rozrywka</string>
-    <string name="emergency_numbers_panel">Numery alarmowe</string>
-    <string name="settings_panel">Ustawienia</string>
+    <string name="health_panel">Health</string>
+    <string name="entertainment_panel">Entertainment</string>
+    <string name="emergency_numbers_panel">Emergency numbers</string>
+    <string name="settings_panel">Settings</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="login_longer">Login</string>
+    <string name="log_in_to_account">Log in to your account</string>
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
+    <string name="password_repeat">Repeat password</string>
+    <string name="name">Name</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="new_here">New here?</string>
+    <string name="register_longer">Register</string>
+    <string name="register">Register</string>
+    <string name="create_account">Create account</string>
+    <string name="already_registered">Already registered?</string>
+    <string name="not_verified">E-mail not verified</string>
+    <string name="resend_mail">Resend e-mail</string>
 
     <!-- Health Activity   -->
-    <string name="exercises_set_panel">Zestaw ćwiczeń</string>
-    <string name="add_data_panel">Dodaj dane</string>
-    <string name="sleep_measuring_switch">Mierzenie snu</string>
-    <string name="water_drunk_switch">Wypita woda</string>
-    <string name="current_weight_switch">Aktualna waga</string>
-    <string name="step_counter_switch">Licznik kroków</string>
-    <string name="desired_weight_txt">Docelowa waga:</string>
-    <string name="desired_sleep_txt">Docelowa ilość snu:</string>
-    <string name="desired_water_txt">Docelowa ilość \nwypitej wody [ml]:</string>
+    <string name="exercises_set_panel">Exercise set</string>
+    <string name="add_data_panel">Add data</string>
+    <string name="sleep_measuring_switch">Sleep measurement</string>
+    <string name="water_drunk_switch">Water drunk</string>
+    <string name="current_weight_switch">Current weight</string>
+    <string name="step_counter_switch">Ste counter</string>
+    <string name="desired_weight_txt">Target weight:</string>
+    <string name="desired_sleep_txt">Docelowa amount of sleep:</string>
+    <string name="desired_water_txt">Target amount of \ndrunk water [ml]:</string>
 
     <!-- Entertainment Activity   -->
-    <string name="recommended_movies_panel">Polecane filmy</string>
-    <string name="recommended_books_panel">Polecane książki</string>
-    <string name="familial_games_panel">Gry familijne</string>
-    <string name="director">Reżyser</string>
-    <string name="author">Autor</string>
-    <string name="ratings">Ocena</string>
-    <string name="released">Premiera</string>
-    <string name="duration">Czas trwania</string>
-    <string name="pages">Liczba stron</string>
-    <string name="age">Przedział wiekowy</string>
-    <string name="players">Liczba graczy</string>
-    <string name="time">Czas rozgrywki</string>
-    <string name="games">Gry</string>
-    <string name="films">Filmy</string>
-    <string name="books">Książki</string>
-    <string name="enable_notifications">Włącz powiadomienia</string>
-    <string name="enable_sound">Włącz dźwięk</string>
-    <string name="enable_vibrations">Włącz wibracje</string>
-    <string name="choose_time">Wybierz godzinę</string>
-    <string name="apply">Zatwierdź</string>
-    <string name="num_of_books">Liczba wyświetlanych książek</string>
-    <string name="num_of_films">Liczba wyświetlanych filmów</string>
-    <string name="film_sort_by">Sortowanie filmów...</string>
-    <string name="film_by_genre">Po gatunkach:</string>
-    <string name="film_by_other">Inne:</string>
-    <string name="book_by_genre">Sortuj książki po gatunku</string>
+    <string name="familial_games_panel">Familial games</string>
+    <string name="director">Director</string>
+    <string name="author">Author</string>
+    <string name="ratings">Ratings</string>
+    <string name="released">Release date</string>
+    <string name="duration">Duration</string>
+    <string name="pages">Pages</string>
+    <string name="age">Age range</string>
+    <string name="players">Number of players</string>
+    <string name="time">Gameplay time</string>
+    <string name="games">Games</string>
+    <string name="films">Movies</string>
+    <string name="books">Books</string>
+    <string name="enable_notifications">Enable notifications</string>
+    <string name="enable_sound">Enable sound</string>
+    <string name="enable_vibrations">Enable vibrations</string>
+    <string name="choose_time">Choose time</string>
+    <string name="apply">Apply</string>
+    <string name="num_of_books">Number of displayed books</string>
+    <string name="num_of_films">Number of displayed films</string>
+    <string name="film_sort_by">Sort films...</string>
+    <string name="film_by_genre">By genres:</string>
+    <string name="film_by_other">Other:</string>
+    <string name="book_by_genre">Sort boks by genres:</string>
 
     <!-- Common   -->
-    <string name="preferences_panel">Preferencje</string>
-    <string name="notifications_settings_panel">Ustawienia powiadomień</string>
+    <string name="preferences_panel">Preferences</string>
+    <string name="notifications_settings_panel">Notification settings</string>
 
     <!-- Film sorting methods -->
     <string-array name="film_other">
-        <item>Najwyżej oceniane</item>
-        <item>Najbardziej popularne</item>
-        <item>Nadchodzące</item>
-        <item>Teraz grane</item>
-    </string-array>
-    <!-- Book genres -->
-    <string-array name="book_genres">
-        <item>Dramat</item>
-        <item>Fikcja</item>
-        <item>Historia</item>
-        <item>Sztuka</item>
-        <item>Psychologia</item>
-        <item>Medycyna</item>
-        <item>Biografia</item>
-        <item>Poezja</item>
+        <item>Top rated</item>
+        <item>Most popular</item>
+        <item>Upcoming</item>
+        <item>Now playing</item>
     </string-array>
 
-    <!-- Film genres -->
+    <!-- Book genres -->
+    <string-array name="book_genres" tools:ignore="InconsistentArrays">
+        <item>drama</item>
+        <item>fiction</item>
+        <item>history</item>
+        <item>art</item>
+        <item>detective</item>
+        <item>psychology</item>
+        <item>medical</item>
+        <item>biography</item>
+        <item>poetry</item>
+    </string-array>
+
     <string-array name="film_genres">
-        <item>Akcja</item>
-        <item>Animacja</item>
-        <item>Komedia</item>
-        <item>Kryminał</item>
-        <item>Dokument</item>
-        <item>Dramat</item>
-        <item>Fantastyczny</item>
-        <item>Familijny</item>
-        <item>Historyczny</item>
+        <item>Action</item>
+        <item>Animation</item>
+        <item>Comedy</item>
+        <item>Crime</item>
+        <item>Documentary</item>
+        <item>Drama</item>
+        <item>Fantasy</item>
+        <item>Family</item>
+        <item>History</item>
         <item>Horror</item>
-        <item>Muzyczny</item>
-        <item>Detektywistyczny</item>
-        <item>Romans</item>
+        <item>Music</item>
+        <item>Mystery</item>
+        <item>Romance</item>
         <item>Science Fiction</item>
-        <item>Dreszczowiec</item>
-        <item>Film TV</item>
-        <item>Wojenny</item>
+        <item>Thriller</item>
+        <item>TV Movie</item>
+        <item>War</item>
         <item>Western</item>
     </string-array>
-
-<!--    &lt;!&ndash; Film sorting methods &ndash;&gt;-->
-<!--    <string-array name="film_other">-->
-<!--        <item>Top rated</item>-->
-<!--        <item>Most popular</item>-->
-<!--        <item>Upcoming</item>-->
-<!--        <item>Now playing</item>-->
-<!--    </string-array>-->
-
-<!--    &lt;!&ndash; Book genres &ndash;&gt;-->
-<!--    <string-array name="book_genres">-->
-<!--        <item>drama</item>-->
-<!--        <item>fiction</item>-->
-<!--        <item>history</item>-->
-<!--        <item>art</item>-->
-<!--        <item>detective</item>-->
-<!--        <item>psychology</item>-->
-<!--        <item>medical</item>-->
-<!--        <item>biography</item>-->
-<!--        <item>poetry</item>-->
-<!--    </string-array>-->
-
-<!--    <string-array name="film_genres">-->
-<!--        <item>Action</item>-->
-<!--        <item>Animation</item>-->
-<!--        <item>Comedy</item>-->
-<!--        <item>Crime</item>-->
-<!--        <item>Documentary</item>-->
-<!--        <item>Drama</item>-->
-<!--        <item>Fantasy</item>-->
-<!--        <item>Family</item>-->
-<!--        <item>History</item>-->
-<!--        <item>Horror</item>-->
-<!--        <item>Music</item>-->
-<!--        <item>Mystery</item>-->
-<!--        <item>Romance</item>-->
-<!--        <item>Science Fiction</item>-->
-<!--        <item>Thriller</item>-->
-<!--        <item>TV Movie</item>-->
-<!--        <item>War</item>-->
-<!--        <item>Western</item>-->
-<!--    </string-array>-->
-
-
 </resources>

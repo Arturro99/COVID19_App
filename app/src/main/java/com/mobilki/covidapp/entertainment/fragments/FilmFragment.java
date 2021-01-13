@@ -153,8 +153,6 @@ public class FilmFragment extends Fragment implements FragmentEntity{
             //IMAGE
             constraintSet.connect(filmPhotosList[i].getId(), ConstraintSet.START, filmConstraintLayoutList[i].getId(), ConstraintSet.START);
             constraintSet.connect(filmPhotosList[i].getId(), ConstraintSet.TOP, filmConstraintLayoutList[i].getId(), ConstraintSet.TOP);
-            filmPhotosList[i].setScaleX(1.5f);
-            filmPhotosList[i].setScaleY(1.5f);
 
             //TITLE
             constraintSet.connect(filmTitleList[i].getId(), ConstraintSet.END, filmConstraintLayoutList[i].getId(), ConstraintSet.END);
