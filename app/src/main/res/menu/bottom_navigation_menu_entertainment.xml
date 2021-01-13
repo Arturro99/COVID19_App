@@ -3,16 +3,16 @@
     <item
         android:id="@+id/filmPage"
         android:enabled="true"
-        android:icon="@drawable/placeholder"
+        android:icon="@drawable/film_icon2"
         android:title="Films"/>
     <item
         android:id="@+id/bookPage"
         android:enabled="true"
-        android:icon="@drawable/placeholder"
+        android:icon="@drawable/book_icon2"
         android:title="Books"/>
     <item
         android:id="@+id/gamePage"
         android:enabled="true"
-        android:icon="@drawable/placeholder"
+        android:icon="@drawable/game_icon"
         android:title="Games"/>
 </menu>

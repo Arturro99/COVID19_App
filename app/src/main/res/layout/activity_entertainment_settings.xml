@@ -24,7 +24,7 @@
         android:id="@+id/bookDigitTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Number of displayed books:"
+        android:text="@string/num_of_books"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -33,20 +33,18 @@
     <NumberPicker
         android:id="@+id/bookDigit"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="58dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/bookDigitTxt"
-        app:layout_constraintHorizontal_bias="0.05"
-        android:scaleX="0.8"
-        android:scaleY="0.8" />
+        app:layout_constraintHorizontal_bias="0.05" />
 
     <TextView
         android:id="@+id/filmDigitTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Number of displayed films:"
+        android:text="@string/num_of_films"
         app:layout_constraintTop_toBottomOf="@id/bookDigitTxt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,37 +65,39 @@
 
     <RadioGroup
         android:id="@+id/typeOfSorting"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.3"
-        app:layout_constraintHorizontal_bias="0.35">
-        <RadioButton
-            android:id="@+id/sortByValues"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/filmSortingTxt"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="0.04">
+
         <RadioButton
             android:id="@+id/sortByGenres"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="75dp"
-            />
+            android:layout_marginStart="70pt"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/sortByValues"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="45pt" />
     </RadioGroup>
 
     <TextView
         android:id="@+id/filmSortingTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Film sorting method:"
+        android:text="@string/film_sort_by"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <RadioGroup
         android:id="@+id/sortingGroup"
@@ -135,11 +135,25 @@
         android:id="@+id/filmGenresSpinnerTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Chosen film genre:"
-        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/film_by_genre"
+        app:layout_constraintTop_toBottomOf="@id/filmSortingTxt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.4" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintHorizontal_bias="0.20"/>
+
+    <TextView
+        android:id="@+id/filmOtherSpinnerTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/film_by_other"
+        app:layout_constraintTop_toBottomOf="@id/filmSortingTxt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintHorizontal_bias="0.70"/>
 
     <Spinner
         android:id="@+id/filmGenresSpinner"
@@ -148,20 +162,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.4"
-        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintTop_toBottomOf="@id/filmSortingTxt"
+        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintHorizontal_bias="0.3"
         />
 
     <TextView
         android:id="@+id/bookGenresSpinnerTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Chosen books genre:"
+        android:text="@string/book_by_genre"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintVertical_bias="0.8" />
 
     <Spinner
         android:id="@+id/bookGenresSpinner"
@@ -171,7 +185,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"/>
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="0.81"/>
 
 
 
@@ -179,7 +194,7 @@
         android:id="@+id/applyEntertainmentSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Apply"
+        android:text="@string/apply"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

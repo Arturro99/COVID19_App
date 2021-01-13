@@ -22,12 +22,11 @@
             android:id="@+id/filmTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
             android:text="Filmy"
             android:textSize="40sp"
+            android:layout_marginTop="100dp"
             android:layout_below="@id/finalToolbar"
-            android:layout_marginTop="50dp"
             android:fontFamily="@font/aclonica"
             android:visibility="gone"/>
 
@@ -54,8 +53,9 @@
             android:layout_height="wrap_content"
             android:text="Książki"
             android:textSize="40sp"
+            android:layout_centerInParent="true"
             android:layout_below="@id/finalToolbar"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="100dp"
             android:fontFamily="@font/aclonica"
             android:visibility="gone"/>
 
@@ -83,7 +83,8 @@
             android:text="Gry familijne"
             android:textSize="40sp"
             android:layout_below="@id/finalToolbar"
-            android:layout_marginTop="50dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="100dp"
             android:fontFamily="@font/aclonica"
             android:visibility="gone"/>
 

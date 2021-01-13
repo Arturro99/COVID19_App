@@ -7,19 +7,12 @@
         android:title="Settings"
         android:icon="@drawable/settings_icon"
         app:showAsAction="always"
-        android:orderInCategory="2"/>
+        android:orderInCategory="1"/>
 
     <item
         android:id="@+id/menuEntertainmentNotifications"
         android:title="Notifications"
         android:icon="@drawable/notification"
-        app:showAsAction="always"
-        android:orderInCategory="1"/>
-
-    <item
-        android:id="@+id/menuEntertainmentBack"
-        android:title="Notifications"
-        android:icon="@drawable/back"
         app:showAsAction="always"
         android:orderInCategory="0"/>
 

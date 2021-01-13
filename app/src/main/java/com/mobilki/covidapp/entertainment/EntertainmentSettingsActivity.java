@@ -71,31 +71,23 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
         sortByValues = findViewById(R.id.sortByValues);
         sortByGenres = findViewById(R.id.sortByGenres);
 
-        //Book Spinner initialization
+        //Book Genres Spinner initialization
         bookGenresSpinner = findViewById(R.id.bookGenresSpinner);
         ArrayAdapter<CharSequence> bookAdapter = ArrayAdapter.createFromResource(
                 this, R.array.book_genres, android.R.layout.simple_spinner_item);
         bookAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         bookGenresSpinner.setAdapter(bookAdapter);
-        //bookGenresSpinner.setSelection(adapter.getPosition(collectionReference.document("filters").get().toString()));
-        collectionReference.document("filters").addSnapshotListener((documentSnapshot, e) -> {
-            if (documentSnapshot != null)
-                bookGenresSpinner.setSelection(bookAdapter.getPosition(documentSnapshot.getString("bookGenre")));
-            else
-                Log.d("TAG", "NULL in setter");
-        });
 
 
-        //Film Spinner initialization
+        //Film Genres Spinner initialization
         filmGenresSpinner = findViewById(R.id.filmGenresSpinner);
-        String[] filmGenresList;
-        filmGenresList = FilmGenresRepository.getGenres().values().toArray(new String[0]);
-        ArrayAdapter<CharSequence> filmAdapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item, filmGenresList
-        );
+        ArrayAdapter<CharSequence> filmAdapter = ArrayAdapter.createFromResource(
+                this, R.array.film_genres, android.R.layout.simple_spinner_item);
         filmAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         filmGenresSpinner.setAdapter(filmAdapter);
         filmGenresSpinner.setEnabled(false);
+
+        //Film popularities initialization
 
 
         bookDigit.setMinValue(5);
@@ -137,7 +129,44 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
         bookGenresSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                bookGenre = adapterView.getItemAtPosition(i).toString();
+                switch (adapterView.getItemAtPosition(i).toString()) {
+                    case("Dramat"): {
+                        bookGenre = "drama";
+                        break;
+                    }
+                    case("Fikcja"): {
+                        bookGenre = "fiction";
+                        break;
+                    }
+                    case("Historia"): {
+                        bookGenre = "history";
+                        break;
+                    }
+                    case("Sztuka"): {
+                        bookGenre = "art";
+                        break;
+                    }
+                    case("Psychologia"): {
+                        bookGenre = "psychology";
+                        break;
+                    }
+                    case("Medycyna"): {
+                        bookGenre = "medical";
+                        break;
+                    }
+                    case("Biografia"): {
+                        bookGenre = "biography";
+                        break;
+                    }
+                    case("Poezja"): {
+                        bookGenre = "poetry";
+                        break;
+                    }
+                    default: {
+                        bookGenre = adapterView.getItemAtPosition(i).toString();
+                        break;
+                    }
+                }
             }
 
             @Override
@@ -148,7 +177,84 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
         filmGenresSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                filmGenre = adapterView.getItemAtPosition(i).toString();
+                switch (adapterView.getItemAtPosition(i).toString()) {
+                    case ("Akcja"): {
+                        filmGenre = "Action";
+                        break;
+                    }
+                    case ("Animacja"): {
+                        filmGenre = "Animation";
+                        break;
+                    }
+                    case ("Komedia"): {
+                        filmGenre = "Comedy";
+                        break;
+                    }
+                    case ("Kryminał"): {
+                        filmGenre = "Crime";
+                        break;
+                    }
+                    case ("Dokument"): {
+                        filmGenre = "Documentary";
+                        break;
+                    }
+                    case ("Dramat"): {
+                        filmGenre = "Drama";
+                        break;
+                    }
+                    case ("Fantastyczny"): {
+                        filmGenre = "Fantasy";
+                        break;
+                    }
+                    case ("Familijny"): {
+                        filmGenre = "Family";
+                        break;
+                    }
+                    case ("Historyczny"): {
+                        filmGenre = "History";
+                        break;
+                    }
+                    case ("Horror"): {
+                        filmGenre = "Horror";
+                        break;
+                    }
+                    case ("Muzyczny"): {
+                        filmGenre = "Music";
+                        break;
+                    }
+                    case ("Detektywistyczny"): {
+                        filmGenre = "Mystery";
+                        break;
+                    }
+                    case ("Romans"): {
+                        filmGenre = "Romance";
+                        break;
+                    }
+                    case ("Science fiction"): {
+                        filmGenre = "Science Fiction";
+                        break;
+                    }
+                    case ("Dreszczowiec"): {
+                        filmGenre = "Thriller";
+                        break;
+                    }
+                    case ("Film TV"): {
+                        filmGenre = "TV Movie";
+                        break;
+                    }
+                    case ("Wojenny"): {
+                        filmGenre = "War";
+                        break;
+                    }
+                    case ("Western"): {
+                        filmGenre = "Western";
+                        break;
+                    }
+                    default: {
+                        filmGenre = adapterView.getItemAtPosition(i).toString();
+                        break;
+                    }
+                }
             }
 
             @Override
@@ -173,8 +279,24 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
             settings.put("filmSortingMethod", "sortByValues");
             if (sortingGroup.getCheckedRadioButtonId() != -1) {
                 int id = sortingGroup.getCheckedRadioButtonId();
-                RadioButton radioButton = findViewById(id);
-                settings.put("filmSortingByValuesType", radioButton.getText().toString());
+                switch (id) {
+                    case(R.id.sort_most_popular): {
+                        settings.put("filmSortingByValuesType", "Most popular");
+                        break;
+                    }
+                    case(R.id.sort_now_playing): {
+                        settings.put("filmSortingByValuesType", "Now playing");
+                        break;
+                    }
+                    case(R.id.sort_top_rated): {
+                        settings.put("filmSortingByValuesType", "Top rated");
+                        break;
+                    }
+                    case(R.id.sort_upcoming): {
+                        settings.put("filmSortingByValuesType", "Upcoming");
+                        break;
+                    }
+                }
             }
         }
         else if (sortByGenres.isChecked()){
