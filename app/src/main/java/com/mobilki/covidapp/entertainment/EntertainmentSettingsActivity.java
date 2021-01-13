@@ -129,7 +129,9 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
 
         applySettings.setOnClickListener(view -> {
             saveOptions();
-            startActivity(new Intent(this, EntertainmentActivity.class));
+            Intent intent = new Intent(this, EntertainmentActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         });
 
         bookGenresSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -50,6 +51,7 @@ public class EntertainmentNotificationsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entertainment_notifications);
 
+
         mFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -92,7 +94,9 @@ public class EntertainmentNotificationsActivity extends AppCompatActivity {
         enableNotifications.setOnCheckedChangeListener((compoundButton, b) -> setVisibility(b));
         apply.setOnClickListener(x -> {
             apply();
-            this.finish();
+            Intent intent = new Intent(this, EntertainmentActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         });
     }
 
