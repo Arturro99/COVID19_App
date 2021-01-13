@@ -1,5 +1,6 @@
 package com.mobilki.covidapp.health;
 
+import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,12 +10,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.Group;
+import androidx.fragment.app.DialogFragment;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -50,7 +54,7 @@ import java.util.Hashtable;
 import java.util.Locale;
 import java.util.Objects;
 
-public class HealthActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
+public class HealthActivity extends AppCompatActivity implements GestureDetector.OnGestureListener, DatePickerDialog.OnDateSetListener {
 
     public static final int SWIPE_THRESHOLD = 100;
     public static final int SWIPE_VELOCITY_THRESHOLD = 100;
@@ -85,11 +89,17 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     Button pickDateWeightBtn;
     Button pickDateSleepBtn;
     Button pickDateWaterBtn;
+    Button clickedButton;
 
     Button setStepsBtn;
     Button setWeightBtn;
     Button setSleepBtn;
     Button setWaterBtn;
+
+    Button test;
+    LinearLayout test1;
+    LinearLayout test2;
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -135,7 +145,6 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
             return true;
         });
 
-
     }
 
 
@@ -147,10 +156,14 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         //notificationsSettingsBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, HealthNotification.class)));
         setEntries();
         //fetchExercises();
-        initAdd();
+        initAddData();
+        initExercises();
     }
 
-    private void initAdd() {
+    private void initExercises() {
+    }
+
+    private void initAddData() {
         numberStepsSet = findViewById(R.id.numberStepsSet);
         numberWeightSet = findViewById(R.id.numberWeightSet);
         numberSleepSet = findViewById(R.id.numberSleepSet);
@@ -197,6 +210,21 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
                 addToDb(pickDateWaterBtn.getText().toString(), "water", Integer.parseInt(numberWaterSet.getText().toString()));
         });
 
+        pickDateStepsBtn.setOnClickListener(view -> pickDate(pickDateStepsBtn));
+        pickDateWeightBtn.setOnClickListener(view -> pickDate(pickDateWeightBtn));
+        pickDateSleepBtn.setOnClickListener(view -> pickDate(pickDateSleepBtn));
+        pickDateWaterBtn.setOnClickListener(view -> pickDate(pickDateWaterBtn));
+    }
+
+    public void pickDate(Button button) {
+        clickedButton = button;
+        DialogFragment datePicker = new DatePickerFragment();
+        datePicker.show(getSupportFragmentManager(), "date picker");
+    }
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int y, int m, int d) {
+        clickedButton.setText(d + "-" + m+1 + "-" + y);
     }
 
     private void addToDb(String date, String value, Integer intValue) {
@@ -304,6 +332,7 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         }
     }
 
+
     public void setBarChart(ArrayList<BarEntry> entries, String[] labels) {
         barDataSet.setValues(entries);
         barData = new BarData(barDataSet);
@@ -388,8 +417,7 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
             } else {
                 Log.d("ERR", "Cannot import exercises from db");
             }
-//            initiateGames();
-//            start();
+
         });
     }
 
@@ -418,4 +446,6 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     public void onLongPress(MotionEvent motionEvent) {
 
     }
+
+
 }
