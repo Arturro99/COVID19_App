@@ -1,7 +1,9 @@
 package com.mobilki.covidapp.entertainment.fragments;
 
 import android.annotation.SuppressLint;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +21,7 @@ import com.mobilki.covidapp.R;
 import com.mobilki.covidapp.api.ImdbApi;
 import com.squareup.picasso.Picasso;
 
-public class FilmFragment extends Fragment {
+public class FilmFragment extends Fragment implements FragmentEntity{
     ImdbApi imdbApi;
     LinearLayout filmsLayout;
     int filmDigit;
@@ -43,8 +45,9 @@ public class FilmFragment extends Fragment {
 
     ConstraintLayout[] filmConstraintLayoutList;
 
+    public FilmFragment() { super(R.layout.film_overview); }
+
     public FilmFragment(LinearLayout layout, int filmDigit, ImdbApi api) {
-        super(R.layout.film_overview);
         this.filmsLayout = layout;
         this.filmDigit = filmDigit;
         this.imdbApi = api;
@@ -53,18 +56,15 @@ public class FilmFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.d("TAG", "onCreateView: FILM");
         initializeFields(filmDigit);
+        setFields(filmDigit);
+        fillFields(filmDigit);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
-        setFields(filmDigit);
-        initiateFilms(filmDigit);
-    }
-
-    private void initializeFields(int number) {
+    public void initializeFields(int number) {
         filmTitleList = new TextView[number];
         filmGenresList = new TextView[number];
 
@@ -86,7 +86,8 @@ public class FilmFragment extends Fragment {
     }
 
     @SuppressLint("InflateParams")
-    private void setFields(int filmDigit) {
+    @Override
+    public void setFields(int filmDigit) {
         int filmTitleInitiateId = 1000;
         int filmReleaseYearInitiateId = 2000;
         int filmReleaseYearTxtInitiateId = 2500;
@@ -155,9 +156,10 @@ public class FilmFragment extends Fragment {
 
             //TITLE
             constraintSet.connect(filmTitleList[i].getId(), ConstraintSet.END, filmConstraintLayoutList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(filmTitleList[i].getId(), ConstraintSet.START, filmConstraintLayoutList[i].getId(), ConstraintSet.START);
+            constraintSet.connect(filmTitleList[i].getId(), ConstraintSet.START, filmPhotosList[i].getId(), ConstraintSet.END);
             constraintSet.connect(filmTitleList[i].getId(), ConstraintSet.TOP, filmConstraintLayoutList[i].getId(), ConstraintSet.TOP);
-            filmTitleList[i].setTextSize(20);
+            filmTitleList[i].setTextSize(15);
+            filmTitleList[i].setTypeface(Typeface.DEFAULT_BOLD);
 
             //DIRECTOR TXT
             constraintSet.connect(filmDirectorTxtList[i].getId(), ConstraintSet.BOTTOM, filmConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
@@ -186,7 +188,7 @@ public class FilmFragment extends Fragment {
             constraintSet.connect(filmReleaseYearList[i].getId(), ConstraintSet.END, filmConstraintLayoutList[i].getId(), ConstraintSet.END);
             constraintSet.connect(filmReleaseYearList[i].getId(), ConstraintSet.START, filmPhotosList[i].getId(), ConstraintSet.END);
             constraintSet.connect(filmReleaseYearList[i].getId(), ConstraintSet.TOP, filmPhotosList[i].getId(), ConstraintSet.TOP);
-            constraintSet.setVerticalBias(filmReleaseYearList[i].getId(), 0.3f);
+            constraintSet.setVerticalBias(filmReleaseYearList[i].getId(), 0.4f);
             constraintSet.setHorizontalBias(filmReleaseYearList[i].getId(), 0.6f);
 
             //DURATION TXT
@@ -202,7 +204,7 @@ public class FilmFragment extends Fragment {
             constraintSet.connect(filmDurationList[i].getId(), ConstraintSet.END, filmConstraintLayoutList[i].getId(), ConstraintSet.END);
             constraintSet.connect(filmDurationList[i].getId(), ConstraintSet.START, filmPhotosList[i].getId(), ConstraintSet.END);
             constraintSet.connect(filmDurationList[i].getId(), ConstraintSet.TOP, filmPhotosList[i].getId(), ConstraintSet.TOP);
-            constraintSet.setVerticalBias(filmDurationList[i].getId(), 0.4f);
+            constraintSet.setVerticalBias(filmDurationList[i].getId(), 0.5f);
             constraintSet.setHorizontalBias(filmDurationList[i].getId(), 0.6f);
 
             //RATINGS TXT
@@ -218,7 +220,7 @@ public class FilmFragment extends Fragment {
             constraintSet.connect(filmRatingList[i].getId(), ConstraintSet.END, filmConstraintLayoutList[i].getId(), ConstraintSet.END);
             constraintSet.connect(filmRatingList[i].getId(), ConstraintSet.START, filmPhotosList[i].getId(), ConstraintSet.END);
             constraintSet.connect(filmRatingList[i].getId(), ConstraintSet.TOP, filmPhotosList[i].getId(), ConstraintSet.TOP);
-            constraintSet.setVerticalBias(filmRatingList[i].getId(), 0.5f);
+            constraintSet.setVerticalBias(filmRatingList[i].getId(), 0.6f);
             constraintSet.setHorizontalBias(filmRatingList[i].getId(), 0.6f);
 
             //Genres
@@ -233,7 +235,8 @@ public class FilmFragment extends Fragment {
         }
     }
 
-    private void initiateFilms(int number) {
+    @Override
+    public void fillFields(int number) {
         for (int i = 0; i < number; i++) {
             filmTitleList[i].setText(imdbApi.getAll().get(i).getTitle());
             filmReleaseYearList[i].setText(String.valueOf(imdbApi.getAll().get(i).getDateOfRelease()));
@@ -255,6 +258,7 @@ public class FilmFragment extends Fragment {
         }
     }
 
-    public ImageButton getFilmPhoto(int index) { return filmPhotosList[index]; }
+    @Override
+    public ImageButton getPhoto(int index) { return filmPhotosList[index]; }
 
 }
