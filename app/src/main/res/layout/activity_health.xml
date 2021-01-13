@@ -7,19 +7,19 @@
     android:background="#03A9F4"
     tools:context=".health.HealthActivity">
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/barchart"
+<!--    <com.github.mikephil.charting.charts.BarChart-->
+<!--        android:id="@+id/barchart"-->
 
-        android:layout_width="396dp"
-        android:layout_height="244dp"
-        android:layout_marginTop="30dp"
+<!--        android:layout_width="396dp"-->
+<!--        android:layout_height="244dp"-->
+<!--        android:layout_marginTop="30dp"-->
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.466"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.076" />
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.466"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.076" />-->
 
     <Button
         android:id="@+id/exerciseSetBtn"
@@ -96,14 +96,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.80" />
 
-    <TextView
-        android:id="@+id/healthBarChartTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <TextView-->
+<!--        android:id="@+id/healthBarChartTitle"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textSize="24sp"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

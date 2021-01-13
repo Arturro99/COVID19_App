@@ -1,18 +1,20 @@
 package com.mobilki.covidapp.health;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.Group;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -22,6 +24,7 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -29,18 +32,23 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.Source;
 import com.mobilki.covidapp.R;
 import com.mobilki.covidapp.api.model.Exercise;
 import com.mobilki.covidapp.api.repository.ExerciseRepository;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Locale;
+import java.util.Objects;
 
 public class HealthActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
@@ -66,6 +74,22 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     Hashtable<Integer, String> dict = new Hashtable<Integer, String>();
 
     ExerciseRepository exerciseRepository;
+    BottomNavigationView bottomNavigationView;
+
+    EditText numberStepsSet;
+    EditText numberWeightSet;
+    EditText numberSleepSet;
+    EditText numberWaterSet;
+
+    Button pickDateStepsBtn;
+    Button pickDateWeightBtn;
+    Button pickDateSleepBtn;
+    Button pickDateWaterBtn;
+
+    Button setStepsBtn;
+    Button setWeightBtn;
+    Button setSleepBtn;
+    Button setWaterBtn;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -73,12 +97,12 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_health);
+        setContentView(R.layout.activity_health_new);
 
-        exerciseSetBtn = findViewById(R.id.exerciseSetBtn);
-        addDataBtn = findViewById(R.id.addDataBtn);
-        notificationsSettingsBtn = findViewById(R.id.healthNotificationsSettingsBtn);
-        preferencesBtn = findViewById(R.id.healthPreferencesBtn);
+//        exerciseSetBtn = findViewById(R.id.exerciseSetBtn);
+//        addDataBtn = findViewById(R.id.addDataBtn);
+//        notificationsSettingsBtn = findViewById(R.id.healthNotificationsSettingsBtn);
+//        preferencesBtn = findViewById(R.id.healthPreferencesBtn);
         barChart = findViewById(R.id.barchart);
         labels = new String[7];
         InitBarChart();
@@ -94,21 +118,98 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         dict.put(2, "Ilość snu [min]");
         dict.put(3, "Wypita woda [ml]");
         exerciseRepository = new ExerciseRepository();
-
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
         gestureDetector = new GestureDetector(this);
         start();
-    }
 
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            Group page1group = findViewById(R.id.page1group);
+            Group page2group = findViewById(R.id.page2group);
+            Group page3group = findViewById(R.id.page3group);
+
+            page1group.setVisibility(itemId == R.id.page_1 ? View.VISIBLE : View.GONE);
+            page2group.setVisibility(itemId == R.id.page_2 ? View.VISIBLE : View.GONE);
+            page3group.setVisibility(itemId == R.id.page_3 ? View.VISIBLE : View.GONE);
+
+            return true;
+        });
+
+
+    }
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void start() {
-        exerciseSetBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, ExerciseSet.class)));
+        //exerciseSetBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, ExerciseSet.class)));
         //ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(HealthActivity.this, findViewById(R.id.textView3), HealthDataActivity.VIEW_NAME_HEADER_TITLE);
-        addDataBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, HealthDataActivity.class)));
-        notificationsSettingsBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, HealthNotification.class)));
+        //addDataBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, HealthDataActivity.class)));
+        //notificationsSettingsBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, HealthNotification.class)));
         setEntries();
-        fetchExercises();
+        //fetchExercises();
+        initAdd();
+    }
+
+    private void initAdd() {
+        numberStepsSet = findViewById(R.id.numberStepsSet);
+        numberWeightSet = findViewById(R.id.numberWeightSet);
+        numberSleepSet = findViewById(R.id.numberSleepSet);
+        numberWaterSet = findViewById(R.id.numberWaterSet);
+
+        pickDateStepsBtn = findViewById(R.id.pickDateStepsBtn);
+        pickDateWeightBtn = findViewById(R.id.pickDateWeightBtn);
+        pickDateSleepBtn = findViewById(R.id.pickDateSleepBtn);
+        pickDateWaterBtn = findViewById(R.id.pickDateWaterBtn);
+
+        setStepsBtn = findViewById(R.id.setStepsBtn);
+        setWeightBtn = findViewById(R.id.setWeightBtn);
+        setSleepBtn = findViewById(R.id.setSleepBtn);
+        setWaterBtn = findViewById(R.id.setWaterBtn);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        String currentDate = sdf.format(new Date());
+        Calendar calendar = Calendar.getInstance();
+        try {
+            calendar.setTime(Objects.requireNonNull(sdf.parse(currentDate)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        pickDateStepsBtn.setText(currentDate);
+        pickDateWeightBtn.setText(currentDate);
+        pickDateSleepBtn.setText(currentDate);
+        pickDateWaterBtn.setText(currentDate);
+
+        setStepsBtn.setOnClickListener(view -> {
+            if (Integer.parseInt(numberStepsSet.getText().toString()) > 0)
+                addToDb(pickDateStepsBtn.getText().toString(), "steps", Integer.parseInt(numberStepsSet.getText().toString()));
+        });
+        setWeightBtn.setOnClickListener(view -> {
+            if (Integer.parseInt(numberWeightSet.getText().toString()) > 0)
+                addToDb(pickDateWeightBtn.getText().toString(), "weight", Integer.parseInt(numberWeightSet.getText().toString()));
+        });
+        setSleepBtn.setOnClickListener(view -> {
+            if (Integer.parseInt(numberSleepSet.getText().toString()) > 0)
+                addToDb(pickDateSleepBtn.getText().toString(), "sleep", Integer.parseInt(numberSleepSet.getText().toString()));
+        });
+        setWaterBtn.setOnClickListener(view -> {
+            if (Integer.parseInt(numberWaterSet.getText().toString()) > 0)
+                addToDb(pickDateWaterBtn.getText().toString(), "water", Integer.parseInt(numberWaterSet.getText().toString()));
+        });
+
+    }
+
+    private void addToDb(String date, String value, Integer intValue) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+        db.collection("users").document(mFirebaseAuth.getCurrentUser().getUid()).collection("health_data").document(date).set(new HashMap<String, Integer>()
+        {
+            {
+                put(value, intValue);
+            }
+        }, SetOptions.merge())
+                .addOnSuccessListener(documentReference -> Log.d("DocSnippets", "DocumentSnapshot added" ))
+                .addOnFailureListener(e -> Log.w("DocSnippets", "Error adding document", e));
     }
 
     @Override

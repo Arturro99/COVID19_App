@@ -34,4 +34,5 @@
         <item name="android:textColor">?attr/textColor</item>
         <item name="android:textAlignment">center</item>
     </style>
+
 </resources>
