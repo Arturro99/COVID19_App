@@ -12,7 +12,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -97,8 +96,8 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     Button setWaterBtn;
 
     Button test;
-    LinearLayout test1;
-    LinearLayout test2;
+    TextView test1;
+    TextView test2;
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -145,6 +144,14 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
             return true;
         });
 
+        test2 = findViewById(R.id.exercise1Description);
+        test1 = findViewById(R.id.exercise1Title);
+        test1.setOnClickListener(view -> {
+            if(test2.getVisibility() == View.GONE)
+                test2.setVisibility(View.VISIBLE);
+            else
+                test2.setVisibility(View.GONE);
+        });
     }
 
 
