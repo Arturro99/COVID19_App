@@ -33,7 +33,9 @@
 
             android:orientation="vertical">
 
-            <include layout="@layout/form_item"/>
+            <include
+                android:id="@+id/aaa"
+                layout="@layout/form_item"/>
             <include layout="@layout/form_item"/>
             <include layout="@layout/form_item"/>
             <include layout="@layout/form_item"/>
