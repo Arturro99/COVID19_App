@@ -10,24 +10,25 @@
         android:id="@+id/enableNotifications"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/aclonica"
         android:text="@string/enable_notifications"
         android:textSize="20sp"
-        android:fontFamily="@font/aclonica"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.1"
-        app:layout_constraintHorizontal_bias="0.5"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
     <TextView
         android:id="@+id/chooseTimeTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/choose_time"
         android:fontFamily="@font/aclonica"
+        android:text="@string/choose_time"
         android:textSize="15sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,9 +39,10 @@
         android:id="@+id/colon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=":"
         android:fontFamily="@font/aclonica"
+        android:text=":"
         android:textSize="20sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,12 +55,13 @@
         android:layout_height="70dp"
         android:scaleX="0.9"
         android:scaleY="0.9"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chooseTimeTxt"
-        app:layout_constraintVertical_bias="0.05"
-        app:layout_constraintHorizontal_bias="0.4" />
+        app:layout_constraintVertical_bias="0.05" />
 
     <NumberPicker
         android:id="@+id/minutes"
@@ -66,12 +69,13 @@
         android:layout_height="70dp"
         android:scaleX="0.9"
         android:scaleY="0.9"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chooseTimeTxt"
-        app:layout_constraintVertical_bias="0.05"
-        app:layout_constraintHorizontal_bias="0.6" />
+        app:layout_constraintVertical_bias="0.05" />
 
     <Button
         android:id="@+id/applyEntertainmentNotifications"
@@ -112,5 +116,19 @@
         app:layout_constraintVertical_bias="0.06"
         app:layout_constraintHorizontal_bias="0.5"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <Button
+        android:id="@+id/chooseTimeBtnEnter"
+        android:layout_width="90dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="31dp"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:text="@string/choose_time"
+        app:layout_constraintBottom_toTopOf="@+id/applyEntertainmentNotifications"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enableNotifications"
+        app:layout_constraintVertical_bias="0.033" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
