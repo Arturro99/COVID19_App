@@ -119,6 +119,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:menu="@menu/bottom_navigation_menu_entertainment"
+            android:background="@android:color/holo_purple"
             android:layout_alignParentBottom="true"/>
 
     </RelativeLayout>
