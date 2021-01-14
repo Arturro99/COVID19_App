@@ -233,7 +233,10 @@ public class EntertainmentActivity extends AppCompatActivity {
         gameFragment = new GameFragment(gamesLayout, gameRepository);
 
         fetchGames();
+
         switchFragment(filmFragment, R.id.filmsLinearLayout);
+        Log.d("TAG", "onNavigationItemSelected: FILM");
+        setPhotosClickable(R.id.filmPage);
         mProgressBar.setVisibility(View.GONE);
     }
 

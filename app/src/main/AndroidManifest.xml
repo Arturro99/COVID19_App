@@ -17,11 +17,11 @@
         <activity android:name=".entertainment.EntertainmentNotificationsActivity" />
         <activity android:name=".health.HealthNotification" />
         <activity android:name=".authentication.Login">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity android:name=".authentication.Register">
 <!--            <intent-filter>-->
@@ -40,11 +40,11 @@
         <activity android:name=".health.ExerciseSet" />
         <activity
             android:name=".MainActivity">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".health.HealthForm" android:theme="@android:style/Theme.Translucent.NoTitleBar">
 <!--            <intent-filter>-->

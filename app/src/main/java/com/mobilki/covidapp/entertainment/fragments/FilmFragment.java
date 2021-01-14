@@ -117,8 +117,8 @@ public class FilmFragment extends Fragment implements FragmentEntity{
             filmGenresList[i].setId(filmGenresInitiateId + i);
             filmDirectorList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
             filmDirectorList[i].setId(filmDirectorInitiateId + i);
-            filmDirectorTxtList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
-            filmDirectorTxtList[i].setId(filmDirectorTxtInitiateId + i);
+//            filmDirectorTxtList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
+//            filmDirectorTxtList[i].setId(filmDirectorTxtInitiateId + i);
             filmRatingList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
             filmRatingList[i].setId(filmRatingInitiateId + i);
             filmRatingTxtList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
@@ -134,21 +134,21 @@ public class FilmFragment extends Fragment implements FragmentEntity{
 
             filmConstraintLayoutList[i].addView(filmPhotosList[i], 0);
             filmConstraintLayoutList[i].addView(filmTitleList[i], 1);
-            filmConstraintLayoutList[i].addView(filmDirectorTxtList[i], 2);
-            filmConstraintLayoutList[i].addView(filmDirectorList[i], 3);
-            filmConstraintLayoutList[i].addView(filmRatingTxtList[i], 4);
-            filmConstraintLayoutList[i].addView(filmRatingList[i], 5);
-            filmConstraintLayoutList[i].addView(filmReleaseYearTxtList[i], 6);
-            filmConstraintLayoutList[i].addView(filmReleaseYearList[i], 7);
-            filmConstraintLayoutList[i].addView(filmDurationTxtList[i], 8);
-            filmConstraintLayoutList[i].addView(filmDurationList[i], 9);
-            filmConstraintLayoutList[i].addView(filmGenresList[i], 10);
+//            filmConstraintLayoutList[i].addView(filmDirectorTxtList[i], 2);
+            filmConstraintLayoutList[i].addView(filmDirectorList[i], 2);
+            filmConstraintLayoutList[i].addView(filmRatingTxtList[i], 3);
+            filmConstraintLayoutList[i].addView(filmRatingList[i], 4);
+            filmConstraintLayoutList[i].addView(filmReleaseYearTxtList[i], 5);
+            filmConstraintLayoutList[i].addView(filmReleaseYearList[i], 6);
+            filmConstraintLayoutList[i].addView(filmDurationTxtList[i], 7);
+            filmConstraintLayoutList[i].addView(filmDurationList[i], 8);
+            filmConstraintLayoutList[i].addView(filmGenresList[i], 9);
 
             filmsLayout.addView(linearLayout);
 
             filmConstraintLayoutList[i].setMinWidth(1500);
-            filmConstraintLayoutList[i].setMinWidth(1500);
             ConstraintSet constraintSet = new ConstraintSet();
+            constraintSet.clone(filmConstraintLayoutList[i]);
 
             //IMAGE
             constraintSet.connect(filmPhotosList[i].getId(), ConstraintSet.START, filmConstraintLayoutList[i].getId(), ConstraintSet.START);
@@ -162,18 +162,18 @@ public class FilmFragment extends Fragment implements FragmentEntity{
             filmTitleList[i].setTypeface(Typeface.DEFAULT_BOLD);
 
             //DIRECTOR TXT
-            constraintSet.connect(filmDirectorTxtList[i].getId(), ConstraintSet.BOTTOM, filmConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
-            constraintSet.connect(filmDirectorTxtList[i].getId(), ConstraintSet.END, filmConstraintLayoutList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(filmDirectorTxtList[i].getId(), ConstraintSet.START, filmPhotosList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(filmDirectorTxtList[i].getId(), ConstraintSet.TOP, filmPhotosList[i].getId(), ConstraintSet.TOP);
-            constraintSet.setVerticalBias(filmDirectorTxtList[i].getId(), 0.15f);
+//            constraintSet.connect(filmDirectorTxtList[i].getId(), ConstraintSet.BOTTOM, filmConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
+//            constraintSet.connect(filmDirectorTxtList[i].getId(), ConstraintSet.END, filmConstraintLayoutList[i].getId(), ConstraintSet.END);
+//            constraintSet.connect(filmDirectorTxtList[i].getId(), ConstraintSet.START, filmPhotosList[i].getId(), ConstraintSet.END);
+//            constraintSet.connect(filmDirectorTxtList[i].getId(), ConstraintSet.TOP, filmPhotosList[i].getId(), ConstraintSet.TOP);
+//            constraintSet.setVerticalBias(filmDirectorTxtList[i].getId(), 0.15f);
 
             //DIRECTOR
             constraintSet.connect(filmDirectorList[i].getId(), ConstraintSet.BOTTOM, filmConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.connect(filmDirectorList[i].getId(), ConstraintSet.END, filmConstraintLayoutList[i].getId(), ConstraintSet.END);
             constraintSet.connect(filmDirectorList[i].getId(), ConstraintSet.START, filmPhotosList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(filmDirectorList[i].getId(), ConstraintSet.TOP, filmDirectorTxtList[i].getId(), ConstraintSet.BOTTOM);
-            constraintSet.setVerticalBias(filmDirectorList[i].getId(), 0.01f);
+            constraintSet.connect(filmDirectorList[i].getId(), ConstraintSet.TOP, filmPhotosList[i].getId(), ConstraintSet.TOP);
+            constraintSet.setVerticalBias(filmDirectorList[i].getId(), 0.15f);
 
             //RELEASE YEAR TXT
             constraintSet.connect(filmReleaseYearTxtList[i].getId(), ConstraintSet.BOTTOM, filmConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
@@ -250,7 +250,7 @@ public class FilmFragment extends Fragment implements FragmentEntity{
                     .replace("]", ""));
             Picasso.get().load(imdbApi.getAll().get(i).getImageUrl()).placeholder(R.drawable.placeholder).into(filmPhotosList[i]);
 
-            filmDirectorTxtList[i].setText(R.string.director);
+//            filmDirectorTxtList[i].setText(R.string.director);
             filmReleaseYearTxtList[i].setText(R.string.released);
             filmDurationTxtList[i].setText(R.string.duration);
             filmRatingTxtList[i].setText(R.string.ratings);

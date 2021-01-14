@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         resendVerificationTxt = findViewById(R.id.resendVerificationTxt);
         user = firebaseAuth.getCurrentUser();
 
-        documentReference = firestore.collection("users").document(user.getUid());
+        documentReference = firestore.collection("users").document(user.getUid()).collection("settings").document("language");
         documentReference.addSnapshotListener(this, (documentSnapshot, e) -> {
             polish.setVisibility(Optional.ofNullable(documentSnapshot.getString("language")).orElse("english").equals("polish") ? View.GONE : View.VISIBLE);
             english.setVisibility(polish.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
