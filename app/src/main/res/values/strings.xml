@@ -27,15 +27,24 @@
     <string name="resend_mail">Resend e-mail</string>
 
     <!-- Health Activity   -->
-    <string name="exercises_set_panel">Exercise set</string>
+    <string name="barchart_panel">Barcharts</string>
+    <string name="exercises_set_panel">Exercises</string>
     <string name="add_data_panel">Add data</string>
-    <string name="sleep_measuring_switch">Sleep measurement</string>
-    <string name="water_drunk_switch">Water drunk</string>
-    <string name="current_weight_switch">Current weight</string>
-    <string name="step_counter_switch">Ste counter</string>
+    <string name="sleep_measuring_title">SLEEP</string>
+    <string name="water_drunk_title">WATER</string>
+    <string name="current_weight_title">WEIGHT</string>
+    <string name="step_counter_title">STEPS</string>
     <string name="desired_weight_txt">Target weight:</string>
     <string name="desired_sleep_txt">Docelowa amount of sleep:</string>
     <string name="desired_water_txt">Target amount of \ndrunk water [ml]:</string>
+    <string name="amount_for_add_data">AMOUNT</string>
+    <string name="set_btn_for_add_data">SET</string>
+    <string name="weight_title_barchart">Weight [kg]</string>
+    <string name="steps_title_barchart">Steps</string>
+    <string name="sleep_title_barchart">Sleep [min]</string>
+    <string name="water_title_barchart">Water [ml]</string>
+
+
 
     <!-- Entertainment Activity   -->
     <string name="familial_games_panel">Familial games</string>

@@ -6,414 +6,414 @@
     android:layout_height="match_parent"
     tools:context=".health.HealthDataActivity">
 
-    <Switch
-        android:id="@+id/stepCounterSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/step_counter_switch"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.35" />
+<!--    <Switch-->
+<!--        android:id="@+id/stepCounterSwitch"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/step_counter_switch"-->
+<!--        android:visibility="invisible"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.1"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.35" />-->
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/weightGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        app:constraint_referenced_ids="previousDayWeightBtn, nextDayWeightBtn, currentWeightDate,
-    currentWeightValue, desiredWeightTxt, desiredWeightValue" />
+<!--    <androidx.constraintlayout.widget.Group-->
+<!--        android:id="@+id/weightGroup"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:visibility="visible"-->
+<!--        app:constraint_referenced_ids="previousDayWeightBtn, nextDayWeightBtn, currentWeightDate,-->
+<!--    currentWeightValue, desiredWeightTxt, desiredWeightValue" />-->
 
-    <ImageButton
-        android:id="@+id/previousDayWeightBtn"
-        android:layout_width="28dp"
-        android:layout_height="26dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="21dp"
-        android:background="@drawable/left_arrow"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toTopOf="@+id/stepCounterSwitch"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentWeightValue"
-        app:layout_constraintVertical_bias="0.0" />
+<!--    <ImageButton-->
+<!--        android:id="@+id/previousDayWeightBtn"-->
+<!--        android:layout_width="28dp"-->
+<!--        android:layout_height="26dp"-->
+<!--        android:layout_marginStart="32dp"-->
+<!--        android:layout_marginTop="21dp"-->
+<!--        android:background="@drawable/left_arrow"-->
+<!--        android:scaleType="fitXY"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/stepCounterSwitch"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/currentWeightValue"-->
+<!--        app:layout_constraintVertical_bias="0.0" />-->
 
-    <TextView
-        android:id="@+id/currentWeightDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/stepCounterSwitch"
-        app:layout_constraintEnd_toStartOf="@+id/nextDayWeightBtn"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toEndOf="@+id/previousDayWeightBtn"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.81" />
+<!--    <TextView-->
+<!--        android:id="@+id/currentWeightDate"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/stepCounterSwitch"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/nextDayWeightBtn"-->
+<!--        app:layout_constraintHorizontal_bias="0.506"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/previousDayWeightBtn"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.81" />-->
 
-    <ImageButton
-        android:id="@+id/nextDayWeightBtn"
-        android:layout_width="28dp"
-        android:layout_height="26dp"
-        android:layout_marginEnd="264dp"
-        android:background="@drawable/right_arrow"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toTopOf="@+id/stepCounterSwitch"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentWeightValue"
-        app:layout_constraintVertical_bias="0.363" />
+<!--    <ImageButton-->
+<!--        android:id="@+id/nextDayWeightBtn"-->
+<!--        android:layout_width="28dp"-->
+<!--        android:layout_height="26dp"-->
+<!--        android:layout_marginEnd="264dp"-->
+<!--        android:background="@drawable/right_arrow"-->
+<!--        android:scaleType="fitXY"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/stepCounterSwitch"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/currentWeightValue"-->
+<!--        app:layout_constraintVertical_bias="0.363" />-->
 
-    <EditText
-        android:id="@+id/currentWeightValue"
-        android:layout_width="52dp"
-        android:layout_height="41dp"
-        android:ems="10"
-        android:inputType="number"
-        android:text="75"
-        app:layout_constraintBottom_toTopOf="@+id/currentWeightDate"
-        app:layout_constraintEnd_toStartOf="@+id/nextDayWeightBtn"
-        app:layout_constraintHorizontal_bias="0.74"
-        app:layout_constraintStart_toEndOf="@+id/previousDayWeightBtn"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.834" />
+<!--    <EditText-->
+<!--        android:id="@+id/currentWeightValue"-->
+<!--        android:layout_width="52dp"-->
+<!--        android:layout_height="41dp"-->
+<!--        android:ems="10"-->
+<!--        android:inputType="number"-->
+<!--        android:text="75"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/currentWeightDate"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/nextDayWeightBtn"-->
+<!--        app:layout_constraintHorizontal_bias="0.74"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/previousDayWeightBtn"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.834" />-->
 
-    <EditText
-        android:id="@+id/desiredWeightValue"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        android:text="75"
-        app:layout_constraintBottom_toTopOf="@+id/currentWeightDate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.908"
-        app:layout_constraintStart_toEndOf="@+id/currentWeightValue"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.834" />
+<!--    <EditText-->
+<!--        android:id="@+id/desiredWeightValue"-->
+<!--        android:layout_width="40dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:ems="10"-->
+<!--        android:inputType="number"-->
+<!--        android:text="75"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/currentWeightDate"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.908"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/currentWeightValue"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.834" />-->
 
-    <TextView
-        android:id="@+id/desiredWeightTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/desired_weight_txt"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/currentWeightDate"
-        app:layout_constraintEnd_toStartOf="@+id/desiredWeightValue"
-        app:layout_constraintHorizontal_bias="0.775"
-        app:layout_constraintStart_toEndOf="@+id/currentWeightValue"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.808" />
+<!--    <TextView-->
+<!--        android:id="@+id/desiredWeightTxt"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/desired_weight_txt"-->
+<!--        android:textSize="20sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/currentWeightDate"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/desiredWeightValue"-->
+<!--        app:layout_constraintHorizontal_bias="0.775"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/currentWeightValue"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.808" />-->
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/stepGroup"
-        android:layout_width="2dp"
-        android:layout_height="2dp"
-        android:visibility="visible"
-        app:constraint_referenced_ids="previousDayStepBtn, nextDayStepBtn, stepCounterDate,currentStepsValue" />
-
-
-    <TextView
-        android:id="@+id/stepCounterDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/sleepMeasuringSwitch"
-        app:layout_constraintEnd_toStartOf="@+id/nextDayStepBtn"
-        app:layout_constraintStart_toEndOf="@+id/previousDayStepBtn"
-        app:layout_constraintTop_toBottomOf="@+id/stepCounterSwitch"
-        app:layout_constraintVertical_bias="0.586" />
-
-    <EditText
-        android:id="@+id/currentStepsValue"
-        android:layout_width="69dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="244dp"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/sleepGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        app:constraint_referenced_ids="previousDaySleepBtn, nextDaySleepBtn, sleepMeasuringDate,
-        currentSleepValue, desiredSleepTxt, desiredSleepValue" />
+<!--    <androidx.constraintlayout.widget.Group-->
+<!--        android:id="@+id/stepGroup"-->
+<!--        android:layout_width="2dp"-->
+<!--        android:layout_height="2dp"-->
+<!--        android:visibility="visible"-->
+<!--        app:constraint_referenced_ids="previousDayStepBtn, nextDayStepBtn, stepCounterDate,currentStepsValue" />-->
 
 
-    <TextView
-        android:id="@+id/sleepMeasuringDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/waterDrunkSwitch"
-        app:layout_constraintEnd_toStartOf="@+id/nextDaySleepBtn"
-        app:layout_constraintStart_toEndOf="@+id/previousDaySleepBtn"
-        app:layout_constraintTop_toBottomOf="@+id/sleepMeasuringSwitch"
-        app:layout_constraintVertical_bias="0.7"/>
+<!--    <TextView-->
+<!--        android:id="@+id/stepCounterDate"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/sleepMeasuringSwitch"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/nextDayStepBtn"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/previousDayStepBtn"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/stepCounterSwitch"-->
+<!--        app:layout_constraintVertical_bias="0.586" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/currentStepsValue"-->
+<!--        android:layout_width="69dp"-->
+<!--        android:layout_height="55dp"-->
+<!--        android:layout_marginStart="64dp"-->
+<!--        android:layout_marginTop="244dp"-->
+<!--        android:ems="10"-->
+<!--        android:inputType="number"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    <androidx.constraintlayout.widget.Group-->
+<!--        android:id="@+id/sleepGroup"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:visibility="visible"-->
+<!--        app:constraint_referenced_ids="previousDaySleepBtn, nextDaySleepBtn, sleepMeasuringDate,-->
+<!--        currentSleepValue, desiredSleepTxt, desiredSleepValue" />-->
 
 
-    <TextView
-        android:id="@+id/desiredSleepTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/desired_sleep_txt"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/sleepMeasuringDate"
-        app:layout_constraintEnd_toStartOf="@+id/desiredSleepValue"
-        app:layout_constraintHorizontal_bias="0.803"
-        app:layout_constraintStart_toEndOf="@+id/currentSleepValue"
-        app:layout_constraintTop_toBottomOf="@+id/sleepMeasuringSwitch"
-        app:layout_constraintVertical_bias="0.515" />
-
-    <ImageButton
-        android:id="@+id/nextDayWaterBtn"
-        android:layout_width="28dp"
-        android:layout_height="26dp"
-        android:background="@drawable/right_arrow"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.301"
-        app:layout_constraintStart_toStartOf="@id/waterDrunkSwitch"
-        app:layout_constraintTop_toBottomOf="@+id/waterDrunkSwitch"
-        app:layout_constraintVertical_bias="0.459" />
-
-    <ImageButton
-        android:id="@+id/nextDayStepBtn"
-        android:layout_width="28dp"
-        android:layout_height="26dp"
-        android:background="@drawable/right_arrow"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toTopOf="@+id/sleepMeasuringSwitch"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.308"
-        app:layout_constraintStart_toStartOf="@id/stepCounterSwitch"
-        app:layout_constraintTop_toBottomOf="@+id/stepCounterSwitch"
-        app:layout_constraintVertical_bias="0.55" />
-
-    <ImageButton
-        android:id="@+id/previousDayStepBtn"
-        android:layout_width="28dp"
-        android:layout_height="26dp"
-        android:background="@drawable/left_arrow"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toTopOf="@+id/sleepMeasuringSwitch"
-        app:layout_constraintEnd_toEndOf="@+id/stepCounterSwitch"
-        app:layout_constraintHorizontal_bias="0.224"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stepCounterSwitch"
-        app:layout_constraintVertical_bias="0.55" />
-
-    <Switch
-        android:id="@+id/sleepMeasuringSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sleep_measuring_switch"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.111"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.538" />
-
-    <ImageButton
-        android:id="@+id/previousDaySleepBtn"
-        android:layout_width="28dp"
-        android:layout_height="26dp"
-        android:background="@drawable/left_arrow"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toTopOf="@+id/waterDrunkSwitch"
-        app:layout_constraintEnd_toEndOf="@+id/sleepMeasuringSwitch"
-        app:layout_constraintHorizontal_bias="0.218"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sleepMeasuringSwitch"
-        app:layout_constraintVertical_bias="0.701" />
-
-    <EditText
-        android:id="@+id/currentSleepValue"
-        android:layout_width="65dp"
-        android:layout_height="41dp"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/sleepMeasuringDate"
-        app:layout_constraintEnd_toStartOf="@+id/nextDaySleepBtn"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toEndOf="@+id/previousDaySleepBtn"
-        app:layout_constraintTop_toBottomOf="@+id/sleepMeasuringSwitch"
-        app:layout_constraintVertical_bias="0.521" />
-
-    <EditText
-        android:id="@+id/desiredSleepValue"
-        android:layout_width="48dp"
-        android:layout_height="43dp"
-        android:ems="10"
-        android:inputType="number"
-        android:text="450"
-        app:layout_constraintBottom_toTopOf="@+id/sleepMeasuringDate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.91"
-        app:layout_constraintStart_toEndOf="@+id/currentSleepValue"
-        app:layout_constraintTop_toBottomOf="@+id/sleepMeasuringSwitch"
-        app:layout_constraintVertical_bias="0.521" />
-
-    <EditText
-        android:id="@+id/desiredWaterValue"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        android:text="2000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.899"
-        app:layout_constraintStart_toEndOf="@+id/currentWaterValue"
-        app:layout_constraintTop_toBottomOf="@+id/waterDrunkSwitch"
-        app:layout_constraintVertical_bias="0.106" />
-
-    <Switch
-        android:id="@+id/waterDrunkSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/water_drunk_switch"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.112"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.789" />
-
-    <ImageButton
-        android:id="@+id/previousDayWaterBtn"
-        android:layout_width="28dp"
-        android:layout_height="26dp"
-        android:background="@drawable/left_arrow"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/waterDrunkSwitch"
-        app:layout_constraintHorizontal_bias="0.221"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/waterDrunkSwitch"
-        app:layout_constraintVertical_bias="0.459" />
-
-    <ImageButton
-        android:id="@+id/nextDaySleepBtn"
-        android:layout_width="28dp"
-        android:layout_height="26dp"
-        android:background="@drawable/right_arrow"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toTopOf="@+id/waterDrunkSwitch"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.301"
-        app:layout_constraintStart_toStartOf="@id/sleepMeasuringSwitch"
-        app:layout_constraintTop_toBottomOf="@+id/sleepMeasuringSwitch"
-        app:layout_constraintVertical_bias="0.701" />
-
-    <EditText
-        android:id="@+id/currentWaterValue"
-        android:layout_width="75dp"
-        android:layout_height="39dp"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/nextDayWaterBtn"
-        app:layout_constraintHorizontal_bias="0.483"
-        app:layout_constraintStart_toEndOf="@+id/previousDayWaterBtn"
-        app:layout_constraintTop_toBottomOf="@+id/waterDrunkSwitch"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/desiredWaterTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/desired_water_txt"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/desiredWaterValue"
-        app:layout_constraintHorizontal_bias="0.716"
-        app:layout_constraintStart_toEndOf="@+id/currentWaterValue"
-        app:layout_constraintTop_toBottomOf="@+id/waterDrunkSwitch"
-        app:layout_constraintVertical_bias="0.051" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/waterGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        app:constraint_referenced_ids="previousDayWaterBtn, nextDayWaterBtn, waterDrunkDate,
-        currentWaterValue, desiredWaterTxt, desiredWaterValue" />
+<!--    <TextView-->
+<!--        android:id="@+id/sleepMeasuringDate"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/waterDrunkSwitch"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/nextDaySleepBtn"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/previousDaySleepBtn"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/sleepMeasuringSwitch"-->
+<!--        app:layout_constraintVertical_bias="0.7"/>-->
 
 
-    <TextView
-        android:id="@+id/waterDrunkDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/nextDayWaterBtn"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toEndOf="@+id/previousDayWaterBtn"
-        app:layout_constraintTop_toBottomOf="@+id/waterDrunkSwitch"
-        app:layout_constraintVertical_bias="0.434" />
+<!--    <TextView-->
+<!--        android:id="@+id/desiredSleepTxt"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/desired_sleep_txt"-->
+<!--        android:textSize="20sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/sleepMeasuringDate"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/desiredSleepValue"-->
+<!--        app:layout_constraintHorizontal_bias="0.803"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/currentSleepValue"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/sleepMeasuringSwitch"-->
+<!--        app:layout_constraintVertical_bias="0.515" />-->
 
-    <TextView
-        android:id="@+id/titleaaaa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="178dp"
-        android:layout_marginTop="25dp"
-        android:text="Dodaj dane"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <ImageButton-->
+<!--        android:id="@+id/nextDayWaterBtn"-->
+<!--        android:layout_width="28dp"-->
+<!--        android:layout_height="26dp"-->
+<!--        android:background="@drawable/right_arrow"-->
+<!--        android:scaleType="fitXY"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.301"-->
+<!--        app:layout_constraintStart_toStartOf="@id/waterDrunkSwitch"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/waterDrunkSwitch"-->
+<!--        app:layout_constraintVertical_bias="0.459" />-->
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="156dp"
-        android:layout_marginBottom="7dp"
-        android:text="Dodaj dane"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+<!--    <ImageButton-->
+<!--        android:id="@+id/nextDayStepBtn"-->
+<!--        android:layout_width="28dp"-->
+<!--        android:layout_height="26dp"-->
+<!--        android:background="@drawable/right_arrow"-->
+<!--        android:scaleType="fitXY"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/sleepMeasuringSwitch"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.308"-->
+<!--        app:layout_constraintStart_toStartOf="@id/stepCounterSwitch"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/stepCounterSwitch"-->
+<!--        app:layout_constraintVertical_bias="0.55" />-->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="Kroki:"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/currentStepsValue"
-        tools:layout_editor_absoluteX="72dp" />
+<!--    <ImageButton-->
+<!--        android:id="@+id/previousDayStepBtn"-->
+<!--        android:layout_width="28dp"-->
+<!--        android:layout_height="26dp"-->
+<!--        android:background="@drawable/left_arrow"-->
+<!--        android:scaleType="fitXY"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/sleepMeasuringSwitch"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/stepCounterSwitch"-->
+<!--        app:layout_constraintHorizontal_bias="0.224"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/stepCounterSwitch"-->
+<!--        app:layout_constraintVertical_bias="0.55" />-->
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="Waga [kg]:"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/currentWeightValue"
-        tools:layout_editor_absoluteX="65dp" />
+<!--    <Switch-->
+<!--        android:id="@+id/sleepMeasuringSwitch"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/sleep_measuring_switch"-->
+<!--        android:visibility="invisible"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.111"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.538" />-->
 
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:text="Sen [min]:"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/currentSleepValue"
-        tools:layout_editor_absoluteX="59dp" />
+<!--    <ImageButton-->
+<!--        android:id="@+id/previousDaySleepBtn"-->
+<!--        android:layout_width="28dp"-->
+<!--        android:layout_height="26dp"-->
+<!--        android:background="@drawable/left_arrow"-->
+<!--        android:scaleType="fitXY"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/waterDrunkSwitch"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/sleepMeasuringSwitch"-->
+<!--        app:layout_constraintHorizontal_bias="0.218"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/sleepMeasuringSwitch"-->
+<!--        app:layout_constraintVertical_bias="0.701" />-->
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:text="Woda [ml]:"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/waterDrunkSwitch"
-        tools:layout_editor_absoluteX="68dp" />
+<!--    <EditText-->
+<!--        android:id="@+id/currentSleepValue"-->
+<!--        android:layout_width="65dp"-->
+<!--        android:layout_height="41dp"-->
+<!--        android:ems="10"-->
+<!--        android:inputType="number"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/sleepMeasuringDate"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/nextDaySleepBtn"-->
+<!--        app:layout_constraintHorizontal_bias="0.51"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/previousDaySleepBtn"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/sleepMeasuringSwitch"-->
+<!--        app:layout_constraintVertical_bias="0.521" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/desiredSleepValue"-->
+<!--        android:layout_width="48dp"-->
+<!--        android:layout_height="43dp"-->
+<!--        android:ems="10"-->
+<!--        android:inputType="number"-->
+<!--        android:text="450"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/sleepMeasuringDate"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.91"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/currentSleepValue"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/sleepMeasuringSwitch"-->
+<!--        app:layout_constraintVertical_bias="0.521" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/desiredWaterValue"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:ems="10"-->
+<!--        android:inputType="number"-->
+<!--        android:text="2000"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.899"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/currentWaterValue"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/waterDrunkSwitch"-->
+<!--        app:layout_constraintVertical_bias="0.106" />-->
+
+<!--    <Switch-->
+<!--        android:id="@+id/waterDrunkSwitch"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/water_drunk_switch"-->
+<!--        android:visibility="invisible"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.112"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.789" />-->
+
+<!--    <ImageButton-->
+<!--        android:id="@+id/previousDayWaterBtn"-->
+<!--        android:layout_width="28dp"-->
+<!--        android:layout_height="26dp"-->
+<!--        android:background="@drawable/left_arrow"-->
+<!--        android:scaleType="fitXY"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/waterDrunkSwitch"-->
+<!--        app:layout_constraintHorizontal_bias="0.221"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/waterDrunkSwitch"-->
+<!--        app:layout_constraintVertical_bias="0.459" />-->
+
+<!--    <ImageButton-->
+<!--        android:id="@+id/nextDaySleepBtn"-->
+<!--        android:layout_width="28dp"-->
+<!--        android:layout_height="26dp"-->
+<!--        android:background="@drawable/right_arrow"-->
+<!--        android:scaleType="fitXY"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/waterDrunkSwitch"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.301"-->
+<!--        app:layout_constraintStart_toStartOf="@id/sleepMeasuringSwitch"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/sleepMeasuringSwitch"-->
+<!--        app:layout_constraintVertical_bias="0.701" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/currentWaterValue"-->
+<!--        android:layout_width="75dp"-->
+<!--        android:layout_height="39dp"-->
+<!--        android:ems="10"-->
+<!--        android:inputType="number"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/nextDayWaterBtn"-->
+<!--        app:layout_constraintHorizontal_bias="0.483"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/previousDayWaterBtn"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/waterDrunkSwitch"-->
+<!--        app:layout_constraintVertical_bias="0.0" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/desiredWaterTxt"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/desired_water_txt"-->
+<!--        android:textSize="20sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/desiredWaterValue"-->
+<!--        app:layout_constraintHorizontal_bias="0.716"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/currentWaterValue"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/waterDrunkSwitch"-->
+<!--        app:layout_constraintVertical_bias="0.051" />-->
+
+<!--    <androidx.constraintlayout.widget.Group-->
+<!--        android:id="@+id/waterGroup"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:visibility="visible"-->
+<!--        app:constraint_referenced_ids="previousDayWaterBtn, nextDayWaterBtn, waterDrunkDate,-->
+<!--        currentWaterValue, desiredWaterTxt, desiredWaterValue" />-->
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/waterDrunkDate"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/nextDayWaterBtn"-->
+<!--        app:layout_constraintHorizontal_bias="0.506"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/previousDayWaterBtn"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/waterDrunkSwitch"-->
+<!--        app:layout_constraintVertical_bias="0.434" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/titleaaaa"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="178dp"-->
+<!--        android:layout_marginTop="25dp"-->
+<!--        android:text="Dodaj dane"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/button"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="156dp"-->
+<!--        android:layout_marginBottom="7dp"-->
+<!--        android:text="Dodaj dane"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        android:text="Kroki:"-->
+<!--        android:textSize="18sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/currentStepsValue"-->
+<!--        tools:layout_editor_absoluteX="72dp" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/textView6"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="8dp"-->
+<!--        android:text="Waga [kg]:"-->
+<!--        android:textSize="18sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/currentWeightValue"-->
+<!--        tools:layout_editor_absoluteX="65dp" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/textView7"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="40dp"-->
+<!--        android:text="Sen [min]:"-->
+<!--        android:textSize="18sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/currentSleepValue"-->
+<!--        tools:layout_editor_absoluteX="59dp" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/textView8"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="24dp"-->
+<!--        android:text="Woda [ml]:"-->
+<!--        android:textSize="18sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/waterDrunkSwitch"-->
+<!--        tools:layout_editor_absoluteX="68dp" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

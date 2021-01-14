@@ -4,15 +4,15 @@
         android:id="@+id/page_1"
         android:enabled="true"
         android:icon="@drawable/ic_star_checkable_24"
-        android:title="Wykresy" />
+        android:title="@string/barchart_panel" />
     <item
         android:id="@+id/page_2"
         android:enabled="true"
         android:icon="@drawable/ic_star_checkable_24"
-        android:title="Ćwiczenia" />
+        android:title="@string/exercises_set_panel" />
     <item
         android:id="@+id/page_3"
         android:enabled="true"
         android:icon="@drawable/ic_star_checkable_24"
-        android:title="Dodaj" />
+        android:title="@string/add_data_panel" />
 </menu>
