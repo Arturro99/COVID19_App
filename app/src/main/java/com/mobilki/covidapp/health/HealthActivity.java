@@ -1,6 +1,7 @@
 package com.mobilki.covidapp.health;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -74,7 +76,7 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     TextView healthBarChartTitle;
     int entry;
     String[] labels;
-    Hashtable<Integer, String> dict = new Hashtable<Integer, String>();
+    Hashtable<Integer, Integer> dict = new Hashtable<Integer, Integer>();
 
     ExerciseRepository exerciseRepository;
     BottomNavigationView bottomNavigationView;
@@ -99,6 +101,7 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     TextView test1;
     TextView test2;
 
+    ImageView notificationtn;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -122,10 +125,10 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         entries = new ArrayList<>();
         healthBarChartTitle = findViewById(R.id.healthBarChartTitle);
 
-        dict.put(0, "Waga [kg]");
-        dict.put(1, "Liczba kroków");
-        dict.put(2, "Ilość snu [min]");
-        dict.put(3, "Wypita woda [ml]");
+        dict.put(0, R.string.weight_title_barchart);
+        dict.put(1, R.string.steps_title_barchart);
+        dict.put(2, R.string.sleep_title_barchart);
+        dict.put(3, R.string.water_title_barchart);
         exerciseRepository = new ExerciseRepository();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         gestureDetector = new GestureDetector(this);
@@ -152,6 +155,10 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
             else
                 test2.setVisibility(View.GONE);
         });
+
+        notificationtn = findViewById(R.id.notificationBtnHealth);
+
+        notificationtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, HealthNotification.class)));
     }
 
 

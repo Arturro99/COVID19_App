@@ -27,15 +27,22 @@
     <string name="resend_mail">Prześlij ponownie</string>
 
     <!-- Health Activity   -->
-    <string name="exercises_set_panel">Zestaw ćwiczeń</string>
+    <string name="barchart_panel">Wykresy</string>
+    <string name="exercises_set_panel">Ćwiczenia</string>
     <string name="add_data_panel">Dodaj dane</string>
-    <string name="sleep_measuring_switch">Mierzenie snu</string>
-    <string name="water_drunk_switch">Wypita woda</string>
-    <string name="current_weight_switch">Aktualna waga</string>
-    <string name="step_counter_switch">Licznik kroków</string>
+    <string name="sleep_measuring_title">SEN</string>
+    <string name="water_drunk_title">WODA</string>
+    <string name="current_weight_title">WAGA</string>
+    <string name="step_counter_title">KROKI</string>
     <string name="desired_weight_txt">Docelowa waga:</string>
     <string name="desired_sleep_txt">Docelowa ilość snu:</string>
     <string name="desired_water_txt">Docelowa ilość \nwypitej wody [ml]:</string>
+    <string name="amount_for_add_data">ILOŚĆ</string>
+    <string name="set_btn_for_add_data">USTAW</string>
+    <string name="weight_title_barchart">Waga [kg]</string>
+    <string name="steps_title_barchart">Liczba kroków</string>
+    <string name="sleep_title_barchart">Ilość snu [min]</string>
+    <string name="water_title_barchart">Wypita woda [ml]</string>
 
     <!-- Entertainment Activity   -->
     <string name="recommended_movies_panel">Polecane filmy</string>
