@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.android.material.timepicker.MaterialTimePicker;
 import com.mobilki.covidapp.R;
 import com.mobilki.covidapp.health.TimePickerFragment;
 import com.mobilki.covidapp.notification.NotificationHelper;
@@ -112,8 +113,12 @@ public class EntertainmentNotificationsActivity extends AppCompatActivity implem
     }
 
     public void pickTime() {
-        DialogFragment timePicker = new TimePickerFragment();
-        timePicker.show(getSupportFragmentManager(), "time picker");
+//        DialogFragment timePicker = new TimePickerFragment();
+//        timePicker.show(getSupportFragmentManager(), "time picker");
+        new MaterialTimePicker.Builder()
+                .setTitleText(R.string.time_picker)
+                .build()
+                .show(getSupportFragmentManager(), "time picker");
     }
 
     @Override

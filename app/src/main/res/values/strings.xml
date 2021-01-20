@@ -71,6 +71,7 @@
     <string name="film_by_genre">By genres:</string>
     <string name="film_by_other">Other:</string>
     <string name="book_by_genre">Sort boks by genres:</string>
+    <string name="time_picker">Time picker</string>
 
     <!-- Common   -->
     <string name="preferences_panel">Preferences</string>

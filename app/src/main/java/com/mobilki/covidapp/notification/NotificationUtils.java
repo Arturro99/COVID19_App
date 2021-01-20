@@ -55,14 +55,14 @@ public class NotificationUtils extends ContextWrapper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // create android channel
             NotificationChannel newChannel = new NotificationChannel(CHANNEL_ID,
-                    CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
-            if (enableSound) {
-                Log.d("TAG", "createChannel: with sound");
-            }
-            else {
-                Log.d("TAG", "createChannel: no sound");
-                newChannel.setSound(null, null);
-            }
+                    CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
+//            if (enableSound) {
+//                Log.d("TAG", "createChannel: with sound");
+//            }
+//            else {
+//                Log.d("TAG", "createChannel: no sound");
+//                newChannel.setSound(null, null);
+//            }
             // Sets whether notifications posted to this channel should display notification lights
             newChannel.enableLights(true);
             // Sets whether notification posted to this channel should vibrate.

@@ -71,6 +71,7 @@
     <string name="film_by_genre">Po gatunkach:</string>
     <string name="film_by_other">Inne:</string>
     <string name="book_by_genre">Sortuj książki po gatunku</string>
+    <string name="time_picker">Wybierz godzinę</string>
 
     <!-- Common   -->
     <string name="preferences_panel">Preferencje</string>
