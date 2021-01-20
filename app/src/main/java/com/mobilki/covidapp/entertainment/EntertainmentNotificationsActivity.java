@@ -1,21 +1,18 @@
 package com.mobilki.covidapp.entertainment;
 
 import android.annotation.SuppressLint;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 
+import com.google.android.material.timepicker.TimeFormat;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -23,14 +20,13 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.mobilki.covidapp.R;
-import com.mobilki.covidapp.health.TimePickerFragment;
 import com.mobilki.covidapp.notification.NotificationHelper;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class EntertainmentNotificationsActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
+public class EntertainmentNotificationsActivity extends AppCompatActivity{
 
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch enableNotifications;
@@ -38,11 +34,7 @@ public class EntertainmentNotificationsActivity extends AppCompatActivity implem
     private Switch enableSound;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch enableVibrations;
-//    private NumberPicker hourPicker;
-//    private NumberPicker minutePicker;
     private Button apply;
-    private TextView colon;
-    private TextView chooseTxt;
 
     FirebaseFirestore mFirestore;
     FirebaseAuth mAuth;
@@ -52,13 +44,19 @@ public class EntertainmentNotificationsActivity extends AppCompatActivity implem
     Button chooseTimeBtn;
     int hourPicker;
     int minutePicker;
+    MaterialTimePicker.Builder pickerBuilder;
+    MaterialTimePicker picker;
 
 
+    @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entertainment_notifications);
+
+        pickerBuilder = new MaterialTimePicker.Builder();
+        picker = new MaterialTimePicker();
 
 
         mFirestore = FirebaseFirestore.getInstance();
@@ -72,16 +70,8 @@ public class EntertainmentNotificationsActivity extends AppCompatActivity implem
         enableNotifications = findViewById(R.id.enableNotifications);
         enableSound = findViewById(R.id.enableSound);
         enableVibrations = findViewById(R.id.enableVibrs);
-//        hourPicker = findViewById(R.id.hours);
-//        minutePicker = findViewById(R.id.minutes);
         apply = findViewById(R.id.applyEntertainmentNotifications);
-        colon = findViewById(R.id.colon);
-        chooseTxt = findViewById(R.id.chooseTimeTxt);
 
-//        hourPicker.setMinValue(0);
-//        hourPicker.setMaxValue(23);
-//        minutePicker.setMinValue(0);
-//        minutePicker.setMaxValue(59);
 
         collectionReference.document("entertainmentNotifications").get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot != null) {
@@ -110,30 +100,25 @@ public class EntertainmentNotificationsActivity extends AppCompatActivity implem
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });
+
     }
 
+    @SuppressLint("SetTextI18n")
     public void pickTime() {
-//        DialogFragment timePicker = new TimePickerFragment();
-//        timePicker.show(getSupportFragmentManager(), "time picker");
-        new MaterialTimePicker.Builder()
+        pickerBuilder
                 .setTitleText(R.string.time_picker)
-                .build()
-                .show(getSupportFragmentManager(), "time picker");
-    }
-
-    @Override
-    public void onTimeSet(TimePicker timePicker, int h, int m) {
-        hourPicker = h;
-        minutePicker = m;
-        chooseTimeBtn.setText(h + ":" + m);
+                .setTimeFormat(TimeFormat.CLOCK_24H);
+        picker = pickerBuilder.build();
+        picker.show(getSupportFragmentManager(), "time picker");
+        picker.addOnPositiveButtonClickListener(view -> {
+            hourPicker = picker.getHour();
+            minutePicker = picker.getMinute();
+            chooseTimeBtn.setText(hourPicker + ":" + minutePicker);
+        });
     }
 
     private void setVisibility(boolean visible) {
-//        chooseTxt.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
-//        colon.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
         chooseTimeBtn.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
-//        hourPicker.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
-//        minutePicker.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
         enableVibrations.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
         enableSound.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
     }
