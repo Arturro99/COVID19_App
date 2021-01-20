@@ -76,6 +76,7 @@
     <!-- Common   -->
     <string name="preferences_panel">Preferencje</string>
     <string name="notifications_settings_panel">Ustawienia powiadomień</string>
+    <string name="dark_mode">Tryb ciemny</string>
     <string name="yes">TAK</string>
     <string name="no">NIE</string>
     <string name="save">Zapisz</string>
