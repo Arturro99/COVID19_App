@@ -42,6 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
+        android:fontFamily="@font/aclonica"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -56,6 +57,7 @@
         android:gravity="center|center_horizontal|center_vertical"
         android:text="@string/health_panel"
         android:textSize="25sp"
+        android:fontFamily="@font/aclonica"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,12 +71,13 @@
         android:foregroundGravity="center_vertical|center|center_horizontal"
         android:gravity="center|center_horizontal|center_vertical"
         android:text="@string/entertainment_panel"
+        android:fontFamily="@font/aclonica"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintTop_toTopOf="@id/healthBtn"
+        app:layout_constraintVertical_bias="0.2" />
 
     <Button
         android:id="@+id/emergencyNumbersBtn"
@@ -83,39 +86,27 @@
         android:foregroundGravity="center_vertical|center|center_horizontal"
         android:gravity="center|center_horizontal|center_vertical"
         android:text="@string/emergency_numbers_panel"
+        android:fontFamily="@font/aclonica"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6" />
-
-    <Button
-        android:id="@+id/settingsBtn"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:foregroundGravity="center_vertical|center|center_horizontal"
-        android:gravity="center|center_horizontal|center_vertical"
-        android:text="@string/settings_panel"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7" />
+        app:layout_constraintTop_toTopOf="@id/entertainmentBtn"
+        app:layout_constraintVertical_bias="0.25" />
 
     <Button
         android:id="@+id/logout"
-        android:layout_width="69dp"
-        android:layout_height="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center|center_horizontal|center_vertical"
         android:onClick="logout"
+        android:fontFamily="@font/aclonica"
         android:text="@string/logout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/english"
         android:layout_width="24pt"
         android:layout_height="15pt"
@@ -126,7 +117,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.05" />
 
-    <Button
+    <ImageButton
         android:id="@+id/polish"
         android:layout_width="24pt"
         android:layout_height="15pt"
@@ -135,6 +126,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.05" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/darkMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dark_mode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.05"
+        android:fontFamily="@font/aclonica"
+        tools:ignore="UseSwitchCompatOrMaterialXml"
+        android:theme="@style/SwitchOnOff" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
