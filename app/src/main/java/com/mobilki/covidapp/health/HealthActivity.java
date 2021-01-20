@@ -29,18 +29,15 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.mobilki.covidapp.R;
-import com.mobilki.covidapp.api.model.Exercise;
 import com.mobilki.covidapp.api.repository.ExerciseRepository;
 
 import java.text.ParseException;
@@ -103,6 +100,12 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
 
     ImageView notificationBtn;
     ImageView settingsBtn;
+
+    ExercisesRepository repo;
+    FirebaseFirestore mFirestore;
+    FirebaseAuth mAuth;
+    FirebaseUser mUser;
+    CollectionReference collectionReference;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -173,7 +176,127 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         settingsBtn = findViewById(R.id.settingBtnHealth);
 
         settingsBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, HealthForm.class)));
+
+        mFirestore = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        collectionReference = mFirestore
+                .collection("exercises");
+        repo = new ExercisesRepository();
+        getExercisesFromDB();
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void getExercisesFromDB() {
+
+        collectionReference.get().addOnSuccessListener(document -> {
+            if (document != null) {
+                for (DocumentSnapshot doc : document.getDocuments()) {
+                    repo.add(new com.mobilki.covidapp.health.Exercise(
+                                Exercise.TypeExercise.valueOf(doc.getString("type")),
+                                doc.getBoolean("goodShoulders"),
+                                doc.getBoolean("goodBack"),
+                                doc.getBoolean("goodWrists"),
+                                doc.getBoolean("goodKnees"),
+                                doc.getBoolean("goodElbows"),
+                                doc.getBoolean("goodHip"),
+                                doc.getString("name_pl"),
+                                doc.getString("name_en"),
+                                doc.getLong("minReps").intValue(),
+                                doc.getLong("maxReps").intValue(),
+                                doc.getString("description_pl"),
+                                doc.getString("description_en"),
+                                doc.getString("yt")
+                            )
+
+                    );
+                }
+            }
+        });
+    }
+
+
+    //adding exercises to db
+//    private void addExercises() {
+//
+//
+//
+//
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        Random rand = new Random();
+//        for (int i = 0; i< 50; i++) {
+//
+//            List<Boolean> good = new ArrayList<>();
+//            for (int j =0; j<6; j++) {
+//                good.add(true);
+//            }
+//            for (int j =0; j<2; j++) {
+//                int r = rand.nextInt(5);
+//                good.set(r, false);
+//            }
+//            String name = i + "";
+//            String finalName = name;
+//            db.collection("exercises").document("upper "+ i).set(new HashMap<String, Object>()
+//            {
+//                {
+//                    put("type", "UPPER");
+//                    put("goodShoulders", good.get(0));
+//                    put("goodBack", good.get(1));
+//                    put("goodWrists", good.get(2));
+//                    put("goodKnees", good.get(3));
+//                    put("goodElbows", good.get(4));
+//                    put("goodHip", good.get(5));
+//                    put("name_pl", "pl UPPER" + finalName);
+//                    put("name_en", "en UPPER" + finalName);
+//                    put("minReps", rand.nextInt(10));
+//                    put("maxReps", rand.nextInt(20)+10);
+//                    put("description_pl", "pl_des UPPER" + finalName);
+//                    put("description_en", "en_des UPPER" + finalName);
+//                    put("yt", "uxPdPpi5W4o");
+//                }
+//            });
+//            db.collection("exercises").document("lower "+ i).set(new HashMap<String, Object>()
+//            {
+//                {
+//                    put("type", "LOWER");
+//                    put("goodShoulders", good.get(0));
+//                    put("goodBack", good.get(1));
+//                    put("goodWrists", good.get(2));
+//                    put("goodKnees", good.get(3));
+//                    put("goodElbows", good.get(4));
+//                    put("goodHip", good.get(5));
+//                    put("name_pl", "pl lower" + finalName);
+//                    put("name_en", "en lower" + finalName);
+//                    put("minReps", rand.nextInt(10));
+//                    put("maxReps", rand.nextInt(20)+10);
+//                    put("description_pl", "pl_des lower" + finalName);
+//                    put("description_en", "en_des lower" + finalName);
+//                    put("yt", "uxPdPpi5W4o");
+//                }
+//            });
+//            db.collection("exercises").document("condition "+ i).set(new HashMap<String, Object>()
+//            {
+//                {
+//                    put("type", "CONDITION");
+//                    put("goodShoulders", good.get(0));
+//                    put("goodBack", good.get(1));
+//                    put("goodWrists", good.get(2));
+//                    put("goodKnees", good.get(3));
+//                    put("goodElbows", good.get(4));
+//                    put("goodHip", good.get(5));
+//                    put("name_pl", "pl condition" + finalName);
+//                    put("name_en", "en condition" + finalName);
+//                    put("minReps", rand.nextInt(10));
+//                    put("maxReps", rand.nextInt(20)+10);
+//                    put("description_pl", "pl_des condition" + finalName);
+//                    put("description_en", "en_des condition" + finalName);
+//                    put("yt", "uxPdPpi5W4o");
+//                }
+//            });
+//
+//
+//        }
+//    }
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -189,6 +312,7 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     }
 
     private void initExercises() {
+
     }
 
     private void initAddData() {
@@ -415,38 +539,38 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void fetchExercises() {
-
-        FirebaseFirestore.getInstance().collection("exercises").get().addOnCompleteListener(task -> {
-            Log.d("TAG", "fetchExercisesFromDataBase: ");
-            if (task.isSuccessful()) {
-
-                for (QueryDocumentSnapshot doc : task.getResult()) {
-                    CollectionReference collectionReference = doc.getReference().collection("normal");
-                    Task<QuerySnapshot> querySnapshotTask =  collectionReference.get();
-                    querySnapshotTask.addOnSuccessListener(document -> {
-                        for (DocumentSnapshot normalDoc : document.getDocuments()) {
-                            Exercise exercises = normalDoc.toObject(Exercise.class);
-                            ExerciseRepository.add(doc.getId(), "normal", exercises);
-                        }
-                    });
-                    CollectionReference collectionReference2 = doc.getReference().collection("stretching");
-                    Task<QuerySnapshot> querySnapshotTask2 =  collectionReference2.get();
-                    querySnapshotTask2.addOnSuccessListener(document -> {
-                        for (DocumentSnapshot normalDoc : document.getDocuments()) {
-                            Exercise exercises = normalDoc.toObject(Exercise.class);
-                            ExerciseRepository.add(doc.getId(), "stretching", exercises);
-                        }
-                    });
-                    Log.d("TAG", "fetchExercisesFromDataBase:");
-                }
-            } else {
-                Log.d("ERR", "Cannot import exercises from db");
-            }
-
-        });
-    }
+//    @RequiresApi(api = Build.VERSION_CODES.N)
+//    public void fetchExercises() {
+//
+//        FirebaseFirestore.getInstance().collection("exercises").get().addOnCompleteListener(task -> {
+//            Log.d("TAG", "fetchExercisesFromDataBase: ");
+//            if (task.isSuccessful()) {
+//
+//                for (QueryDocumentSnapshot doc : task.getResult()) {
+//                    CollectionReference collectionReference = doc.getReference().collection("normal");
+//                    Task<QuerySnapshot> querySnapshotTask =  collectionReference.get();
+//                    querySnapshotTask.addOnSuccessListener(document -> {
+//                        for (DocumentSnapshot normalDoc : document.getDocuments()) {
+//                            Exercise exercises = normalDoc.toObject(Exercise.class);
+//                            ExerciseRepository.add(doc.getId(), "normal", exercises);
+//                        }
+//                    });
+//                    CollectionReference collectionReference2 = doc.getReference().collection("stretching");
+//                    Task<QuerySnapshot> querySnapshotTask2 =  collectionReference2.get();
+//                    querySnapshotTask2.addOnSuccessListener(document -> {
+//                        for (DocumentSnapshot normalDoc : document.getDocuments()) {
+//                            Exercise exercises = normalDoc.toObject(Exercise.class);
+//                            ExerciseRepository.add(doc.getId(), "stretching", exercises);
+//                        }
+//                    });
+//                    Log.d("TAG", "fetchExercisesFromDataBase:");
+//                }
+//            } else {
+//                Log.d("ERR", "Cannot import exercises from db");
+//            }
+//
+//        });
+//    }
 
 
     @Override
