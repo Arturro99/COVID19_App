@@ -76,6 +76,9 @@
     <!-- Common   -->
     <string name="preferences_panel">Preferences</string>
     <string name="notifications_settings_panel">Notification settings</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="save">Save</string>
 
     <!-- Film sorting methods -->
     <string-array name="film_other">

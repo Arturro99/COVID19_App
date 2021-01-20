@@ -2,6 +2,7 @@ package com.mobilki.covidapp.health;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -38,7 +39,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
-import com.google.firebase.firestore.Source;
 import com.mobilki.covidapp.R;
 import com.mobilki.covidapp.api.model.Exercise;
 import com.mobilki.covidapp.api.repository.ExerciseRepository;
@@ -101,7 +101,8 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     TextView test1;
     TextView test2;
 
-    ImageView notificationtn;
+    ImageView notificationBtn;
+    ImageView settingsBtn;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -115,6 +116,15 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
 //        addDataBtn = findViewById(R.id.addDataBtn);
 //        notificationsSettingsBtn = findViewById(R.id.healthNotificationsSettingsBtn);
 //        preferencesBtn = findViewById(R.id.healthPreferencesBtn);
+
+
+        SharedPreferences settings = getSharedPreferences(getResources().getString(R.string.shared_preferences), 0);
+        settings.edit().putBoolean("first_time_health", true).apply();
+        if (settings.getBoolean("first_time_health", true)) {
+            startActivity(new Intent(HealthActivity.this, HealthForm.class));
+        }
+
+
         barChart = findViewById(R.id.barchart);
         labels = new String[7];
         InitBarChart();
@@ -156,9 +166,13 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
                 test2.setVisibility(View.GONE);
         });
 
-        notificationtn = findViewById(R.id.notificationBtnHealth);
+        notificationBtn = findViewById(R.id.notificationBtnHealth);
 
-        notificationtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, HealthNotification.class)));
+        notificationBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, HealthNotification.class)));
+
+        settingsBtn = findViewById(R.id.settingBtnHealth);
+
+        settingsBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, HealthForm.class)));
     }
 
 
@@ -295,7 +309,6 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         Instant firstDay = Instant.now().minus(6, ChronoUnit.DAYS);
         Date myDate = Date.from(firstDay);
         String formattedDate = sdf.format(myDate);
-        Source source = Source.SERVER;
 
         for (int i = 0; i < 7; i++) {
             DocumentReference docRef = db.collection("users").document(mFirebaseAuth.getCurrentUser().getUid()).collection("health_data").document(formattedDate);

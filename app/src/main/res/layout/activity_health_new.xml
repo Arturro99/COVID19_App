@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        app:constraint_referenced_ids="healthBarChartTitle,barchart" />
+        app:constraint_referenced_ids="healthBarChartTitle,barchart,settingBtnHealth,notificationBtnHealth" />
 
 
     <androidx.constraintlayout.widget.Group
@@ -606,11 +606,27 @@
         android:id="@+id/notificationBtnHealth"
         android:layout_width="56dp"
         android:layout_height="52dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/healthBarChartTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/notification" />
+
+    <ImageView
+        android:id="@+id/settingBtnHealth"
+        android:layout_width="56dp"
+        android:layout_height="52dp"
+
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/healthBarChartTitle"
+        app:layout_constraintEnd_toStartOf="@+id/notificationBtnHealth"
+        app:layout_constraintHorizontal_bias="0.943"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/settings_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
