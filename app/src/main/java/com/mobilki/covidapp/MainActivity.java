@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mobilki.covidapp.api.GamesFiller;
 import com.mobilki.covidapp.authentication.Login;
@@ -59,61 +60,19 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_main);
-
-        healthBtn = findViewById(R.id.healthBtn);
-        entertainmentBtn = findViewById(R.id.entertainmentBtn);
-        emergencyNumbersBtn = findViewById(R.id.emergencyNumbersBtn);
-        mLogoutBtn = findViewById(R.id.logout);
-        polish = findViewById(R.id.polish);
-        english = findViewById(R.id.english);
-        darkMode = findViewById(R.id.darkMode);
-
-        darkMode.setSwitchTextAppearance(this, R.style.SwitchTextAppearance);
-
-        curiosities = findViewById(R.id.mainCuriositiesTxt);
-        settings = getSharedPreferences(getResources().getString(R.string.shared_preferences),0);
-
         firebaseAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
-        resendVerification = findViewById(R.id.resendVerification);
-        resendVerificationTxt = findViewById(R.id.resendVerificationTxt);
         user = firebaseAuth.getCurrentUser();
-
-        if (user == null) {
-            finish();
-            Intent intent = new Intent(this, Login.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            return;
-        }
         documentReference = firestore.collection("users").document(user.getUid()).collection("settings").document("language");
-        documentReference.addSnapshotListener(this, (documentSnapshot, e) -> {
-            polish.setVisibility(Optional.ofNullable(documentSnapshot.getString("language")).orElse("english").equals("polish") ? View.GONE : View.VISIBLE);
-            english.setVisibility(polish.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-//            DisplayMetrics metrics = getResources().getDisplayMetrics();
-//            Configuration conf = getResources().getConfiguration();
-//            conf.setLocale(new Locale(polish.getVisibility() == View.VISIBLE ? "en" : "pl"));
-//            getResources().updateConfiguration(conf, metrics);
-//            setContentView(R.layout.activity_main);
-
+        super.onCreate(savedInstanceState);
+        documentReference.get().addOnSuccessListener(documentSnapshot -> {
+            DisplayMetrics metrics = getResources().getDisplayMetrics();
+            Configuration conf = getResources().getConfiguration();
+            conf.setLocale(new Locale(Optional.ofNullable(documentSnapshot.getString("language")).orElse("english").equals("polish") ? "pl" : "en"));
+            getResources().updateConfiguration(conf, metrics);
+            setContentView(R.layout.activity_main);
+            setUp();
         });
-
-        if (user.isEmailVerified()) {
-            DocumentReference documentReference = firestore.collection("users").document(user.getUid());
-            documentReference.addSnapshotListener(this, (documentSnapshot, e) -> {
-                if (documentSnapshot != null)
-                    curiosities.setText("Hello, " + documentSnapshot.getString("name"));
-                else
-                    curiosities.setText("Hello, unknown");
-            });
-        }
-
-        start();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -197,6 +156,50 @@ public class MainActivity extends AppCompatActivity {
             english.setVisibility(View.GONE);
         }
         documentReference.set(locale);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void setUp() {
+        healthBtn = findViewById(R.id.healthBtn);
+        entertainmentBtn = findViewById(R.id.entertainmentBtn);
+        emergencyNumbersBtn = findViewById(R.id.emergencyNumbersBtn);
+        mLogoutBtn = findViewById(R.id.logout);
+        polish = findViewById(R.id.polish);
+        english = findViewById(R.id.english);
+        darkMode = findViewById(R.id.darkMode);
+
+        darkMode.setSwitchTextAppearance(this, R.style.SwitchTextAppearance);
+
+        curiosities = findViewById(R.id.mainCuriositiesTxt);
+        settings = getSharedPreferences(getResources().getString(R.string.shared_preferences),0);
+
+        resendVerification = findViewById(R.id.resendVerification);
+        resendVerificationTxt = findViewById(R.id.resendVerificationTxt);
+
+        if (user == null) {
+            finish();
+            Intent intent = new Intent(this, Login.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            return;
+        }
+//        documentReference = firestore.collection("users").document(user.getUid()).collection("settings").document("language");
+        documentReference.addSnapshotListener(this, (documentSnapshot, e) -> {
+            polish.setVisibility(Optional.ofNullable(documentSnapshot.getString("language")).orElse("english").equals("polish") ? View.GONE : View.VISIBLE);
+            english.setVisibility(polish.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+        });
+
+        if (user.isEmailVerified()) {
+            DocumentReference documentReference = firestore.collection("users").document(user.getUid());
+            documentReference.addSnapshotListener(this, (documentSnapshot, e) -> {
+                if (documentSnapshot != null)
+                    curiosities.setText("Hello, " + documentSnapshot.getString("name"));
+                else
+                    curiosities.setText("Hello, unknown");
+            });
+        }
+
+        start();
     }
 
     @Override
