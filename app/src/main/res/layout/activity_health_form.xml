@@ -35,7 +35,6 @@
                     android:layout_weight="1"
                     android:text="Czy boli Cię ramie?"
                     android:textAlignment="center"
-                    android:textColor="#000000"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"/>
@@ -85,7 +84,6 @@
                     android:layout_weight="1"
                     android:text="Czy bolą Cię plecy?"
                     android:textAlignment="center"
-                    android:textColor="#000000"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"/>
@@ -134,7 +132,6 @@
                     android:layout_weight="1"
                     android:text="Czy bolą Cię nadgarstki?"
                     android:textAlignment="center"
-                    android:textColor="#000000"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"/>
@@ -184,7 +181,6 @@
                     android:layout_weight="1"
                     android:text="Czy bolą Cię kolana?"
                     android:textAlignment="center"
-                    android:textColor="#000000"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"/>
@@ -233,7 +229,6 @@
                     android:layout_weight="1"
                     android:text="Czy bolą Cię łokcie?"
                     android:textAlignment="center"
-                    android:textColor="#000000"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"/>
@@ -283,7 +278,6 @@
                     android:layout_weight="1"
                     android:text="Czy bolą Cię biodra?"
                     android:textAlignment="center"
-                    android:textColor="#000000"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"/>
@@ -333,7 +327,6 @@
                     android:layout_weight="1"
                     android:text="Docelowa waga [kg]:"
                     android:textAlignment="center"
-                    android:textColor="#000000"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"/>
@@ -344,7 +337,8 @@
                     android:layout_height="40dp"
                     android:textStyle="bold"
                     android:ems="10"
-                    android:inputType="numberDecimal" />
+                    android:inputType="numberDecimal"
+                    android:textColor="?attr/myTextColor"/>
             </LinearLayout>
 
             <Space
@@ -364,7 +358,6 @@
                     android:layout_weight="1"
                     android:text="Docelowa dzienna ilość kroków:"
                     android:textAlignment="center"
-                    android:textColor="#000000"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"/>
@@ -376,7 +369,8 @@
                     android:layout_gravity="center"
                     android:ems="10"
                     android:inputType="numberDecimal"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="?attr/myTextColor"/>
             </LinearLayout>
 
             <Space
@@ -396,7 +390,6 @@
                     android:layout_weight="1"
                     android:text="Docelowa dzienna ilość spożytej wody [ml]:"
                     android:textAlignment="center"
-                    android:textColor="#000000"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_gravity="center"/>
@@ -408,7 +401,8 @@
                     android:layout_gravity="center"
                     android:ems="10"
                     android:inputType="numberDecimal"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="?attr/myTextColor"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -168,7 +168,6 @@ public class MainActivity extends AppCompatActivity {
         english = findViewById(R.id.english);
         darkMode = findViewById(R.id.darkMode);
 
-        darkMode.setSwitchTextAppearance(this, R.style.SwitchTextAppearance);
 
         curiosities = findViewById(R.id.mainCuriositiesTxt);
         settings = getSharedPreferences(getResources().getString(R.string.shared_preferences),0);

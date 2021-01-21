@@ -9,7 +9,7 @@
         android:id="@+id/bookPage"
         android:enabled="true"
         android:icon="@drawable/book_icon2"
-        android:title="@string/books"/>
+        android:title="@string/books" />
     <item
         android:id="@+id/gamePage"
         android:enabled="true"

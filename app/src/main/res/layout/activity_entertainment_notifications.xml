@@ -19,7 +19,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.1"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
+        tools:ignore="UseSwitchCompatOrMaterialXml"
+        android:textColor="?attr/myTextColor"/>
 
     <TextView
         android:id="@+id/chooseTimeTxt"
@@ -100,7 +101,8 @@
         app:layout_constraintTop_toBottomOf="@id/hours"
         app:layout_constraintVertical_bias="0.1"
         app:layout_constraintHorizontal_bias="0.5"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
+        tools:ignore="UseSwitchCompatOrMaterialXml"
+        android:textColor="?attr/myTextColor"/>
 
     <Switch
         android:id="@+id/enableVibrs"
@@ -115,7 +117,8 @@
         app:layout_constraintTop_toBottomOf="@id/enableSound"
         app:layout_constraintVertical_bias="0.06"
         app:layout_constraintHorizontal_bias="0.5"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
+        tools:ignore="UseSwitchCompatOrMaterialXml"
+        android:textColor="?attr/myTextColor"/>
 
     <Button
         android:id="@+id/chooseTimeBtnEnter"

@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/aclonica"
         android:text="@string/not_verified"
-        android:textColor="#8F0303"
         android:textSize="20sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -138,7 +137,8 @@
         app:layout_constraintVertical_bias="0.05"
         android:fontFamily="@font/aclonica"
         tools:ignore="UseSwitchCompatOrMaterialXml"
-        android:theme="@style/SwitchOnOff" />
+        android:theme="@style/SwitchOnOff"
+        android:textColor="?attr/myTextColor"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

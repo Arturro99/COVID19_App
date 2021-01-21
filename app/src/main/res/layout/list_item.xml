@@ -7,7 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:src="@drawable/wiedzmin"
+        android:src="@drawable/placeholder"
         android:adjustViewBounds="true"
         android:maxHeight="100dp"
         android:maxWidth="75dp"/>
