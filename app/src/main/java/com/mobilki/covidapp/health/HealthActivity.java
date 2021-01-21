@@ -107,6 +107,27 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     FirebaseUser mUser;
     CollectionReference collectionReference;
 
+    TextView exerciseTitle1;
+    TextView exerciseTitle2;
+    TextView exerciseTitle3;
+    TextView exerciseTitle4;
+    TextView exerciseTitle5;
+    TextView exerciseTitle6;
+
+    ImageView exerciseYT1;
+    ImageView exerciseYT2;
+    ImageView exerciseYT3;
+    ImageView exerciseYT4;
+    ImageView exerciseYT5;
+    ImageView exerciseYT6;
+
+    TextView exerciseDescription1;
+    TextView exerciseDescription2;
+    TextView exerciseDescription3;
+    TextView exerciseDescription4;
+    TextView exerciseDescription5;
+    TextView exerciseDescription6;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,17 +204,28 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         collectionReference = mFirestore
                 .collection("exercises");
         repo = new ExercisesRepository();
+        repo.getSettings();
         getExercisesFromDB();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void getExercisesFromDB() {
-
         collectionReference.get().addOnSuccessListener(document -> {
             if (document != null) {
+                int i = 0;
                 for (DocumentSnapshot doc : document.getDocuments()) {
+                    Exercise.TypeExercise type = null;
+                    if (doc.getString("type").equals("UPPER")) {
+                        type = Exercise.TypeExercise.UPPER;
+                    }
+                    else if (doc.getString("type").equals("LOWER")) {
+                        type = Exercise.TypeExercise.LOWER;
+                    }
+                    else if (doc.getString("type").equals("CONDITION")) {
+                        type = Exercise.TypeExercise.CONDITION;
+                    }
                     repo.add(new com.mobilki.covidapp.health.Exercise(
-                                Exercise.TypeExercise.valueOf(doc.getString("type")),
+                                type,
                                 doc.getBoolean("goodShoulders"),
                                 doc.getBoolean("goodBack"),
                                 doc.getBoolean("goodWrists"),
@@ -210,11 +242,47 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
                             )
 
                     );
+                    i++;
+
+                }
+                System.out.println("to i " + i);
+                System.out.println("doument size " + document.size());
+                if (i >= document.size()) {
+                    initExercises();
+                    System.out.println("Dotarlo");
                 }
             }
         });
     }
 
+    private void initExercises() {
+        exerciseTitle1 = findViewById(R.id.exercise1Title);
+        exerciseTitle2 = findViewById(R.id.exercise2Title);
+        exerciseTitle3 = findViewById(R.id.exercise3Title);
+        exerciseTitle4 = findViewById(R.id.exercise4Title);
+        exerciseTitle5 = findViewById(R.id.exercise5Title);
+        exerciseTitle6 = findViewById(R.id.exercise6Title);
+
+        exerciseYT1 = findViewById(R.id.exercise1YT);
+        exerciseYT2 = findViewById(R.id.exercise2YT);
+        exerciseYT3 = findViewById(R.id.exercise3YT);
+        exerciseYT4 = findViewById(R.id.exercise4YT);
+        exerciseYT5 = findViewById(R.id.exercise5YT);
+        exerciseYT6 = findViewById(R.id.exercise6YT);
+
+
+        exerciseDescription1 = findViewById(R.id.exercise1Description);
+        exerciseDescription2 = findViewById(R.id.exercise2Description);
+        exerciseDescription3 = findViewById(R.id.exercise3Description);
+        exerciseDescription4 = findViewById(R.id.exercise4Description);
+        exerciseDescription5 = findViewById(R.id.exercise5Description);
+        exerciseDescription6 = findViewById(R.id.exercise6Description);
+
+
+        ExerciseToApp tmp = repo.get(Exercise.TypeExercise.UPPER);
+        exerciseTitle1.setText(tmp.repsAndTitle);
+        exerciseDescription1.setText(tmp.description);
+    }
 
     //adding exercises to db
 //    private void addExercises() {
@@ -308,12 +376,10 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         setEntries();
         //fetchExercises();
         initAddData();
-        initExercises();
-    }
-
-    private void initExercises() {
 
     }
+
+
 
     private void initAddData() {
         numberStepsSet = findViewById(R.id.numberStepsSet);

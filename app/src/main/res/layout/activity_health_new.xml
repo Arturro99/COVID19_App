@@ -52,7 +52,7 @@
         android:id="@+id/page1group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
         app:constraint_referenced_ids="healthBarChartTitle,barchart,settingBtnHealth,notificationBtnHealth" />
 
 
@@ -60,7 +60,7 @@
         android:id="@+id/page2group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         app:constraint_referenced_ids=",scrollView2" />
 
     <LinearLayout
@@ -369,7 +369,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="2 x Pompki"
+                        android:text="@string/loading"
                         android:textAlignment="center"
                         android:textSize="18sp" />
 
@@ -411,7 +411,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="2 x Pompki"
+                        android:text="@string/loading"
                         android:textAlignment="center"
                         android:textSize="18sp" />
 
@@ -453,7 +453,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="2 x Pompki"
+                        android:text="@string/loading"
                         android:textAlignment="center"
                         android:textSize="18sp" />
 
@@ -495,12 +495,12 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="2 x Pompki"
+                        android:text="@string/loading"
                         android:textAlignment="center"
                         android:textSize="18sp" />
 
                     <ImageView
-                        android:id="@+id/exercise41YT"
+                        android:id="@+id/exercise4YT"
                         android:layout_width="0dp"
                         android:layout_height="48dp"
                         android:layout_weight="1"
@@ -537,7 +537,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="2 x Pompki"
+                        android:text="@string/loading"
                         android:textAlignment="center"
                         android:textSize="18sp" />
 
@@ -579,7 +579,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="2 x Pompki"
+                        android:text="@string/loading"
                         android:textAlignment="center"
                         android:textSize="18sp" />
 

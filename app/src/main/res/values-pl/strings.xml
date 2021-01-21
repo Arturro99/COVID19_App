@@ -80,6 +80,7 @@
     <string name="yes">TAK</string>
     <string name="no">NIE</string>
     <string name="save">Zapisz</string>
+    <string name="loading">Ladowanie...</string>
 
 
     <!-- Film sorting methods -->
