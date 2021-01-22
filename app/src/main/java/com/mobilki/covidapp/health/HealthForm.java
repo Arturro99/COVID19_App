@@ -67,13 +67,7 @@ public class HealthForm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_health_form);
         SharedPreferences settings = getSharedPreferences(getResources().getString(R.string.shared_preferences), 0);
-//        DisplayMetrics dm =  new DisplayMetrics();
-//        getWindowManager().getDefaultDisplay().getMetrics(dm);
-//
-//        int width = dm.widthPixels;
-//        int height = dm.heightPixels;
-//
-//        getWindow().setLayout((int)(width * .9), (int)(height * .9));
+
         settings.edit().putBoolean("first_time_health", false).apply();
 
         initMap();
