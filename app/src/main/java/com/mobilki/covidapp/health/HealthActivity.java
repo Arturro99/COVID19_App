@@ -174,7 +174,10 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
             Group page2group = findViewById(R.id.page2group);
             Group page3group = findViewById(R.id.page3group);
 
-            page1group.setVisibility(itemId == R.id.page_1 ? View.VISIBLE : View.GONE);
+            if (itemId == R.id.page_1) {
+                page1group.setVisibility(View.VISIBLE);
+                setEntries();
+            }
             page2group.setVisibility(itemId == R.id.page_2 ? View.VISIBLE : View.GONE);
             page3group.setVisibility(itemId == R.id.page_3 ? View.VISIBLE : View.GONE);
 
@@ -215,14 +218,16 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
                 int i = 0;
                 for (DocumentSnapshot doc : document.getDocuments()) {
                     Exercise.TypeExercise type = null;
-                    if (doc.getString("type").equals("UPPER")) {
-                        type = Exercise.TypeExercise.UPPER;
-                    }
-                    else if (doc.getString("type").equals("LOWER")) {
-                        type = Exercise.TypeExercise.LOWER;
-                    }
-                    else if (doc.getString("type").equals("CONDITION")) {
-                        type = Exercise.TypeExercise.CONDITION;
+                    switch (doc.getString("type")) {
+                        case "UPPER":
+                            type = Exercise.TypeExercise.UPPER;
+                            break;
+                        case "LOWER":
+                            type = Exercise.TypeExercise.LOWER;
+                            break;
+                        case "CONDITION":
+                            type = Exercise.TypeExercise.CONDITION;
+                            break;
                     }
                     repo.add(new com.mobilki.covidapp.health.Exercise(
                                 type,
@@ -245,11 +250,8 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
                     i++;
 
                 }
-                System.out.println("to i " + i);
-                System.out.println("doument size " + document.size());
                 if (i >= document.size()) {
                     initExercises();
-                    System.out.println("Dotarlo");
                 }
             }
         });
@@ -462,7 +464,7 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     public boolean onFling(MotionEvent downEvent, MotionEvent moveEvent, float velocityX, float velocityY) {
         float diffX = moveEvent.getX() - downEvent.getX();
         //right or left swipe
-        if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD && downEvent.getY() > 160 && downEvent.getY() < 800) {
+        if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD && downEvent.getY() > 160 && downEvent.getY() < 1400) {
             if (diffX > 0) {
                 onSwipeRight();
             } else {
@@ -503,7 +505,10 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         for (int i = 0; i < 7; i++) {
             DocumentReference docRef = db.collection("users").document(mFirebaseAuth.getCurrentUser().getUid()).collection("health_data").document(formattedDate);
             int finalI = i;
-
+            weightEntries.clear();
+            stepsEntries.clear();
+            waterEntries.clear();
+            sleepEntries.clear();
             docRef.get().addOnSuccessListener(document -> {
                 if (document.exists()) {
                     if (document.contains("weight")) {
