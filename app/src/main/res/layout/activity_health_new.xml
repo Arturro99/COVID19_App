@@ -36,6 +36,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.407" />
 
+
+
     <TextView
         android:id="@+id/healthBarChartTitle"
         android:layout_width="match_parent"
@@ -52,15 +54,15 @@
         android:id="@+id/page1group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="healthBarChartTitle,barchart,settingBtnHealth,notificationBtnHealth" />
+        android:visibility="visible"
+        app:constraint_referenced_ids="healthBarChartTitle,barchart,settingBtnHealth,notificationBtnHealth,dots_under_barchart" />
 
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/page2group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
         app:constraint_referenced_ids=",scrollView2" />
 
     <LinearLayout
@@ -628,5 +630,43 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/settings_icon" />
+
+    <LinearLayout
+        android:id="@+id/dots_under_barchart"
+        android:layout_width="170dp"
+        android:layout_height="55dp"
+        android:orientation="horizontal"
+        android:padding="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barchart"
+        app:layout_constraintVertical_bias="0.43">
+
+        <ImageView
+            android:id="@+id/dot1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/dot_purple" />
+        <ImageView
+            android:id="@+id/dot2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/dot_gray" />
+        <ImageView
+            android:id="@+id/dot3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/dot_gray" />
+        <ImageView
+            android:id="@+id/dot4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/dot_gray" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

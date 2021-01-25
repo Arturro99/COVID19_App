@@ -45,6 +45,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -127,6 +128,12 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     TextView exerciseDescription4;
     TextView exerciseDescription5;
     TextView exerciseDescription6;
+
+    ImageView dot1;
+    ImageView dot2;
+    ImageView dot3;
+    ImageView dot4;
+    ArrayList<ImageView> dots;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -481,6 +488,7 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         else
             entry += 1;
         setBarChart(entries.get(entry), labels);
+        setDots(dots.get(entry));
         healthBarChartTitle.setText(dict.get(entry));
     }
 
@@ -490,7 +498,18 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         else
             entry -= 1;
         setBarChart(entries.get(entry), labels);
+        setDots(dots.get(entry));
         healthBarChartTitle.setText(dict.get(entry));
+    }
+
+    private void setDots(ImageView dot) {
+        for (ImageView d: dots) {
+            if (d == dot) {
+                d.setImageResource(R.drawable.dot_purple);
+            } else {
+                d.setImageResource(R.drawable.dot_gray);
+            }
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -543,8 +562,8 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
                     entries.add(sleepEntries);
                     entries.add(waterEntries);
                     setBarChart(stepsEntries, labels);
-                    entry = 1;
-                    healthBarChartTitle.setText(dict.get(1));
+                    entry = 0;
+                    healthBarChartTitle.setText(dict.get(0));
                 }
             }).addOnFailureListener(e -> System.err.println(e.toString()));
             labels[i] = formattedDate.substring(0, 5);
@@ -601,6 +620,12 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
 
 
         barChart.animateXY(DURATION_MILLIS, DURATION_MILLIS);
+
+        dot1 = findViewById(R.id.dot1);
+        dot2 = findViewById(R.id.dot2);
+        dot3 = findViewById(R.id.dot3);
+        dot4 = findViewById(R.id.dot4);
+        dots = new ArrayList<>(Arrays.asList(dot1, dot2, dot3, dot4));
     }
 
     @Override
