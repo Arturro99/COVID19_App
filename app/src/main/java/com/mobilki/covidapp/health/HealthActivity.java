@@ -135,6 +135,8 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     ImageView dot4;
     ArrayList<ImageView> dots;
 
+
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,6 +186,8 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
             if (itemId == R.id.page_1) {
                 page1group.setVisibility(View.VISIBLE);
                 setEntries();
+            } else {
+                page1group.setVisibility(View.GONE);
             }
             page2group.setVisibility(itemId == R.id.page_2 ? View.VISIBLE : View.GONE);
             page3group.setVisibility(itemId == R.id.page_3 ? View.VISIBLE : View.GONE);
@@ -216,7 +220,11 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         repo = new ExercisesRepository();
         repo.getSettings();
         getExercisesFromDB();
+
     }
+
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void getExercisesFromDB() {
@@ -288,9 +296,26 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         exerciseDescription6 = findViewById(R.id.exercise6Description);
 
 
-        ExerciseToApp tmp = repo.get(Exercise.TypeExercise.UPPER);
-        exerciseTitle1.setText(tmp.repsAndTitle);
-        exerciseDescription1.setText(tmp.description);
+//        ExerciseToApp tmp = repo.get(Exercise.TypeExercise.UPPER);
+//        exerciseTitle1.setText(tmp.repsAndTitle);
+//        exerciseDescription1.setText(tmp.description);
+        setExercise(exerciseTitle1, exerciseDescription1, exerciseYT1, Exercise.TypeExercise.UPPER);
+        setExercise(exerciseTitle2, exerciseDescription2, exerciseYT2, Exercise.TypeExercise.LOWER);
+        setExercise(exerciseTitle3, exerciseDescription3, exerciseYT3, Exercise.TypeExercise.CONDITION);
+        setExercise(exerciseTitle4, exerciseDescription4, exerciseYT4, Exercise.TypeExercise.UPPER);
+        setExercise(exerciseTitle5, exerciseDescription5, exerciseYT5, Exercise.TypeExercise.LOWER);
+        setExercise(exerciseTitle6, exerciseDescription6, exerciseYT6, Exercise.TypeExercise.CONDITION);
+    }
+
+    private void setExercise(TextView title, TextView desc, ImageView yt, Exercise.TypeExercise type) {
+        ExerciseToApp tmp = repo.get(type);
+        title.setText(tmp.repsAndTitle);
+        desc.setText(tmp.description);
+        yt.setOnClickListener(view -> {
+            Intent intent = new Intent(HealthActivity.this, PlayerYT.class);
+            intent.putExtra("url", tmp.urlYT);
+            startActivity(intent);
+        });
     }
 
     //adding exercises to db

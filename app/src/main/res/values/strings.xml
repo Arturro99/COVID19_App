@@ -2,7 +2,7 @@
     <string name="app_name">CovidApp</string>
     <!--SharedPreferences-->
     <string name="shared_preferences">CovidAppPref</string>
-
+    <string name="ytKey" translatable="false">AIzaSyBS0tjiXkyNrWyBWlidoJ0l0mY9Fn6ZTY4</string>
 
     <!-- Main Activity   -->
     <string name="health_panel">Health</string>
