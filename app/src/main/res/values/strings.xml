@@ -142,4 +142,13 @@
     <string name="target_weight">Target weight [kg]:</string>
     <string name="target_steps">Target daily steps:</string>
     <string name="target_water">Target daily drinking water [ml]:</string>
+    <string name="enable_notifications_exercises">Enable notifications exercises</string>
+    <string name="enable_notifications_water">Enable notifications water</string>
+    <string name="monday">MON</string>
+    <string name="tuesday">TUE</string>
+    <string name="wednesday">WED</string>
+    <string name="thursday">THU</string>
+    <string name="friday">FRI</string>
+    <string name="saturday">SAT</string>
+    <string name="sunday">SUN</string>
 </resources>

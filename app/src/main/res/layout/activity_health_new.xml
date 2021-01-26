@@ -54,7 +54,7 @@
         android:id="@+id/page1group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         app:constraint_referenced_ids="healthBarChartTitle,barchart,settingBtnHealth,notificationBtnHealth,dots_under_barchart" />
 
 
@@ -62,7 +62,7 @@
         android:id="@+id/page2group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
         app:constraint_referenced_ids=",scrollView2" />
 
     <LinearLayout

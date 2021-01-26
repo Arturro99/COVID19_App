@@ -6,100 +6,289 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Switch
-        android:id="@+id/enableNotiExercises"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/aclonica"
-        android:text="Enable notifications \n exercises"
-        android:textAlignment="center"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingTop="40dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="20dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.478"
-        tools:ignore="UseSwitchCompatOrMaterialXml"
-        android:textColor="?attr/myTextColor"/>
+        tools:layout_editor_absoluteX="70dp">
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/exerGroupNoti"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:constraint_referenced_ids="setNotiExer,setTimeExercBtn"
-        tools:visibility="visible" />
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/waterGroupNoti"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:constraint_referenced_ids="setTimeWaterBtn,setWaterNoti" />
 
-    <Switch
-        android:id="@+id/enableNotiWater"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/aclonica"
-        android:text="Enable notifications \n water"
-        android:textAlignment="center"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        <Switch
+            android:id="@+id/enableNotiWater"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:fontFamily="@font/aclonica"
+            android:text="@string/enable_notifications_water"
+            android:textAlignment="center"
+            android:textColor="?attr/myTextColor"
+
+            android:textSize="20dp"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        <Button
+            android:id="@+id/setTimeWaterBtn"
+            android:layout_width="128dp"
+            android:layout_height="64dp"
+            android:layout_marginBottom="15dp"
+            android:text="@string/choose_time" />
+
+        <LinearLayout
+            android:id="@+id/linearLayoutWater"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/buttonWaterDay1"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="40dp"
+                android:layout_height="35dp"
+                android:background="@drawable/button_not_pressed"
+                android:text="@string/monday" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/buttonWaterDay2"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="40dp"
+                android:layout_height="35dp"
+                android:background="@drawable/button_not_pressed"
+                android:text="@string/tuesday" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/buttonWaterDay3"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="40dp"
+                android:layout_height="35dp"
+                android:background="@drawable/button_not_pressed"
+                android:text="@string/wednesday" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/buttonWaterDay4"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="40dp"
+                android:layout_height="35dp"
+                android:background="@drawable/button_not_pressed"
+                android:text="@string/thursday" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/buttonWaterDay5"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="40dp"
+                android:layout_height="35dp"
+                android:background="@drawable/button_not_pressed"
+                android:text="@string/friday" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/buttonWaterDay6"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="40dp"
+                android:layout_height="35dp"
+                android:background="@drawable/button_not_pressed"
+                android:text="@string/saturday" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/buttonWaterDay7"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="40dp"
+                android:layout_height="35dp"
+                android:background="@drawable/button_not_pressed"
+                android:text="@string/sunday" />
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/setWaterNoti"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/set_btn_for_add_data" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:layout_marginTop="4dp"
+
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingTop="40dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.063"
-        tools:ignore="UseSwitchCompatOrMaterialXml"
-        android:textColor="?attr/myTextColor"/>
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/waterGroupNoti"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:constraint_referenced_ids="setWaterNoti,setTimeWaterBtn"
-        tools:visibility="visible" />
+        <Switch
+            android:id="@+id/enableNotiExercises"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:fontFamily="@font/aclonica"
+            android:text="@string/enable_notifications_exercises"
+            android:textAlignment="center"
+            android:textColor="?attr/myTextColor"
 
-    <Button
-        android:id="@+id/setTimeWaterBtn"
-        android:layout_width="128dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="132dp"
-        android:layout_marginTop="24dp"
-        android:gravity="center|center_horizontal|center_vertical"
-        android:text="@string/choose_time"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enableNotiWater" />
+            android:textSize="20dp"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-    <Button
-        android:id="@+id/setNotiExer"
-        android:layout_width="98dp"
-        android:layout_height="51dp"
-        android:gravity="center|center_horizontal|center_vertical"
-        android:text="@string/set_btn_for_add_data"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.458"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setTimeExercBtn"
-        app:layout_constraintVertical_bias="0.156" />
+        <Button
+            android:id="@+id/setTimeExercBtn"
+            android:layout_width="128dp"
+            android:layout_height="64dp"
+            android:layout_marginBottom="15dp"
+            android:text="@string/choose_time" />
 
-    <Button
-        android:id="@+id/setTimeExercBtn"
-        android:layout_width="128dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="132dp"
-        android:layout_marginTop="44dp"
-        android:gravity="center|center_horizontal|center_vertical"
-        android:text="@string/choose_time"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enableNotiExercises" />
+        <LinearLayout
+            android:id="@+id/linearLayoutExercise"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
-    <Button
-        android:id="@+id/setWaterNoti"
-        android:layout_width="88dp"
-        android:layout_height="47dp"
-        android:gravity="center|center_horizontal|center_vertical"
-        android:text="@string/set_btn_for_add_data"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.477"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setTimeWaterBtn"
-        app:layout_constraintVertical_bias="0.063" />
+            <TextView
+                android:id="@+id/buttonExerDay1"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="40dp"
+                android:layout_height="35dp"
+                android:background="@drawable/button_not_pressed"
+                android:text="@string/monday" />
 
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/buttonExerDay2"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="40dp"
+                android:layout_height="35dp"
+                android:background="@drawable/button_not_pressed"
+                android:text="@string/tuesday" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/buttonExerDay3"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="40dp"
+                android:layout_height="35dp"
+                android:background="@drawable/button_not_pressed"
+                android:text="@string/wednesday" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/buttonExerDay4"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="40dp"
+                android:layout_height="35dp"
+                android:background="@drawable/button_not_pressed"
+                android:text="@string/thursday" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/buttonExerDay5"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="40dp"
+                android:layout_height="35dp"
+                android:background="@drawable/button_not_pressed"
+                android:text="@string/friday" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/buttonExerDay6"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="40dp"
+                android:layout_height="35dp"
+                android:background="@drawable/button_not_pressed"
+                android:text="@string/saturday" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/buttonExerDay7"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="40dp"
+                android:layout_height="35dp"
+                android:background="@drawable/button_not_pressed"
+                android:text="@string/sunday" />
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/setNotiExer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/set_btn_for_add_data" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

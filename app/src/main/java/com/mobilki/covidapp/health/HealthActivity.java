@@ -40,6 +40,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.mobilki.covidapp.R;
 import com.mobilki.covidapp.api.repository.ExerciseRepository;
+import com.mobilki.covidapp.pickers.DatePickerFragment;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -152,7 +153,6 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
 
 
         SharedPreferences settings = getSharedPreferences(getResources().getString(R.string.shared_preferences), 0);
-        settings.edit().putBoolean("first_time_health", true).apply();
         if (settings.getBoolean("first_time_health", true)) {
             startActivity(new Intent(HealthActivity.this, HealthForm.class));
         }
@@ -167,8 +167,8 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         entries = new ArrayList<>();
         healthBarChartTitle = findViewById(R.id.healthBarChartTitle);
 
-        dict.put(0, R.string.weight_title_barchart);
-        dict.put(1, R.string.steps_title_barchart);
+        dict.put(0, R.string.steps_title_barchart);
+        dict.put(1, R.string.weight_title_barchart);
         dict.put(2, R.string.sleep_title_barchart);
         dict.put(3, R.string.water_title_barchart);
         exerciseRepository = new ExerciseRepository();
@@ -604,8 +604,8 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
                         waterEntries.add(new BarEntry(finalI, 0));
                 }
                 if (waterEntries.size() == 7) {
-                    entries.add(weightEntries);
                     entries.add(stepsEntries);
+                    entries.add(weightEntries);
                     entries.add(sleepEntries);
                     entries.add(waterEntries);
                     setBarChart(stepsEntries, labels);
