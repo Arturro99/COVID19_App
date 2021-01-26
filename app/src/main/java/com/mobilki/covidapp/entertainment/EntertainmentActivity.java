@@ -4,52 +4,40 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.HorizontalScrollView;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.mobilki.covidapp.MainActivity;
 import com.mobilki.covidapp.R;
 import com.mobilki.covidapp.api.*;
 import com.mobilki.covidapp.api.customThreads.FilmByGenresSorter;
 import com.mobilki.covidapp.api.customThreads.FilmByValuesSorter;
 import com.mobilki.covidapp.api.customThreads.GenresSetter;
-import com.mobilki.covidapp.api.model.Book;
 import com.mobilki.covidapp.api.model.Game;
 import com.mobilki.covidapp.api.repository.GameRepository;
 import com.mobilki.covidapp.entertainment.fragments.BookFragment;
 import com.mobilki.covidapp.entertainment.fragments.FilmFragment;
 import com.mobilki.covidapp.entertainment.fragments.GameFragment;
-import com.squareup.picasso.Picasso;
 
-import java.util.Locale;
 import java.util.Optional;
 
 import lombok.SneakyThrows;
@@ -84,7 +72,6 @@ public class EntertainmentActivity extends AppCompatActivity {
     private String filmSortingByValuesType;
     private String filmGenre;
     private String bookGenre;
-    private DocumentReference filters;
 
     private GameRepository gameRepository;
 
@@ -106,7 +93,7 @@ public class EntertainmentActivity extends AppCompatActivity {
             mFirestore = FirebaseFirestore.getInstance();
             mAuth = FirebaseAuth.getInstance();
             mUser = mAuth.getCurrentUser();
-            filters = mFirestore.collection("users").document(mUser.getUid()).collection("settings").document("filters");
+            DocumentReference filters = mFirestore.collection("users").document(mUser.getUid()).collection("settings").document("filters");
 
             gameRepository = new GameRepository();
             imdbApi = new ImdbApi();
@@ -225,7 +212,12 @@ public class EntertainmentActivity extends AppCompatActivity {
             filmByGenresSorter.start();
             filmByGenresSorter.join(3000L);
         }
-        googleApi.getByGenre(bookGenre, bookDigit, "en");
+        if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
+            googleApi.getByGenre(bookGenre, bookDigit, "en");
+        }
+        else {
+            googleApi.getByGenre(bookGenre, bookDigit, "pl");
+        }
 
 
         filmFragment = new FilmFragment(filmsLayout, filmDigit, imdbApi);

@@ -18,18 +18,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/filmDirector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.1"
         android:adjustViewBounds="true"
-        android:maxWidth="250dp" />
+        android:maxWidth="250dp"
+        android:visibility="gone"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/filmTitle"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/mainFilmPhoto"
-        app:layout_constraintStart_toStartOf="@id/mainFilmPhoto"
-        app:layout_constraintTop_toBottomOf="@id/mainFilmPhoto" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.01"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
@@ -38,97 +42,99 @@
         android:id="@+id/filmDirector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.01"
-        app:layout_constraintStart_toEndOf="@id/mainFilmPhoto"
-        app:layout_constraintTop_toBottomOf="@id/filmDirectorTxt" />
+        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/filmTitle" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/filmRatingTxt"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toEndOf="@id/mainFilmPhoto"
-        app:layout_constraintTop_toTopOf="@id/mainFilmPhoto" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mainFilmPhoto"
+        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintVertical_bias="0.2" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/filmRating"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mainFilmPhoto"
         app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toEndOf="@id/mainFilmPhoto"
-        app:layout_constraintTop_toTopOf="@id/mainFilmPhoto" />
+        app:layout_constraintVertical_bias="0.2" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/filmReleaseDateTxt"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.3"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toEndOf="@id/mainFilmPhoto"
-        app:layout_constraintTop_toTopOf="@id/mainFilmPhoto" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/filmRatingTxt"
+        app:layout_constraintHorizontal_bias="0.3" />
 
     <TextView
         android:id="@+id/filmReleaseDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintVertical_bias="0.3"
-        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/mainFilmPhoto"
-        app:layout_constraintTop_toTopOf="@+id/mainFilmPhoto"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/filmRating"
+        app:layout_constraintHorizontal_bias="0.6" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/filmDurationTxt"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.4"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toEndOf="@id/mainFilmPhoto"
-        app:layout_constraintTop_toTopOf="@id/mainFilmPhoto" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/filmReleaseDateTxt"
+        app:layout_constraintHorizontal_bias="0.3" />
 
     <TextView
         android:id="@+id/filmDuration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintVertical_bias="0.4"
-        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/filmReleaseDate"
+        app:layout_constraintHorizontal_bias="0.6" />
+
+    <TextView
+        android:id="@+id/filmGenresTxt"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:singleLine="false"
+        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/mainFilmPhoto"
         app:layout_constraintStart_toEndOf="@+id/mainFilmPhoto"
-        app:layout_constraintTop_toTopOf="@+id/mainFilmPhoto"/>
+        app:layout_constraintTop_toTopOf="@id/mainFilmPhoto" />
 
     <TextView
         android:id="@+id/filmGenres"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:singleLine="false"
-        app:layout_constraintVertical_bias="0.8"
+        app:layout_constraintVertical_bias="0.2"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/mainFilmPhoto"
         app:layout_constraintStart_toEndOf="@+id/mainFilmPhoto"
-        app:layout_constraintTop_toTopOf="@id/mainFilmPhoto"/>
+        app:layout_constraintTop_toBottomOf="@id/filmGenresTxt" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/filmDirectorTxt"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.05"
-        app:layout_constraintStart_toEndOf="@id/mainFilmPhoto"
-        app:layout_constraintTop_toTopOf="@id/mainFilmPhoto" />
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/filmDirectorTxt"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.05"-->
+<!--        app:layout_constraintStart_toEndOf="@id/mainFilmPhoto"-->
+<!--        app:layout_constraintTop_toTopOf="@id/mainFilmPhoto" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

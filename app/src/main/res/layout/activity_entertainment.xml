@@ -22,32 +22,32 @@
             android:id="@+id/filmTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
             android:text="@string/films"
             android:textSize="40sp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="30pt"
             android:layout_below="@id/finalToolbar"
             android:fontFamily="@font/aclonica"
             android:visibility="visible"/>
 
-        <HorizontalScrollView
-            android:id="@+id/filmScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="350dp"
-            android:fillViewport="true"
-            android:measureAllChildren="false"
-            android:layout_below="@id/filmTextView"
-            android:visibility="visible">
+    <HorizontalScrollView
+        android:id="@+id/filmScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/filmTextView"
+        android:fillViewport="true"
+        android:measureAllChildren="false"
+        android:visibility="visible">
 
-            <LinearLayout
-                android:id="@+id/filmsLinearLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"/>
+        <LinearLayout
+            android:id="@+id/filmsLinearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" />
 
-        </HorizontalScrollView>
+    </HorizontalScrollView>
 
-        <TextView
+    <TextView
             android:id="@+id/bookTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,14 +55,14 @@
             android:textSize="40sp"
             android:layout_centerInParent="true"
             android:layout_below="@id/finalToolbar"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="30pt"
             android:fontFamily="@font/aclonica"
             android:visibility="gone"/>
 
         <HorizontalScrollView
             android:id="@+id/bookScrollView"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="wrap_content"
             android:fillViewport="true"
             android:measureAllChildren="false"
             android:layout_below="@+id/bookTextView"

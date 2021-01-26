@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    tools:context=".FilmDetailsActivity"-->
-<!--    android:fillViewport="true">-->
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,45 +17,43 @@
 
             <TextView
                 android:id="@+id/bookDetailedTitle"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="Title" />
+                android:layout_centerHorizontal="true" />
 
             <TextView
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/bookRatingBar"
                 android:layout_toStartOf="@id/bookDetailedRatingsCount"
-                android:text="Number of votes: " />
+                android:text="@string/num_of_votes" />
 
             <TextView
                 android:id="@+id/bookDetailedRatingsCount"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/bookRatingBar"
-                android:layout_alignParentRight="true"
-                android:text="\???" />
+                android:layout_alignParentEnd="true" />
 
             <TextView
                 android:id="@+id/bookDetailedDescriptionTxt"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/bookDetailedRatingsCount"
                 android:layout_marginTop="20dp"
                 android:layout_centerVertical="true"
-                android:text="Description" />
+                android:text="@string/description" />
 
             <TextView
                 android:id="@+id/bookDetailedDescription"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:scrollbars="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -71,15 +61,14 @@
                 android:layout_below="@id/bookDetailedDescriptionTxt"
                 android:layout_marginTop="10sp"
                 android:layout_centerVertical="true"
-                android:singleLine="false"
-                android:text="Description" />
+                android:singleLine="false" />
 
             <TextView
                 android:id="@+id/pdfAvailableTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/bookRatingBar"
-                android:text="PDF availibility: "/>
+                android:text="@string/pdf"/>
 
             <TextView
                 android:id="@+id/pdfAvailable"
@@ -87,8 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/bookRatingBar"
                 android:layout_toEndOf="@id/pdfAvailableTxt"
-                android:layout_marginStart="5dp"
-                android:text="\???"/>
+                android:layout_marginStart="5dp" />
 
 
         </RelativeLayout>

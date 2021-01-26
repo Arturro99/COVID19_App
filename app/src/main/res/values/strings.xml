@@ -72,6 +72,14 @@
     <string name="film_by_other">Other:</string>
     <string name="book_by_genre">Sort boks by genres:</string>
     <string name="time_picker">Time picker</string>
+    <string name="genres">Genres:</string>
+    <string name="minutes">minutes</string>
+    <string name="description">Description</string>
+    <string name="pdf">PDF availability:</string>
+    <string name="num_of_votes">Number of votes:</string>
+    <string name="where_to_get">Where to get?</string>
+    <string name="no_data">No data</string>
+    <string name="known_actors">Actors:</string>
 
     <!-- Common   -->
     <string name="preferences_panel">Preferences</string>

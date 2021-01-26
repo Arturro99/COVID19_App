@@ -29,6 +29,7 @@ public class BookFragment extends Fragment implements FragmentEntity{
 
 
     TextView[] bookTitleList;
+    TextView[] bookGenresTxtList;
     TextView[] bookGenresList;
 
     ImageButton[] bookPhotosList;
@@ -67,6 +68,7 @@ public class BookFragment extends Fragment implements FragmentEntity{
     @Override
     public void initializeFields(int number) {
         bookTitleList = new TextView[number];
+        bookGenresTxtList = new TextView[number];
         bookGenresList = new TextView[number];
 
         bookPhotosList = new ImageButton[number];
@@ -100,6 +102,7 @@ public class BookFragment extends Fragment implements FragmentEntity{
         int bookRatingInitiateId = 16000;
         int bookRatingTxtInitiateId = 16500;
         int bookGenresInitiateId = 17000;
+        int bookGenresTxtInitiateId = 17500;
         int bookConstraintLayoutInitiateId = 20000;
 
         booksLayout.removeAllViews();
@@ -115,6 +118,8 @@ public class BookFragment extends Fragment implements FragmentEntity{
             bookPhotosList[i].setId(bookPhotoInitiateId + i);
             bookGenresList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
             bookGenresList[i].setId(bookGenresInitiateId + i);
+            bookGenresTxtList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
+            bookGenresTxtList[i].setId(bookGenresTxtInitiateId + i);
             bookPublicationDateList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
             bookPublicationDateList[i].setId(bookPublicationDateInitiateId + i);
             bookPublicationDateTxtList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
@@ -143,10 +148,11 @@ public class BookFragment extends Fragment implements FragmentEntity{
             bookConstraintLayoutList[i].addView(bookPagesTxtList[i], 7);
             bookConstraintLayoutList[i].addView(bookPagesList[i], 8);
             bookConstraintLayoutList[i].addView(bookGenresList[i], 9);
+            bookConstraintLayoutList[i].addView(bookGenresTxtList[i], 10);
 
             booksLayout.addView(linearLayout);
 
-            bookConstraintLayoutList[i].setMinWidth(1500);
+            bookConstraintLayoutList[i].setMinWidth(1000);
             ConstraintSet constraintSet = new ConstraintSet();
             constraintSet.clone(bookConstraintLayoutList[i]);
 
@@ -156,13 +162,19 @@ public class BookFragment extends Fragment implements FragmentEntity{
 
             //IMAGE
             constraintSet.connect(bookPhotosList[i].getId(), ConstraintSet.START, bookConstraintLayoutList[i].getId(), ConstraintSet.START);
-            constraintSet.connect(bookPhotosList[i].getId(), ConstraintSet.TOP, bookConstraintLayoutList[i].getId(), ConstraintSet.TOP);
-            constraintSet.constrainMaxWidth(bookPhotosList[i].getId(), width/2);
+            constraintSet.connect(bookPhotosList[i].getId(), ConstraintSet.TOP, bookAuthorList[i].getId(), ConstraintSet.BOTTOM);
+            constraintSet.connect(bookPhotosList[i].getId(), ConstraintSet.BOTTOM, bookConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
+            constraintSet.setMargin(bookPhotosList[i].getId(), ConstraintSet.TOP, 5);
+            constraintSet.setVerticalBias(bookPhotosList[i].getId(), 0.1f);
+            constraintSet.constrainMaxWidth(bookPhotosList[i].getId(),750);
+            constraintSet.constrainMaxHeight(bookPhotosList[i].getId(),750);
 
             //TITLE
+            constraintSet.connect(bookTitleList[i].getId(), ConstraintSet.START, bookConstraintLayoutList[i].getId(), ConstraintSet.START);
             constraintSet.connect(bookTitleList[i].getId(), ConstraintSet.END, bookConstraintLayoutList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(bookTitleList[i].getId(), ConstraintSet.START, bookPhotosList[i].getId(), ConstraintSet.END);
+            constraintSet.connect(bookTitleList[i].getId(), ConstraintSet.BOTTOM, bookConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.connect(bookTitleList[i].getId(), ConstraintSet.TOP, bookConstraintLayoutList[i].getId(), ConstraintSet.TOP);
+            constraintSet.setVerticalBias(bookTitleList[i].getId(), 0.01f);
             bookTitleList[i].setTextSize(15);
             bookTitleList[i].setTypeface(Typeface.DEFAULT_BOLD);
 
@@ -178,66 +190,65 @@ public class BookFragment extends Fragment implements FragmentEntity{
             //AUTHOR
             constraintSet.connect(bookAuthorList[i].getId(), ConstraintSet.BOTTOM, bookConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.connect(bookAuthorList[i].getId(), ConstraintSet.END, bookConstraintLayoutList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(bookAuthorList[i].getId(), ConstraintSet.START, bookPhotosList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(bookAuthorList[i].getId(), ConstraintSet.TOP, bookPhotosList[i].getId(), ConstraintSet.TOP);
-            constraintSet.setVerticalBias(bookAuthorList[i].getId(), 0.15f);
-//            constraintSet.setHorizontalBias(bookAuthorList[i].getId(), 0.6f);
-
-            //PUBLICATION DATE TXT
-            constraintSet.connect(bookPublicationDateTxtList[i].getId(), ConstraintSet.BOTTOM, bookConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
-            constraintSet.connect(bookPublicationDateTxtList[i].getId(), ConstraintSet.END, bookConstraintLayoutList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(bookPublicationDateTxtList[i].getId(), ConstraintSet.START, bookPhotosList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(bookPublicationDateTxtList[i].getId(), ConstraintSet.TOP, bookPhotosList[i].getId(), ConstraintSet.TOP);
-            constraintSet.setVerticalBias(bookPublicationDateTxtList[i].getId(), 0.4f);
-            constraintSet.setHorizontalBias(bookPublicationDateTxtList[i].getId(), 0.1f);
-
-            //PUBLICATION DATE
-            constraintSet.connect(bookPublicationDateList[i].getId(), ConstraintSet.BOTTOM, bookConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
-            constraintSet.connect(bookPublicationDateList[i].getId(), ConstraintSet.END, bookConstraintLayoutList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(bookPublicationDateList[i].getId(), ConstraintSet.START, bookPhotosList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(bookPublicationDateList[i].getId(), ConstraintSet.TOP, bookPhotosList[i].getId(), ConstraintSet.TOP);
-            constraintSet.setVerticalBias(bookPublicationDateList[i].getId(), 0.4f);
-            constraintSet.setHorizontalBias(bookPublicationDateList[i].getId(), 0.6f);
-
-            //PAGES TXT
-            constraintSet.connect(bookPagesTxtList[i].getId(), ConstraintSet.BOTTOM, bookConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
-            constraintSet.connect(bookPagesTxtList[i].getId(), ConstraintSet.END, bookConstraintLayoutList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(bookPagesTxtList[i].getId(), ConstraintSet.START, bookPhotosList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(bookPagesTxtList[i].getId(), ConstraintSet.TOP, bookPhotosList[i].getId(), ConstraintSet.TOP);
-            constraintSet.setVerticalBias(bookPagesTxtList[i].getId(), 0.5f);
-            constraintSet.setHorizontalBias(bookPagesTxtList[i].getId(), 0.1f);
-
-            //PAGES
-            constraintSet.connect(bookPagesList[i].getId(), ConstraintSet.BOTTOM, bookConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
-            constraintSet.connect(bookPagesList[i].getId(), ConstraintSet.END, bookConstraintLayoutList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(bookPagesList[i].getId(), ConstraintSet.START, bookPhotosList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(bookPagesList[i].getId(), ConstraintSet.TOP, bookPhotosList[i].getId(), ConstraintSet.TOP);
-            constraintSet.setVerticalBias(bookPagesList[i].getId(), 0.5f);
-            constraintSet.setHorizontalBias(bookPagesList[i].getId(), 0.6f);
+            constraintSet.connect(bookAuthorList[i].getId(), ConstraintSet.START, bookConstraintLayoutList[i].getId(), ConstraintSet.START);
+            constraintSet.connect(bookAuthorList[i].getId(), ConstraintSet.TOP, bookTitleList[i].getId(), ConstraintSet.BOTTOM);
+            constraintSet.setVerticalBias(bookAuthorList[i].getId(), 0.05f);
 
             //RATINGS TXT
-            constraintSet.connect(bookRatingTxtList[i].getId(), ConstraintSet.BOTTOM, bookConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.connect(bookRatingTxtList[i].getId(), ConstraintSet.END, bookConstraintLayoutList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(bookRatingTxtList[i].getId(), ConstraintSet.START, bookPhotosList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(bookRatingTxtList[i].getId(), ConstraintSet.TOP, bookPhotosList[i].getId(), ConstraintSet.TOP);
-            constraintSet.setVerticalBias(bookRatingTxtList[i].getId(), 0.6f);
-            constraintSet.setHorizontalBias(bookRatingTxtList[i].getId(), 0.1f);
+            constraintSet.connect(bookRatingTxtList[i].getId(), ConstraintSet.START, bookConstraintLayoutList[i].getId(), ConstraintSet.START);
+            constraintSet.connect(bookRatingTxtList[i].getId(), ConstraintSet.TOP, bookPhotosList[i].getId(), ConstraintSet.BOTTOM);
+            constraintSet.setHorizontalBias(bookRatingTxtList[i].getId(), 0.2f);
+            constraintSet.setVerticalBias(bookRatingTxtList[i].getId(), 0.2f);
 
             //RATINGS
-            constraintSet.connect(bookRatingList[i].getId(), ConstraintSet.BOTTOM, bookConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.connect(bookRatingList[i].getId(), ConstraintSet.END, bookConstraintLayoutList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(bookRatingList[i].getId(), ConstraintSet.START, bookPhotosList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(bookRatingList[i].getId(), ConstraintSet.TOP, bookPhotosList[i].getId(), ConstraintSet.TOP);
-            constraintSet.setVerticalBias(bookRatingList[i].getId(), 0.6f);
+            constraintSet.connect(bookRatingList[i].getId(), ConstraintSet.START, bookConstraintLayoutList[i].getId(), ConstraintSet.START);
+            constraintSet.connect(bookRatingList[i].getId(), ConstraintSet.TOP, bookPhotosList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.setHorizontalBias(bookRatingList[i].getId(), 0.6f);
+            constraintSet.setVerticalBias(bookRatingList[i].getId(), 0.2f);
+
+            //PUBLICATION DATE TXT
+            constraintSet.connect(bookPublicationDateTxtList[i].getId(), ConstraintSet.END, bookConstraintLayoutList[i].getId(), ConstraintSet.END);
+            constraintSet.connect(bookPublicationDateTxtList[i].getId(), ConstraintSet.START, bookConstraintLayoutList[i].getId(), ConstraintSet.START);
+            constraintSet.connect(bookPublicationDateTxtList[i].getId(), ConstraintSet.TOP, bookRatingTxtList[i].getId(), ConstraintSet.BOTTOM);
+            constraintSet.setHorizontalBias(bookPublicationDateTxtList[i].getId(), 0.2f);
+
+            //PUBLICATION DATE
+            constraintSet.connect(bookPublicationDateList[i].getId(), ConstraintSet.END, bookConstraintLayoutList[i].getId(), ConstraintSet.END);
+            constraintSet.connect(bookPublicationDateList[i].getId(), ConstraintSet.START, bookConstraintLayoutList[i].getId(), ConstraintSet.START);
+            constraintSet.connect(bookPublicationDateList[i].getId(), ConstraintSet.TOP, bookRatingList[i].getId(), ConstraintSet.BOTTOM);
+            constraintSet.setHorizontalBias(bookPublicationDateList[i].getId(), 0.7f);
+
+            //PAGES TXT
+            constraintSet.connect(bookPagesTxtList[i].getId(), ConstraintSet.END, bookConstraintLayoutList[i].getId(), ConstraintSet.END);
+            constraintSet.connect(bookPagesTxtList[i].getId(), ConstraintSet.START, bookConstraintLayoutList[i].getId(), ConstraintSet.START);
+            constraintSet.connect(bookPagesTxtList[i].getId(), ConstraintSet.TOP, bookPublicationDateTxtList[i].getId(), ConstraintSet.BOTTOM);
+            constraintSet.setHorizontalBias(bookPagesTxtList[i].getId(), 0.2f);
+            constraintSet.setMargin(bookPagesTxtList[i].getId(), ConstraintSet.BOTTOM, 5);
+
+            //PAGES
+            constraintSet.connect(bookPagesList[i].getId(), ConstraintSet.END, bookConstraintLayoutList[i].getId(), ConstraintSet.END);
+            constraintSet.connect(bookPagesList[i].getId(), ConstraintSet.START, bookConstraintLayoutList[i].getId(), ConstraintSet.START);
+            constraintSet.connect(bookPagesList[i].getId(), ConstraintSet.TOP, bookPublicationDateList[i].getId(), ConstraintSet.BOTTOM);
+            constraintSet.setHorizontalBias(bookPagesList[i].getId(), 0.6f);
+            constraintSet.setMargin(bookPagesList[i].getId(), ConstraintSet.BOTTOM, 5);
+
+            //GENRES TXT
+            constraintSet.connect(bookGenresTxtList[i].getId(), ConstraintSet.END, bookConstraintLayoutList[i].getId(), ConstraintSet.END);
+            constraintSet.connect(bookGenresTxtList[i].getId(), ConstraintSet.START, bookPhotosList[i].getId(), ConstraintSet.END);
+            constraintSet.connect(bookGenresTxtList[i].getId(), ConstraintSet.BOTTOM, bookPhotosList[i].getId(), ConstraintSet.BOTTOM);
+            constraintSet.connect(bookGenresTxtList[i].getId(), ConstraintSet.TOP, bookPhotosList[i].getId(), ConstraintSet.TOP);
+            constraintSet.setHorizontalBias(bookGenresTxtList[i].getId(), 0.1f);
+            constraintSet.setVerticalBias(bookGenresTxtList[i].getId(), 0.2f);
 
             //Genres
-            constraintSet.connect(bookGenresList[i].getId(), ConstraintSet.BOTTOM, bookConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.connect(bookGenresList[i].getId(), ConstraintSet.END, bookConstraintLayoutList[i].getId(), ConstraintSet.END);
             constraintSet.connect(bookGenresList[i].getId(), ConstraintSet.START, bookPhotosList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(bookGenresList[i].getId(), ConstraintSet.TOP, bookPhotosList[i].getId(), ConstraintSet.TOP);
-            constraintSet.setVerticalBias(bookGenresList[i].getId(), 0.9f);
+            constraintSet.connect(bookGenresList[i].getId(), ConstraintSet.BOTTOM, bookPhotosList[i].getId(), ConstraintSet.BOTTOM);
+            constraintSet.connect(bookGenresList[i].getId(), ConstraintSet.TOP, bookGenresTxtList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.setHorizontalBias(bookGenresList[i].getId(), 0.1f);
+            constraintSet.setVerticalBias(bookGenresList[i].getId(), 0.2f);
 
             constraintSet.applyTo(bookConstraintLayoutList[i]);
         }
@@ -262,6 +273,7 @@ public class BookFragment extends Fragment implements FragmentEntity{
             bookPublicationDateTxtList[i].setText(R.string.released);
             bookPagesTxtList[i].setText(R.string.pages);
             bookRatingTxtList[i].setText(R.string.ratings);
+            bookGenresTxtList[i].setText(R.string.genres);
         }
     }
 

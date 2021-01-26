@@ -214,15 +214,23 @@ public class GameFragment extends Fragment implements FragmentEntity{
 
     @Override
     public void fillFields(int bookDigit) {
+        String currentLanguage = getResources().getConfiguration().locale.getLanguage();
         for (int i = 0; i < bookDigit; i++) {
-            gameTitleList[i].setText(gameRepository.getAll().get(i).getTitleEn());
+            if (currentLanguage.equals("en")) {
+                gameTitleList[i].setText(gameRepository.getAll().get(i).getTitleEn());
+                gameGenresList[i].setText(String.valueOf(gameRepository.getAll().get(i).getGenreEn())
+                        .replace(", ", "\n"));
+            }
+            else {
+                gameTitleList[i].setText(gameRepository.getAll().get(i).getTitlePl());
+                gameGenresList[i].setText(String.valueOf(gameRepository.getAll().get(i).getGenrePl())
+                        .replace(", ", "\n"));
+            }
             gameAgeList[i].setText(String.format(Locale.US,"%d-%d", gameRepository.getAll().get(i).getAgeMin(), gameRepository.getAll().get(i).getAgeMax()));
             gamePlayersList[i].setText(gameRepository.getAll().get(i).getPlayersMin() == gameRepository.getAll().get(i).getPlayersMax() ?
                     String.valueOf(gameRepository.getAll().get(i).getPlayersMin()) :
                     gameRepository.getAll().get(i).getPlayersMin() + "-" + gameRepository.getAll().get(i).getPlayersMax());
-            gameTimeList[i].setText(String.format(Locale.US,"%s minutes", gameRepository.getAll().get(i).getTime()));
-            gameGenresList[i].setText(String.valueOf(gameRepository.getAll().get(i).getGenreEn())
-                    .replace(", ", "\n"));
+            gameTimeList[i].setText(String.format(Locale.US,"%s %s", gameRepository.getAll().get(i).getTime(), getResources().getString(R.string.minutes)));
             Glide.with(this).load(gameRepository.getAll().get(i).getImgLink()).placeholder(R.drawable.placeholder).into(gamePhotosList[i]);
 
             gameAgeTxtList[i].setText(R.string.age);

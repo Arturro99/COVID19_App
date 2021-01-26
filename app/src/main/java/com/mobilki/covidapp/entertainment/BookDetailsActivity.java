@@ -42,9 +42,15 @@ public class BookDetailsActivity extends AppCompatActivity {
             description.setText(book.getDescription());
         }
         else {
-            ratingsCount.setText("no data");
+            ratingsCount.setText(R.string.no_data);
         }
-        pdfAvailability.setText(String.valueOf(book.isPdfAvailable()));
+        if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
+            pdfAvailability.setText(String.valueOf(book.isPdfAvailable()));
+        }
+        else {
+            String available = book.isPdfAvailable() ? "tak" : "nie";
+            pdfAvailability.setText(available);
+        }
 
         description.setMovementMethod(new ScrollingMovementMethod());
     }

@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 
 import com.mobilki.covidapp.R;
@@ -18,6 +17,7 @@ public class GameDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_details);
 
         Game game = (Game) getIntent().getSerializableExtra("game");
+        String currentLanguage = getResources().getConfiguration().locale.getLanguage();
 
         TextView link = findViewById(R.id.gameLink);
         TextView description = findViewById(R.id.gameDetailedDescription);
@@ -25,8 +25,14 @@ public class GameDetailsActivity extends AppCompatActivity {
 
         link.setPaintFlags(link.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-        description.setText(game.getDescriptionEn());
+        if (currentLanguage.equals("en")) {
+            description.setText(game.getDescriptionEn());
+            title.setText(game.getTitleEn());
+        }
+        else {
+            description.setText(game.getDescriptionPl());
+            title.setText(game.getTitlePl());
+        }
         link.setText(game.getLink());
-        title.setText(game.getTitleEn());
     }
 }
