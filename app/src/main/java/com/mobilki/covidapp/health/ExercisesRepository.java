@@ -43,7 +43,8 @@ public class ExercisesRepository {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         mFirestore.collection("users").document(mUser.getUid())
-                .collection("settings").document("healthSettings").get().addOnSuccessListener(documentSnapshot -> {
+                .collection("settings").document("healthSettings")
+                .get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot != null) {
                 goodShoulders = !documentSnapshot.getBoolean("functionalShoulder");
                 goodBack = !documentSnapshot.getBoolean("functionalBack");
@@ -53,7 +54,9 @@ public class ExercisesRepository {
                 goodHip = !documentSnapshot.getBoolean("functionalHips");
             }
         });
-        mFirestore.collection("users").document(mUser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
+        mFirestore.collection("users").document(mUser.getUid())
+                .collection("settings").document("language")
+                .get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot != null) {
                 language = documentSnapshot.getString("language");
             }
@@ -99,9 +102,18 @@ public class ExercisesRepository {
             System.out.println(tmp.toString());
         }
         int reps = random.nextInt(tmp.getMaxReps()-tmp.getMinReps())+tmp.getMinReps();
-        String repsAndTitle = reps + " x " + tmp.getName_pl();
 
-        ExerciseToApp tmpExet = new ExerciseToApp(repsAndTitle, tmp.getYt(), tmp.getDescription_pl());
+        ExerciseToApp tmpExet;
+        if (language.equals("polish")) {
+            String repsAndTitle = reps + " x " + tmp.getName_pl();
+            tmpExet = new ExerciseToApp(repsAndTitle, tmp.getYt(), tmp.getDescription_pl());
+        } else {
+            String repsAndTitle = reps + " x " + tmp.getName_en();
+            tmpExet = new ExerciseToApp(repsAndTitle, tmp.getYt(), tmp.getDescription_en());
+        }
+
+
+
 
 
 

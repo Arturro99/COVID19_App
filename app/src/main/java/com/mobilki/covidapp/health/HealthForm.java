@@ -1,5 +1,6 @@
 package com.mobilki.covidapp.health;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -61,19 +62,15 @@ public class HealthForm extends AppCompatActivity {
     FirebaseUser mUser;
     CollectionReference collectionReference;
 
+    int chooseYes;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_health_form);
         SharedPreferences settings = getSharedPreferences(getResources().getString(R.string.shared_preferences), 0);
-//        DisplayMetrics dm =  new DisplayMetrics();
-//        getWindowManager().getDefaultDisplay().getMetrics(dm);
-//
-//        int width = dm.widthPixels;
-//        int height = dm.heightPixels;
-//
-//        getWindow().setLayout((int)(width * .9), (int)(height * .9));
+
         settings.edit().putBoolean("first_time_health", false).apply();
 
         initMap();
@@ -89,21 +86,27 @@ public class HealthForm extends AppCompatActivity {
             if (documentSnapshot != null) {
                 if ((Optional.ofNullable(documentSnapshot.getBoolean("functionalShoulder")).orElse(false))) {
                     changeStyle(shoulderYes, shoulderNo, backgroundShoulder, "functionalShoulder");
+                    chooseYes++;
                 }
                 if ((Optional.ofNullable(documentSnapshot.getBoolean("functionalBack")).orElse(false))) {
                     changeStyle(backYes, backNo, backgroundBack, "functionalBack");
+                    chooseYes++;
                 }
                 if ((Optional.ofNullable(documentSnapshot.getBoolean("functionalWrists")).orElse(false))) {
                     changeStyle(WristsYes, WristsNo, backgroundWrists, "functionalWrists");
+                    chooseYes++;
                 }
                 if ((Optional.ofNullable(documentSnapshot.getBoolean("functionalKnees")).orElse(false))) {
                     changeStyle(KneesYes, KneesNo, backgroundKnees, "functionalKnees");
+                    chooseYes++;
                 }
-                if ((Optional.ofNullable(documentSnapshot.getBoolean("functionalKnees")).orElse(false))) {
+                if ((Optional.ofNullable(documentSnapshot.getBoolean("functionalElbows")).orElse(false))) {
                     changeStyle(ElbowsYes, ElbowsNo, backgroundElbows, "functionalElbows");
+                    chooseYes++;
                 }
                 if ((Optional.ofNullable(documentSnapshot.getBoolean("functionalHips")).orElse(false))) {
                     changeStyle(HipsYes, HipsNo, backgroundHips, "functionalHips");
+                    chooseYes++;
                 }
                 targetWeightText.setText((Optional.ofNullable(documentSnapshot.getLong("targetWeight")).orElse(19L).toString()));
                 targetStepsText.setText((Optional.ofNullable(documentSnapshot.getLong("targetSteps")).orElse(19L).toString()));
@@ -177,14 +180,24 @@ public class HealthForm extends AppCompatActivity {
         HealthForm.this.finish();
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void setOnClickBtn(Button yes, Button no, LinearLayout layout, String functionalString) {
         yes.setOnClickListener(view -> {
+            if (chooseYes >= 2) {
+                Toast.makeText(getApplicationContext(), getString(R.string.cannot_add_more_than_2),Toast.LENGTH_SHORT).show();
+                return;
+            }
             no.setTextAppearance(R.style.Widget_MaterialComponents_Button_OutlinedButton);
             yes.setTextAppearance(R.style.Widget_MaterialComponents_Button);
             layout.setBackgroundResource(R.drawable.outline_button_yes);
             functional.put(functionalString, true);
+            chooseYes++;
         });
         no.setOnClickListener(view -> {
+            //if (layout.getBackground() == this.getApplicationContext().getDrawable(R.drawable.outline_button_yes)) {
+            if ((boolean) functional.get(functionalString)) {
+                chooseYes--;
+            }
             yes.setTextAppearance(R.style.Widget_MaterialComponents_Button_OutlinedButton);
             no.setTextAppearance(R.style.Widget_MaterialComponents_Button);
             layout.setBackgroundResource(R.drawable.outline_button_no);

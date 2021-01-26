@@ -36,6 +36,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.407" />
 
+
+
     <TextView
         android:id="@+id/healthBarChartTitle"
         android:layout_width="match_parent"
@@ -52,15 +54,15 @@
         android:id="@+id/page1group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="healthBarChartTitle,barchart,settingBtnHealth,notificationBtnHealth" />
+        android:visibility="visible"
+        app:constraint_referenced_ids="healthBarChartTitle,barchart,settingBtnHealth,notificationBtnHealth,dots_under_barchart" />
 
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/page2group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
         app:constraint_referenced_ids=",scrollView2" />
 
     <LinearLayout
@@ -81,7 +83,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/background_add_data"
             android:orientation="horizontal"
-            android:padding="12dp">
+            android:padding="12dp"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -114,7 +117,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="PICK DATE" />
+                    android:text="@string/pick_date" />
             </LinearLayout>
 
             <LinearLayout
@@ -178,7 +181,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="PICK DATE" />
+                    android:text="@string/pick_date" />
             </LinearLayout>
 
             <LinearLayout
@@ -242,7 +245,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="PICK DATE" />
+                    android:text="@string/pick_date" />
             </LinearLayout>
 
             <LinearLayout
@@ -305,7 +308,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="PICK DATE" />
+                    android:text="@string/pick_date" />
             </LinearLayout>
 
             <LinearLayout
@@ -339,12 +342,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:paddingLeft="20dp"
-        android:paddingTop="15dp"
+        android:paddingTop="30dp"
         android:paddingRight="20dp"
         android:paddingBottom="10dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="210dp">
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -380,12 +385,17 @@
                         android:layout_weight="1"
                         app:srcCompat="@drawable/yt" />
                 </LinearLayout>
-
+                <ImageView
+                    android:id="@+id/exercise1Arrow"
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/arrow_down" />
                 <TextView
                     android:id="@+id/exercise1Description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
                     android:visibility="gone" />
             </LinearLayout>
 
@@ -422,12 +432,17 @@
                         android:layout_weight="1"
                         app:srcCompat="@drawable/yt" />
                 </LinearLayout>
-
+                <ImageView
+                    android:id="@+id/exercise2Arrow"
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/arrow_down" />
                 <TextView
                     android:id="@+id/exercise2Description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
                     android:visibility="gone" />
             </LinearLayout>
 
@@ -465,11 +480,18 @@
                         app:srcCompat="@drawable/yt" />
                 </LinearLayout>
 
+                <ImageView
+                    android:id="@+id/exercise3Arrow"
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/arrow_down" />
+
                 <TextView
                     android:id="@+id/exercise3Description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
                     android:visibility="gone" />
             </LinearLayout>
 
@@ -506,12 +528,17 @@
                         android:layout_weight="1"
                         app:srcCompat="@drawable/yt" />
                 </LinearLayout>
-
+                <ImageView
+                    android:id="@+id/exercise4Arrow"
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/arrow_down" />
                 <TextView
                     android:id="@+id/exercise4Description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
                     android:visibility="gone" />
             </LinearLayout>
 
@@ -548,12 +575,17 @@
                         android:layout_weight="1"
                         app:srcCompat="@drawable/yt" />
                 </LinearLayout>
-
+                <ImageView
+                    android:id="@+id/exercise5Arrow"
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/arrow_down" />
                 <TextView
                     android:id="@+id/exercise5Description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
                     android:visibility="gone" />
             </LinearLayout>
 
@@ -590,12 +622,17 @@
                         android:layout_weight="1"
                         app:srcCompat="@drawable/yt" />
                 </LinearLayout>
-
+                <ImageView
+                    android:id="@+id/exercise6Arrow"
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/arrow_down" />
                 <TextView
                     android:id="@+id/exercise6Description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
                     android:visibility="gone" />
             </LinearLayout>
 
@@ -628,5 +665,85 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/settings_icon" />
+
+    <LinearLayout
+        android:id="@+id/dots_under_barchart"
+        android:layout_width="170dp"
+        android:layout_height="55dp"
+        android:orientation="horizontal"
+        android:padding="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barchart"
+        app:layout_constraintVertical_bias="0.43">
+
+        <ImageView
+            android:id="@+id/dot1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/dot_purple" />
+        <ImageView
+            android:id="@+id/dot2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/dot_gray" />
+        <ImageView
+            android:id="@+id/dot3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/dot_gray" />
+        <ImageView
+            android:id="@+id/dot4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/dot_gray" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group1Exercse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="exercise1Arrow,exercise1Title"
+        tools:ignore="NotSibling" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group2Exercse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="exercise2Arrow,exercise2Title"
+        tools:ignore="NotSibling" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group3Exercse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="exercise3Arrow,exercise3Title"
+        tools:ignore="NotSibling" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group4Exercse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="exercise4Arrow,exercise4Title"
+        tools:ignore="NotSibling" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group5Exercse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="exercise5Arrow,exercise5Title"
+        tools:ignore="NotSibling" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group6Exercse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="exercise6Arrow,exercise6Title"
+        tools:ignore="NotSibling" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

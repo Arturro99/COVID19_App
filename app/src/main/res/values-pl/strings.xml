@@ -86,7 +86,7 @@
     <string name="yes">TAK</string>
     <string name="no">NIE</string>
     <string name="save">Zapisz</string>
-    <string name="loading">Ladowanie...</string>
+    <string name="loading">Ładowanie...</string>
 
 
     <!-- Film sorting methods -->
@@ -129,4 +129,24 @@
         <item>Wojenny</item>
         <item>Western</item>
     </string-array>
+    <string name="pick_date">Wybierz Datę</string>
+    <string name="cannot_add_more_than_2">Nie można zaznaczyć więcej niż dwa tak</string>
+    <string name="have_back_pain">Czy bolą Cię plecy?</string>
+    <string name="have_wrist_pain">Czy bolą Cię nadgarstki?</string>
+    <string name="have_shoulder_pain">Czy boli Cię ramie?</string>
+    <string name="have_knees_pain">Czy bolą Cię kolana?</string>
+    <string name="have_elbow_pain">Czy bolą Cię łokcie?</string>
+    <string name="have_hips_pain">Czy bolą Cię biodra?</string>
+    <string name="target_weight">Docelowa waga [kg]:</string>
+    <string name="target_steps">Docelowa dzienna ilość kroków:</string>
+    <string name="target_water">Docelowa dzienna ilość spożytej wody [ml]:</string>
+    <string name="enable_notifications_exercises">Włącz powiadomienia o ćwiczeniach</string>
+    <string name="enable_notifications_water">Włącz powiadomienia o wodzie</string>
+    <string name="monday">PON</string>
+    <string name="tuesday">WT</string>
+    <string name="wednesday">ŚR</string>
+    <string name="thursday">CZW</string>
+    <string name="friday">PT</string>
+    <string name="saturday">SOB</string>
+    <string name="sunday">ND</string>
 </resources>

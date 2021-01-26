@@ -1,4 +1,4 @@
-package com.mobilki.covidapp.health;
+package com.mobilki.covidapp.pickers;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;

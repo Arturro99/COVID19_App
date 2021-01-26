@@ -2,7 +2,7 @@
     <string name="app_name">CovidApp</string>
     <!--SharedPreferences-->
     <string name="shared_preferences">CovidAppPref</string>
-
+    <string name="ytKey" translatable="false">AIzaSyBS0tjiXkyNrWyBWlidoJ0l0mY9Fn6ZTY4</string>
 
     <!-- Main Activity   -->
     <string name="health_panel">Health</string>
@@ -89,6 +89,7 @@
     <string name="no">NO</string>
     <string name="save">Save</string>
     <string name="loading">Loading...</string>
+    <string name="pick_date">PICK DATE</string>
 
     <!-- Film sorting methods -->
     <string-array name="film_other">
@@ -131,4 +132,31 @@
         <item>War</item>
         <item>Western</item>
     </string-array>
+    <string name="recommended_movies_panel">Recommended movies</string>
+    <string name="recommended_books_panel">Recommended books</string>
+    <string name="firebase_users" translatable="false">users</string>
+    <string name="firebase_health_data" translatable="false">health_data</string>
+    <string name="firebase_weight" translatable="false">weight</string>
+    <string name="firebase_steps" translatable="false">steps</string>
+    <string name="firebase_sleep" translatable="false">sleep</string>
+    <string name="firebase_water" translatable="false">water</string>
+    <string name="cannot_add_more_than_2">Cannot add more than two yes</string>
+    <string name="have_back_pain">Do your back hurt?</string>
+    <string name="have_wrist_pain">Do your wrist hurt?</string>
+    <string name="have_shoulder_pain">Do your shoulder hurt?</string>
+    <string name="have_knees_pain">Do your knee hurt?</string>
+    <string name="have_elbow_pain">Do your elbow hurt?</string>
+    <string name="have_hips_pain">Do your hips hurt?</string>
+    <string name="target_weight">Target weight [kg]:</string>
+    <string name="target_steps">Target daily steps:</string>
+    <string name="target_water">Target daily drinking water [ml]:</string>
+    <string name="enable_notifications_exercises">Enable notifications exercises</string>
+    <string name="enable_notifications_water">Enable notifications water</string>
+    <string name="monday">MON</string>
+    <string name="tuesday">TUE</string>
+    <string name="wednesday">WED</string>
+    <string name="thursday">THU</string>
+    <string name="friday">FRI</string>
+    <string name="saturday">SAT</string>
+    <string name="sunday">SUN</string>
 </resources>
