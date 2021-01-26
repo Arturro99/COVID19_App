@@ -203,16 +203,18 @@ public class EntertainmentActivity extends AppCompatActivity {
         genresSetter.start();
         genresSetter.join();
 
+        String locale = getResources().getConfiguration().locale.getLanguage();
+
         if (filmSortingMethod.equals("sortByValues")) {
-            Thread filmByValuesSorter = new Thread(new FilmByValuesSorter(imdbApi, getSortingValue(filmSortingByValuesType), filmDigit), "filmValuesSorter");
+            Thread filmByValuesSorter = new Thread(new FilmByValuesSorter(imdbApi, getSortingValue(filmSortingByValuesType), filmDigit, locale), "filmValuesSorter");
             filmByValuesSorter.start();
             filmByValuesSorter.join(3000L);
         } else {
-            Thread filmByGenresSorter = new Thread(new FilmByGenresSorter(imdbApi, filmGenre, filmDigit), "filmGenresSorter");
+            Thread filmByGenresSorter = new Thread(new FilmByGenresSorter(imdbApi, filmGenre, filmDigit, locale), "filmGenresSorter");
             filmByGenresSorter.start();
             filmByGenresSorter.join(3000L);
         }
-        if (getResources().getConfiguration().locale.getLanguage().equals("en")) {
+        if (locale.equals("en")) {
             googleApi.getByGenre(bookGenre, bookDigit, "en");
         }
         else {

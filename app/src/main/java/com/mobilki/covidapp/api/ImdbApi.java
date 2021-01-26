@@ -43,30 +43,30 @@ public class ImdbApi implements EntertainmentDatabaseApi<Film, FilmSortingType> 
     private FilmRepository filmRepository = new FilmRepository();
 
     @Override
-    public void getSortedByValues(FilmSortingType type, int number) throws InterruptedException {
+    public void getSortedByValues(FilmSortingType type, int number, String locale) throws InterruptedException {
         Request request = null;
         switch (type) {
             case TOP_RATED:
                 request = new Request.Builder()
-                        .url("https://api.themoviedb.org/3/movie/top_rated?api_key=" + key + "&language=en-US&page=1")
+                        .url("https://api.themoviedb.org/3/movie/top_rated?api_key=" + key + "&language=" + locale + "&page=1")
                         .get()
                         .build();
                 break;
             case UPCOMING:
                 request = new Request.Builder()
-                        .url("https://api.themoviedb.org/3/movie/upcoming?api_key=" + key + "&language=en-US&page=1")
+                        .url("https://api.themoviedb.org/3/movie/upcoming?api_key=" + key + "&language=" + locale + "&page=1")
                         .get()
                         .build();
                 break;
             case NOW_PLAYING:
                 request = new Request.Builder()
-                        .url("https://api.themoviedb.org/3/movie/now_playing?api_key=" + key + "&language=en-US&page=1")
+                        .url("https://api.themoviedb.org/3/movie/now_playing?api_key=" + key + "&language=" + locale + "&page=1")
                         .get()
                         .build();
                 break;
             case MOST_POPULAR:
                 request = new Request.Builder()
-                        .url("https://api.themoviedb.org/3/movie/popular?api_key=" + key + "&language=en-US&page=1")
+                        .url("https://api.themoviedb.org/3/movie/popular?api_key=" + key + "&language=" + locale + "&page=1")
                         .get()
                         .build();
                 break;
@@ -112,11 +112,11 @@ public class ImdbApi implements EntertainmentDatabaseApi<Film, FilmSortingType> 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void getSortedByGenres(String genre, int number) throws InterruptedException {
+    public void getSortedByGenres(String genre, int number, String locale) throws InterruptedException {
         int genreId = getGenreId(genre);
         CountDownLatch countDownLatch = new CountDownLatch(1);
         Request request = new Request.Builder()
-                .url("https://api.themoviedb.org/3/discover/movie?api_key=" + key + "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=" + String.valueOf(genreId))
+                .url("https://api.themoviedb.org/3/discover/movie?api_key=" + key + "&language=" + locale + "&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=" + String.valueOf(genreId))
                 .get()
                 .build();
         client.newCall(request).enqueue(new Callback() {

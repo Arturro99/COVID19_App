@@ -63,6 +63,14 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
         user = firebaseAuth.getCurrentUser();
+        if (user == null) {
+            super.onCreate(savedInstanceState);
+            finish();
+            Intent intent = new Intent(this, Login.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            return;
+        }
         documentReference = firestore.collection("users").document(user.getUid()).collection("settings").document("language");
         super.onCreate(savedInstanceState);
         documentReference.get().addOnSuccessListener(documentSnapshot -> {
