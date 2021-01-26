@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,9 +50,14 @@ public class EntertainmentSettingsActivity extends AppCompatActivity {
     RadioButton sortByValues;
     RadioButton sortByGenres;
 
+    SharedPreferences settings;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        settings = getSharedPreferences(getResources().getString(R.string.shared_preferences),0);
+        setTheme(!settings.getBoolean("darkModeOn", false) ? R.style.LightTheme : R.style.DarkTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entertainment_settings);
 

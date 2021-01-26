@@ -2,6 +2,7 @@ package com.mobilki.covidapp.entertainment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -11,8 +12,13 @@ import com.mobilki.covidapp.api.model.Game;
 
 public class GameDetailsActivity extends AppCompatActivity {
 
+    SharedPreferences settings;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        settings = getSharedPreferences(getResources().getString(R.string.shared_preferences),0);
+        setTheme(!settings.getBoolean("darkModeOn", false) ? R.style.LightTheme : R.style.DarkTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_details);
 

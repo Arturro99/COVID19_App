@@ -2,6 +2,7 @@ package com.mobilki.covidapp.entertainment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.widget.RatingBar;
@@ -12,8 +13,13 @@ import com.mobilki.covidapp.api.model.Book;
 
 public class BookDetailsActivity extends AppCompatActivity {
 
+    SharedPreferences settings;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        settings = getSharedPreferences(getResources().getString(R.string.shared_preferences),0);
+        setTheme(!settings.getBoolean("darkModeOn", false) ? R.style.LightTheme : R.style.DarkTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_details);
 

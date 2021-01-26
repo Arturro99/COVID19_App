@@ -7,27 +7,22 @@ import androidx.appcompat.widget.SwitchCompat;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.mobilki.covidapp.api.GamesFiller;
 import com.mobilki.covidapp.authentication.Login;
 import com.mobilki.covidapp.entertainment.EntertainmentActivity;
 import com.mobilki.covidapp.health.HealthActivity;
@@ -55,11 +50,14 @@ public class MainActivity extends AppCompatActivity {
     FirebaseFirestore firestore;
 
     SharedPreferences settings;
-    DocumentReference documentReference;
+    DocumentReference languageDocumentReference;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        settings = getSharedPreferences(getResources().getString(R.string.shared_preferences),0);
+        setTheme(!settings.getBoolean("darkModeOn", false) ? R.style.LightTheme : R.style.DarkTheme);
+
         firebaseAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
         user = firebaseAuth.getCurrentUser();
@@ -71,13 +69,15 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             return;
         }
-        documentReference = firestore.collection("users").document(user.getUid()).collection("settings").document("language");
+        languageDocumentReference = firestore.collection("users").document(user.getUid()).collection("settings").document("language");
+//        modeDocumentReference = firestore.collection("users").document(user.getUid()).collection("settings").document("mode");
         super.onCreate(savedInstanceState);
-        documentReference.get().addOnSuccessListener(documentSnapshot -> {
+        languageDocumentReference.get().addOnSuccessListener(documentSnapshotLanguage -> {
             DisplayMetrics metrics = getResources().getDisplayMetrics();
             Configuration conf = getResources().getConfiguration();
-            conf.setLocale(new Locale(Optional.ofNullable(documentSnapshot.getString("language")).orElse("english").equals("polish") ? "pl" : "en"));
+            conf.setLocale(new Locale(Optional.ofNullable(documentSnapshotLanguage.getString("language")).orElse("english").equals("polish") ? "pl" : "en"));
             getResources().updateConfiguration(conf, metrics);
+
             setContentView(R.layout.activity_main);
             setUp();
         });
@@ -107,12 +107,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         darkMode.setOnCheckedChangeListener((compoundButton, b) -> {
+            //Map<String, Object> mode = new HashMap<>();
             if (compoundButton.isChecked()) {
-                setTheme(R.style.DarkTheme);
+                //mode.put("mode", "dark");
+                settings.edit().putBoolean("darkModeOn", true).apply();
+                recreate();
             }
             else {
-                setTheme(R.style.LightTheme);
+                //mode.put("mode", "light");
+                settings.edit().putBoolean("darkModeOn", false).apply();
+                recreate();
             }
+            //modeDocumentReference.set(mode);
         });
 
         if (!user.isEmailVerified()) {
@@ -163,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
             polish.setVisibility(View.VISIBLE);
             english.setVisibility(View.GONE);
         }
-        documentReference.set(locale);
+        languageDocumentReference.set(locale);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -178,7 +184,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         curiosities = findViewById(R.id.mainCuriositiesTxt);
-        settings = getSharedPreferences(getResources().getString(R.string.shared_preferences),0);
 
         resendVerification = findViewById(R.id.resendVerification);
         resendVerificationTxt = findViewById(R.id.resendVerificationTxt);
@@ -190,11 +195,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             return;
         }
-//        documentReference = firestore.collection("users").document(user.getUid()).collection("settings").document("language");
-        documentReference.addSnapshotListener(this, (documentSnapshot, e) -> {
+        languageDocumentReference.addSnapshotListener(this, (documentSnapshot, e) -> {
             polish.setVisibility(Optional.ofNullable(documentSnapshot.getString("language")).orElse("english").equals("polish") ? View.GONE : View.VISIBLE);
             english.setVisibility(polish.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
         });
+
+        darkMode.setChecked(settings.getBoolean("darkModeOn", false));
 
         if (user.isEmailVerified()) {
             DocumentReference documentReference = firestore.collection("users").document(user.getUid());
@@ -207,10 +213,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         start();
-    }
-
-    @Override
-    public void setTheme(int resId) {
-        super.setTheme(resId);
     }
 }

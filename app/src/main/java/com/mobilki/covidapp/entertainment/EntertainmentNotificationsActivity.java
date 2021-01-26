@@ -2,6 +2,7 @@ package com.mobilki.covidapp.entertainment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -47,11 +48,16 @@ public class EntertainmentNotificationsActivity extends AppCompatActivity{
     MaterialTimePicker.Builder pickerBuilder;
     MaterialTimePicker picker;
 
+    SharedPreferences settings;
+
 
     @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        settings = getSharedPreferences(getResources().getString(R.string.shared_preferences),0);
+        setTheme(!settings.getBoolean("darkModeOn", false) ? R.style.LightTheme : R.style.DarkTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entertainment_notifications);
 
