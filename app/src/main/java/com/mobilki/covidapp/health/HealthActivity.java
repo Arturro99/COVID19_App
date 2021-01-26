@@ -1,5 +1,6 @@
 package com.mobilki.covidapp.health;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -58,10 +59,6 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     public static final int SWIPE_THRESHOLD = 100;
     public static final int SWIPE_VELOCITY_THRESHOLD = 100;
     public static final int DURATION_MILLIS = 500;
-    Button exerciseSetBtn;
-    Button addDataBtn;
-    Button notificationsSettingsBtn;
-    Button preferencesBtn;
     BarChart barChart;
     BarDataSet barDataSet;
     BarData barData;
@@ -95,10 +92,6 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     Button setSleepBtn;
     Button setWaterBtn;
 
-    Button test;
-    TextView test1;
-    TextView test2;
-
     ImageView notificationBtn;
     ImageView settingsBtn;
 
@@ -129,6 +122,13 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     TextView exerciseDescription5;
     TextView exerciseDescription6;
 
+    ImageView exerciseArrow1;
+    ImageView exerciseArrow2;
+    ImageView exerciseArrow3;
+    ImageView exerciseArrow4;
+    ImageView exerciseArrow5;
+    ImageView exerciseArrow6;
+
     ImageView dot1;
     ImageView dot2;
     ImageView dot3;
@@ -156,7 +156,6 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         if (settings.getBoolean("first_time_health", true)) {
             startActivity(new Intent(HealthActivity.this, HealthForm.class));
         }
-
 
         barChart = findViewById(R.id.barchart);
         labels = new String[7];
@@ -186,6 +185,7 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
             if (itemId == R.id.page_1) {
                 page1group.setVisibility(View.VISIBLE);
                 setEntries();
+                setDots(dots.get(0));
             } else {
                 page1group.setVisibility(View.GONE);
             }
@@ -195,14 +195,7 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
             return true;
         });
 
-        test2 = findViewById(R.id.exercise1Description);
-        test1 = findViewById(R.id.exercise1Title);
-        test1.setOnClickListener(view -> {
-            if(test2.getVisibility() == View.GONE)
-                test2.setVisibility(View.VISIBLE);
-            else
-                test2.setVisibility(View.GONE);
-        });
+
 
         notificationBtn = findViewById(R.id.notificationBtnHealth);
 
@@ -295,16 +288,40 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         exerciseDescription5 = findViewById(R.id.exercise5Description);
         exerciseDescription6 = findViewById(R.id.exercise6Description);
 
+        exerciseArrow1 = findViewById(R.id.exercise1Arrow);
+        exerciseArrow2 = findViewById(R.id.exercise2Arrow);
+        exerciseArrow3 = findViewById(R.id.exercise3Arrow);
+        exerciseArrow4 = findViewById(R.id.exercise4Arrow);
+        exerciseArrow5 = findViewById(R.id.exercise5Arrow);
+        exerciseArrow6 = findViewById(R.id.exercise6Arrow);
 
-//        ExerciseToApp tmp = repo.get(Exercise.TypeExercise.UPPER);
-//        exerciseTitle1.setText(tmp.repsAndTitle);
-//        exerciseDescription1.setText(tmp.description);
+
+
+
+        showDescription(exerciseTitle1, exerciseDescription1, exerciseArrow1);
+        showDescription(exerciseTitle2, exerciseDescription2, exerciseArrow2);
+        showDescription(exerciseTitle3, exerciseDescription3, exerciseArrow3);
+        showDescription(exerciseTitle4, exerciseDescription4, exerciseArrow4);
+        showDescription(exerciseTitle5, exerciseDescription5, exerciseArrow5);
+        showDescription(exerciseTitle6, exerciseDescription6, exerciseArrow6);
+
         setExercise(exerciseTitle1, exerciseDescription1, exerciseYT1, Exercise.TypeExercise.UPPER);
         setExercise(exerciseTitle2, exerciseDescription2, exerciseYT2, Exercise.TypeExercise.LOWER);
         setExercise(exerciseTitle3, exerciseDescription3, exerciseYT3, Exercise.TypeExercise.CONDITION);
         setExercise(exerciseTitle4, exerciseDescription4, exerciseYT4, Exercise.TypeExercise.UPPER);
         setExercise(exerciseTitle5, exerciseDescription5, exerciseYT5, Exercise.TypeExercise.LOWER);
         setExercise(exerciseTitle6, exerciseDescription6, exerciseYT6, Exercise.TypeExercise.CONDITION);
+    }
+
+    private void showDescription(TextView title, TextView desc, ImageView arrow) {
+        arrow.setOnClickListener(view -> {
+            desc.setVisibility(desc.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
+            arrow.setImageResource(desc.getVisibility() == View.GONE ? R.drawable.arrow_down : R.drawable.arrow_up);
+        });
+        title.setOnClickListener(view -> {
+            desc.setVisibility(desc.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
+            arrow.setImageResource(desc.getVisibility() == View.GONE ? R.drawable.arrow_down : R.drawable.arrow_up);
+        });
     }
 
     private void setExercise(TextView title, TextView desc, ImageView yt, Exercise.TypeExercise type) {
@@ -330,14 +347,15 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
 //
 //            List<Boolean> good = new ArrayList<>();
 //            for (int j =0; j<6; j++) {
-//                good.add(true);
+//                good.add(false);
 //            }
 //            for (int j =0; j<2; j++) {
 //                int r = rand.nextInt(5);
-//                good.set(r, false);
+//                good.set(r, true);
 //            }
-//            String name = i + "";
+//            String name = i + "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eget leo vehicula lorem placerat tincidunt. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc mattis tellus et vehicula lobortis. Vestibulum malesuada dolor dolor, vel lacinia nisl convallis non. Nunc elit ante, pretium quis scelerisque ac, congue at augue. Suspendisse semper imperdiet aliquet. Praesent bibendum tortor accumsan, interdum nisi dignissim, condimentum diam.";
 //            String finalName = name;
+//            int finalI = i;
 //            db.collection("exercises").document("upper "+ i).set(new HashMap<String, Object>()
 //            {
 //                {
@@ -348,12 +366,12 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
 //                    put("goodKnees", good.get(3));
 //                    put("goodElbows", good.get(4));
 //                    put("goodHip", good.get(5));
-//                    put("name_pl", "pl UPPER" + finalName);
-//                    put("name_en", "en UPPER" + finalName);
+//                    put("name_pl", "pl upper" + finalI);
+//                    put("name_en", "en upper" + finalI);
 //                    put("minReps", rand.nextInt(10));
 //                    put("maxReps", rand.nextInt(20)+10);
-//                    put("description_pl", "pl_des UPPER" + finalName);
-//                    put("description_en", "en_des UPPER" + finalName);
+//                    put("description_pl", "pl_des upper" + finalName);
+//                    put("description_en", "en_des upper" + finalName);
 //                    put("yt", "uxPdPpi5W4o");
 //                }
 //            });
@@ -367,8 +385,8 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
 //                    put("goodKnees", good.get(3));
 //                    put("goodElbows", good.get(4));
 //                    put("goodHip", good.get(5));
-//                    put("name_pl", "pl lower" + finalName);
-//                    put("name_en", "en lower" + finalName);
+//                    put("name_pl", "pl lower" + finalI);
+//                    put("name_en", "en lower" + finalI);
 //                    put("minReps", rand.nextInt(10));
 //                    put("maxReps", rand.nextInt(20)+10);
 //                    put("description_pl", "pl_des lower" + finalName);
@@ -386,8 +404,8 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
 //                    put("goodKnees", good.get(3));
 //                    put("goodElbows", good.get(4));
 //                    put("goodHip", good.get(5));
-//                    put("name_pl", "pl condition" + finalName);
-//                    put("name_en", "en condition" + finalName);
+//                    put("name_pl", "pl condition" + finalI);
+//                    put("name_en", "en condition" + finalI);
 //                    put("minReps", rand.nextInt(10));
 //                    put("maxReps", rand.nextInt(20)+10);
 //                    put("description_pl", "pl_des condition" + finalName);
@@ -447,19 +465,19 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
 
         setStepsBtn.setOnClickListener(view -> {
             if (Integer.parseInt(numberStepsSet.getText().toString()) > 0)
-                addToDb(pickDateStepsBtn.getText().toString(), "steps", Integer.parseInt(numberStepsSet.getText().toString()));
+                addToDb(pickDateStepsBtn.getText().toString(), getString(R.string.firebase_steps), Integer.parseInt(numberStepsSet.getText().toString()));
         });
         setWeightBtn.setOnClickListener(view -> {
             if (Integer.parseInt(numberWeightSet.getText().toString()) > 0)
-                addToDb(pickDateWeightBtn.getText().toString(), "weight", Integer.parseInt(numberWeightSet.getText().toString()));
+                addToDb(pickDateWeightBtn.getText().toString(), getString(R.string.firebase_weight), Integer.parseInt(numberWeightSet.getText().toString()));
         });
         setSleepBtn.setOnClickListener(view -> {
             if (Integer.parseInt(numberSleepSet.getText().toString()) > 0)
-                addToDb(pickDateSleepBtn.getText().toString(), "sleep", Integer.parseInt(numberSleepSet.getText().toString()));
+                addToDb(pickDateSleepBtn.getText().toString(), getString(R.string.firebase_sleep), Integer.parseInt(numberSleepSet.getText().toString()));
         });
         setWaterBtn.setOnClickListener(view -> {
             if (Integer.parseInt(numberWaterSet.getText().toString()) > 0)
-                addToDb(pickDateWaterBtn.getText().toString(), "water", Integer.parseInt(numberWaterSet.getText().toString()));
+                addToDb(pickDateWaterBtn.getText().toString(), getString(R.string.firebase_water), Integer.parseInt(numberWaterSet.getText().toString()));
         });
 
         pickDateStepsBtn.setOnClickListener(view -> pickDate(pickDateStepsBtn));
@@ -474,6 +492,7 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         datePicker.show(getSupportFragmentManager(), "date picker");
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onDateSet(DatePicker datePicker, int y, int m, int d) {
         clickedButton.setText(d + "-" + m+1 + "-" + y);
@@ -482,7 +501,8 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     private void addToDb(String date, String value, Integer intValue) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
-        db.collection("users").document(mFirebaseAuth.getCurrentUser().getUid()).collection("health_data").document(date).set(new HashMap<String, Integer>()
+        db.collection(getString(R.string.firebase_users)).document(mFirebaseAuth.getCurrentUser()
+                .getUid()).collection(getString(R.string.firebase_health_data)).document(date).set(new HashMap<String, Integer>()
         {
             {
                 put(value, intValue);
@@ -547,7 +567,9 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         String formattedDate = sdf.format(myDate);
 
         for (int i = 0; i < 7; i++) {
-            DocumentReference docRef = db.collection("users").document(mFirebaseAuth.getCurrentUser().getUid()).collection("health_data").document(formattedDate);
+            DocumentReference docRef = db.collection(getString(R.string.firebase_users))
+                    .document(mFirebaseAuth.getCurrentUser().getUid())
+                    .collection(getString(R.string.firebase_health_data)).document(formattedDate);
             int finalI = i;
             weightEntries.clear();
             stepsEntries.clear();
@@ -555,23 +577,23 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
             sleepEntries.clear();
             docRef.get().addOnSuccessListener(document -> {
                 if (document.exists()) {
-                    if (document.contains("weight")) {
-                        weightEntries.add(new BarEntry(finalI, Integer.parseInt(document.getLong("weight").toString())));
+                    if (document.contains(getString(R.string.firebase_weight))) {
+                        weightEntries.add(new BarEntry(finalI, Integer.parseInt(document.getLong(getString(R.string.firebase_weight)).toString())));
                     } else {
                         weightEntries.add(new BarEntry(finalI, 0));
                     }
-                    if (document.contains("steps")) {
-                        stepsEntries.add(new BarEntry(finalI, Integer.parseInt(document.getLong("steps").toString())));
+                    if (document.contains(getString(R.string.firebase_steps))) {
+                        stepsEntries.add(new BarEntry(finalI, Integer.parseInt(document.getLong(getString(R.string.firebase_steps)).toString())));
                     } else {
                         stepsEntries.add(new BarEntry(finalI, 0));
                     }
-                    if (document.contains("sleep")) {
-                        sleepEntries.add(new BarEntry(finalI, Integer.parseInt(document.getLong("sleep").toString())));
+                    if (document.contains(getString(R.string.firebase_sleep))) {
+                        sleepEntries.add(new BarEntry(finalI, Integer.parseInt(document.getLong(getString(R.string.firebase_sleep)).toString())));
                     } else {
                         sleepEntries.add(new BarEntry(finalI, 0));
                     }
-                    if (document.contains("water")) {
-                        waterEntries.add(new BarEntry(finalI, Integer.parseInt(document.getLong("water").toString())));
+                    if (document.contains(getString(R.string.firebase_water))) {
+                        waterEntries.add(new BarEntry(finalI, Integer.parseInt(document.getLong(getString(R.string.firebase_water)).toString())));
                     } else {
                         waterEntries.add(new BarEntry(finalI, 0));
                     }

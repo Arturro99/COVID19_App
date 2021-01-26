@@ -80,7 +80,7 @@
     <string name="yes">TAK</string>
     <string name="no">NIE</string>
     <string name="save">Zapisz</string>
-    <string name="loading">Ladowanie...</string>
+    <string name="loading">Ładowanie...</string>
 
 
     <!-- Film sorting methods -->
@@ -123,4 +123,6 @@
         <item>Wojenny</item>
         <item>Western</item>
     </string-array>
+    <string name="pick_date">Wybierz Datę</string>
+    <string name="cannot_add_more_than_2">Nie można zaznaczyć więcej niż dwa tak</string>
 </resources>
