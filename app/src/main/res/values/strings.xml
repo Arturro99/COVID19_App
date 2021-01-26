@@ -133,4 +133,13 @@
     <string name="firebase_sleep" translatable="false">sleep</string>
     <string name="firebase_water" translatable="false">water</string>
     <string name="cannot_add_more_than_2">Cannot add more than two yes</string>
+    <string name="have_back_pain">Do your back hurt?</string>
+    <string name="have_wrist_pain">Do your wrist hurt?</string>
+    <string name="have_shoulder_pain">Do your shoulder hurt?</string>
+    <string name="have_knees_pain">Do your knee hurt?</string>
+    <string name="have_elbow_pain">Do your elbow hurt?</string>
+    <string name="have_hips_pain">Do your hips hurt?</string>
+    <string name="target_weight">Target weight [kg]:</string>
+    <string name="target_steps">Target daily steps:</string>
+    <string name="target_water">Target daily drinking water [ml]:</string>
 </resources>

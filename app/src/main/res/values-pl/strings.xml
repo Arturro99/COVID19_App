@@ -125,4 +125,13 @@
     </string-array>
     <string name="pick_date">Wybierz Datę</string>
     <string name="cannot_add_more_than_2">Nie można zaznaczyć więcej niż dwa tak</string>
+    <string name="have_back_pain">Czy bolą Cię plecy?</string>
+    <string name="have_wrist_pain">Czy bolą Cię nadgarstki?</string>
+    <string name="have_shoulder_pain">Czy boli Cię ramie?</string>
+    <string name="have_knees_pain">Czy bolą Cię kolana?</string>
+    <string name="have_elbow_pain">Czy bolą Cię łokcie?</string>
+    <string name="have_hips_pain">Czy bolą Cię biodra?</string>
+    <string name="target_weight">Docelowa waga [kg]:</string>
+    <string name="target_steps">Docelowa dzienna ilość kroków:</string>
+    <string name="target_water">Docelowa dzienna ilość spożytej wody [ml]:</string>
 </resources>
