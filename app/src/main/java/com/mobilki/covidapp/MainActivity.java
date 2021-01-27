@@ -35,11 +35,11 @@ public class MainActivity extends AppCompatActivity {
 
     Button healthBtn;
     Button entertainmentBtn;
-    Button emergencyNumbersBtn;
     Button mLogoutBtn;
     ImageButton polish;
     ImageButton english;
-    SwitchCompat darkMode;
+    ImageButton darkMode;
+    ImageButton lightMode;
 
     TextView curiosities, resendVerificationTxt;
     Button resendVerification;
@@ -106,19 +106,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "E-mail not verified", Toast.LENGTH_SHORT).show();
             }
         });
-        darkMode.setOnCheckedChangeListener((compoundButton, b) -> {
-            //Map<String, Object> mode = new HashMap<>();
-            if (compoundButton.isChecked()) {
-                //mode.put("mode", "dark");
-                settings.edit().putBoolean("darkModeOn", true).apply();
-            }
-            else {
-                //mode.put("mode", "light");
-                settings.edit().putBoolean("darkModeOn", false).apply();
-            }
-            recreate();
-            //modeDocumentReference.set(mode);
-        });
 
         if (!user.isEmailVerified()) {
             resendVerificationTxt.setVisibility(View.VISIBLE);
@@ -136,12 +123,28 @@ public class MainActivity extends AppCompatActivity {
 
         polish.setOnClickListener(view -> setLocale("pl"));
         english.setOnClickListener(view -> setLocale("en"));
+        darkMode.setOnClickListener(view -> setMode("dark"));
+        lightMode.setOnClickListener(view -> setMode("light"));
     }
 
     public void logout(View view) {
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getApplicationContext(), Login.class));
         finish();
+    }
+
+    private void setMode(String mode) {
+        if (mode.equals("light")) {
+            settings.edit().putBoolean("darkModeOn", false).apply();
+            lightMode.setVisibility(View.GONE);
+            darkMode.setVisibility(View.VISIBLE);
+        }
+        else {
+            settings.edit().putBoolean("darkModeOn", true).apply();
+            darkMode.setVisibility(View.VISIBLE);
+            lightMode.setVisibility(View.GONE);
+        }
+        recreate();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -178,11 +181,11 @@ public class MainActivity extends AppCompatActivity {
     private void setUp() {
         healthBtn = findViewById(R.id.healthBtn);
         entertainmentBtn = findViewById(R.id.entertainmentBtn);
-        emergencyNumbersBtn = findViewById(R.id.emergencyNumbersBtn);
         mLogoutBtn = findViewById(R.id.logout);
         polish = findViewById(R.id.polish);
         english = findViewById(R.id.english);
-        darkMode = findViewById(R.id.darkMode);
+        darkMode = findViewById(R.id.moon);
+        lightMode = findViewById(R.id.sun);
         emergencyNumbers = findViewById(R.id.emergencyNumbersBtn);
 
 
@@ -203,7 +206,8 @@ public class MainActivity extends AppCompatActivity {
             english.setVisibility(polish.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
         });
 
-        darkMode.setChecked(settings.getBoolean("darkModeOn", false));
+        darkMode.setVisibility(settings.getBoolean("darkModeOn", false) ? View.GONE : View.VISIBLE);
+        lightMode.setVisibility(settings.getBoolean("darkModeOn", false) ? View.VISIBLE : View.GONE);
 
         if (user.isEmailVerified()) {
             DocumentReference documentReference = firestore.collection("users").document(user.getUid());

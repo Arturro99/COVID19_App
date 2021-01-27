@@ -126,19 +126,40 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.05" />
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/darkMode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/dark_mode"
+    <ImageButton
+        android:id="@+id/sun"
+        android:layout_width="30pt"
+        android:layout_height="25pt"
+        android:background="@drawable/sun"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.05"
-        android:fontFamily="@font/aclonica"
-        tools:ignore="UseSwitchCompatOrMaterialXml"
-        android:theme="@style/SwitchOnOff"
-        android:textColor="?attr/myTextColor"/>
+        app:layout_constraintVertical_bias="0.05" />
+
+
+    <ImageButton
+        android:id="@+id/moon"
+        android:layout_width="25pt"
+        android:layout_height="25pt"
+        android:background="@drawable/moon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.05" />
+
+<!--    <androidx.appcompat.widget.SwitchCompat-->
+<!--        android:id="@+id/darkMode"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/dark_mode"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.05"-->
+<!--        android:fontFamily="@font/aclonica"-->
+<!--        tools:ignore="UseSwitchCompatOrMaterialXml"-->
+<!--        android:theme="@style/SwitchOnOff"-->
+<!--        android:textColor="?attr/myTextColor"/>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
