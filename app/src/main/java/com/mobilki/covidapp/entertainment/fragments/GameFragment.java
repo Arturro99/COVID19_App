@@ -28,6 +28,8 @@ public class GameFragment extends Fragment implements FragmentEntity{
     LinearLayout gamesLayout;
     GameRepository gameRepository;
     TextView[] gameTitleList;
+
+    TextView[] gameGenresTxtList;
     TextView[] gameGenresList;
 
     ImageButton[] gamePhotosList;
@@ -61,6 +63,8 @@ public class GameFragment extends Fragment implements FragmentEntity{
     @Override
     public void initializeFields(int bookDigit) {
         gameTitleList = new TextView[bookDigit];
+
+        gameGenresTxtList = new TextView[bookDigit];
         gameGenresList = new TextView[bookDigit];
 
         gamePhotosList = new ImageButton[bookDigit];
@@ -89,6 +93,7 @@ public class GameFragment extends Fragment implements FragmentEntity{
         int gameTimeInitiateId = 25000;
         int gameTimeTxtInitiateId = 25500;
         int gameGenresInitiateId = 26000;
+        int gameGenresTxtInitiateId = 26500;
         int gameConstraintLayoutInitiateId = 30000;
 
         gamesLayout.removeAllViews();
@@ -105,6 +110,8 @@ public class GameFragment extends Fragment implements FragmentEntity{
             gamePhotosList[i].setId(gamePhotoInitiateId + i);
             gameGenresList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
             gameGenresList[i].setId(gameGenresInitiateId + i);
+            gameGenresTxtList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
+            gameGenresTxtList[i].setId(gameGenresTxtInitiateId + i);
             gameAgeList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
             gameAgeList[i].setId(gameAgeInitiateId + i);
             gameAgeTxtList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
@@ -126,7 +133,8 @@ public class GameFragment extends Fragment implements FragmentEntity{
             gameConstraintLayoutList[i].addView(gamePlayersList[i], 5);
             gameConstraintLayoutList[i].addView(gameTimeTxtList[i], 6);
             gameConstraintLayoutList[i].addView(gameTimeList[i], 7);
-            gameConstraintLayoutList[i].addView(gameGenresList[i], 8);
+            gameConstraintLayoutList[i].addView(gameGenresTxtList[i], 8);
+            gameConstraintLayoutList[i].addView(gameGenresList[i], 9);
 
             gamesLayout.addView(linearLayout);
 
@@ -138,75 +146,91 @@ public class GameFragment extends Fragment implements FragmentEntity{
             DisplayMetrics displayMetrics = new DisplayMetrics();
             ((Activity)getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             int width = displayMetrics.widthPixels;
+            int height = displayMetrics.heightPixels;
 
-            gameConstraintLayoutList[i].setMinWidth((int) Math.round(width*1.5));
+            gameConstraintLayoutList[i].setMinWidth(width*5/6);
 
             //IMAGE
-            constraintSet.connect(gamePhotosList[i].getId(), ConstraintSet.START, gameConstraintLayoutList[i].getId(), ConstraintSet.START);
-            constraintSet.connect(gamePhotosList[i].getId(), ConstraintSet.TOP, gameConstraintLayoutList[i].getId(), ConstraintSet.TOP);
             gamePhotosList[i].setMaxWidth(width/2);
+            gamePhotosList[i].setMaxHeight(height*1/3);
+            constraintSet.connect(gamePhotosList[i].getId(), ConstraintSet.START, gameConstraintLayoutList[i].getId(), ConstraintSet.START);
+            constraintSet.connect(gamePhotosList[i].getId(), ConstraintSet.TOP, gameTitleList[i].getId(), ConstraintSet.BOTTOM);
+            constraintSet.connect(gamePhotosList[i].getId(), ConstraintSet.BOTTOM, gameConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
+//            constraintSet.setMargin(gamePhotosList[i].getId(), ConstraintSet.TOP, 5);
+            constraintSet.setVerticalBias(gamePhotosList[i].getId(), 0.1f);
+
 
             //TITLE
+            constraintSet.connect(gameTitleList[i].getId(), ConstraintSet.START, gameConstraintLayoutList[i].getId(), ConstraintSet.START);
             constraintSet.connect(gameTitleList[i].getId(), ConstraintSet.END, gameConstraintLayoutList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(gameTitleList[i].getId(), ConstraintSet.START, gamePhotosList[i].getId(), ConstraintSet.END);
+            constraintSet.connect(gameTitleList[i].getId(), ConstraintSet.BOTTOM, gameConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.connect(gameTitleList[i].getId(), ConstraintSet.TOP, gameConstraintLayoutList[i].getId(), ConstraintSet.TOP);
+            constraintSet.setVerticalBias(gameTitleList[i].getId(), 0.01f);
             gameTitleList[i].setTextSize(15);
             gameTitleList[i].setTypeface(Typeface.DEFAULT_BOLD);
 
 
             //AGE TXT
-            constraintSet.connect(gameAgeTxtList[i].getId(), ConstraintSet.BOTTOM, gameConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.connect(gameAgeTxtList[i].getId(), ConstraintSet.END, gameConstraintLayoutList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(gameAgeTxtList[i].getId(), ConstraintSet.START, gamePhotosList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(gameAgeTxtList[i].getId(), ConstraintSet.TOP, gameConstraintLayoutList[i].getId(), ConstraintSet.TOP);
-            constraintSet.setVerticalBias(gameAgeTxtList[i].getId(), 0.3f);
-            constraintSet.setHorizontalBias(gameAgeTxtList[i].getId(), 0.1f);
+            constraintSet.connect(gameAgeTxtList[i].getId(), ConstraintSet.START, gameConstraintLayoutList[i].getId(), ConstraintSet.START);
+            constraintSet.connect(gameAgeTxtList[i].getId(), ConstraintSet.TOP, gamePhotosList[i].getId(), ConstraintSet.BOTTOM);
+            constraintSet.setHorizontalBias(gameAgeTxtList[i].getId(), 0.2f);
+            constraintSet.setVerticalBias(gameAgeTxtList[i].getId(), 0.2f);
+            //constraintSet.setMargin(gameAgeTxtList[i].getId(), ConstraintSet.TOP, 5);
 
             //AGE
-            constraintSet.connect(gameAgeList[i].getId(), ConstraintSet.BOTTOM, gameConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.connect(gameAgeList[i].getId(), ConstraintSet.END, gameConstraintLayoutList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(gameAgeList[i].getId(), ConstraintSet.START, gamePhotosList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(gameAgeList[i].getId(), ConstraintSet.TOP, gameConstraintLayoutList[i].getId(), ConstraintSet.TOP);
-            constraintSet.setVerticalBias(gameAgeList[i].getId(), 0.3f);
-            constraintSet.setHorizontalBias(gameAgeList[i].getId(), 0.6f);
+            constraintSet.connect(gameAgeList[i].getId(), ConstraintSet.START, gameConstraintLayoutList[i].getId(), ConstraintSet.START);
+            constraintSet.connect(gameAgeList[i].getId(), ConstraintSet.TOP, gamePhotosList[i].getId(), ConstraintSet.BOTTOM);
+            constraintSet.setHorizontalBias(gameAgeList[i].getId(), 0.7f);
+            constraintSet.setVerticalBias(gameAgeList[i].getId(), 0.2f);
+            //constraintSet.setMargin(gameAgeList[i].getId(), ConstraintSet.TOP, 5);
 
             //Players TXT
-            constraintSet.connect(gamePlayersTxtList[i].getId(), ConstraintSet.BOTTOM, gameConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.connect(gamePlayersTxtList[i].getId(), ConstraintSet.END, gameConstraintLayoutList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(gamePlayersTxtList[i].getId(), ConstraintSet.START, gamePhotosList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(gamePlayersTxtList[i].getId(), ConstraintSet.TOP, gameConstraintLayoutList[i].getId(), ConstraintSet.TOP);
-            constraintSet.setVerticalBias(gamePlayersTxtList[i].getId(), 0.4f);
-            constraintSet.setHorizontalBias(gamePlayersTxtList[i].getId(), 0.1f);
+            constraintSet.connect(gamePlayersTxtList[i].getId(), ConstraintSet.START, gameConstraintLayoutList[i].getId(), ConstraintSet.START);
+            constraintSet.connect(gamePlayersTxtList[i].getId(), ConstraintSet.TOP, gameAgeTxtList[i].getId(), ConstraintSet.BOTTOM);
+            constraintSet.setHorizontalBias(gamePlayersTxtList[i].getId(), 0.2f);
+            // constraintSet.setMargin(gamePlayersTxtList[i].getId(), ConstraintSet.TOP, 5);
 
             //Players
-            constraintSet.connect(gamePlayersList[i].getId(), ConstraintSet.BOTTOM, gameConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.connect(gamePlayersList[i].getId(), ConstraintSet.END, gameConstraintLayoutList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(gamePlayersList[i].getId(), ConstraintSet.START, gamePhotosList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(gamePlayersList[i].getId(), ConstraintSet.TOP, gameConstraintLayoutList[i].getId(), ConstraintSet.TOP);
-            constraintSet.setVerticalBias(gamePlayersList[i].getId(), 0.4f);
-            constraintSet.setHorizontalBias(gamePlayersList[i].getId(), 0.6f);
+            constraintSet.connect(gamePlayersList[i].getId(), ConstraintSet.START, gameConstraintLayoutList[i].getId(), ConstraintSet.START);
+            constraintSet.connect(gamePlayersList[i].getId(), ConstraintSet.TOP, gameAgeList[i].getId(), ConstraintSet.BOTTOM);
+            constraintSet.setHorizontalBias(gamePlayersList[i].getId(), 0.7f);
+            //  constraintSet.setMargin(gamePlayersList[i].getId(), ConstraintSet.TOP, 5);
 
             //TIME TXT
-            constraintSet.connect(gameTimeTxtList[i].getId(), ConstraintSet.BOTTOM, gameConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.connect(gameTimeTxtList[i].getId(), ConstraintSet.END, gameConstraintLayoutList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(gameTimeTxtList[i].getId(), ConstraintSet.START, gamePhotosList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(gameTimeTxtList[i].getId(), ConstraintSet.TOP, gameConstraintLayoutList[i].getId(), ConstraintSet.TOP);
-            constraintSet.setVerticalBias(gameTimeTxtList[i].getId(), 0.5f);
-            constraintSet.setHorizontalBias(gameTimeTxtList[i].getId(), 0.1f);
+            constraintSet.connect(gameTimeTxtList[i].getId(), ConstraintSet.START, gameConstraintLayoutList[i].getId(), ConstraintSet.START);
+            constraintSet.connect(gameTimeTxtList[i].getId(), ConstraintSet.TOP, gamePlayersTxtList[i].getId(), ConstraintSet.BOTTOM);
+            constraintSet.setHorizontalBias(gameTimeTxtList[i].getId(), 0.2f);
+            //constraintSet.setMargin(gameTimeTxtList[i].getId(), ConstraintSet.TOP, 5);
+            constraintSet.setMargin(gameTimeTxtList[i].getId(), ConstraintSet.BOTTOM, 5);
 
             //TIME
-            constraintSet.connect(gameTimeList[i].getId(), ConstraintSet.BOTTOM, gameConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.connect(gameTimeList[i].getId(), ConstraintSet.END, gameConstraintLayoutList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(gameTimeList[i].getId(), ConstraintSet.START, gamePhotosList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(gameTimeList[i].getId(), ConstraintSet.TOP, gameConstraintLayoutList[i].getId(), ConstraintSet.TOP);
-            constraintSet.setVerticalBias(gameTimeList[i].getId(), 0.5f);
-            constraintSet.setHorizontalBias(gameTimeList[i].getId(), 0.6f);
+            constraintSet.connect(gameTimeList[i].getId(), ConstraintSet.START, gameConstraintLayoutList[i].getId(), ConstraintSet.START);
+            constraintSet.connect(gameTimeList[i].getId(), ConstraintSet.TOP, gamePlayersList[i].getId(), ConstraintSet.BOTTOM);
+            constraintSet.setHorizontalBias(gameTimeList[i].getId(), 0.7f);
+            //  constraintSet.setMargin(gameTimeList[i].getId(), ConstraintSet.TOP, 5);
+            constraintSet.setMargin(gameTimeList[i].getId(), ConstraintSet.BOTTOM, 5);
+
+            //GENRES TXT
+            constraintSet.connect(gameGenresTxtList[i].getId(), ConstraintSet.END, gameConstraintLayoutList[i].getId(), ConstraintSet.END);
+            constraintSet.connect(gameGenresTxtList[i].getId(), ConstraintSet.START, gamePhotosList[i].getId(), ConstraintSet.END);
+            constraintSet.connect(gameGenresTxtList[i].getId(), ConstraintSet.BOTTOM, gamePhotosList[i].getId(), ConstraintSet.BOTTOM);
+            constraintSet.connect(gameGenresTxtList[i].getId(), ConstraintSet.TOP, gamePhotosList[i].getId(), ConstraintSet.TOP);
+            constraintSet.setHorizontalBias(gameGenresTxtList[i].getId(), 0.1f);
+            constraintSet.setVerticalBias(gameGenresTxtList[i].getId(), 0.2f);
 
             //Genres
-            constraintSet.connect(gameGenresList[i].getId(), ConstraintSet.BOTTOM, gameConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
+            constraintSet.connect(gameGenresList[i].getId(), ConstraintSet.END, gameConstraintLayoutList[i].getId(), ConstraintSet.END);
             constraintSet.connect(gameGenresList[i].getId(), ConstraintSet.START, gamePhotosList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(gameGenresList[i].getId(), ConstraintSet.TOP, gameConstraintLayoutList[i].getId(), ConstraintSet.TOP);
-            constraintSet.setVerticalBias(gameGenresList[i].getId(), 0.8f);
+            constraintSet.connect(gameGenresList[i].getId(), ConstraintSet.BOTTOM, gamePhotosList[i].getId(), ConstraintSet.BOTTOM);
+            constraintSet.connect(gameGenresList[i].getId(), ConstraintSet.TOP, gameGenresTxtList[i].getId(), ConstraintSet.BOTTOM);
+            constraintSet.setHorizontalBias(gameGenresList[i].getId(), 0.1f);
+            constraintSet.setVerticalBias(gameGenresList[i].getId(), 0.2f);
 
             constraintSet.applyTo(gameConstraintLayoutList[i]);
         }
@@ -236,6 +260,7 @@ public class GameFragment extends Fragment implements FragmentEntity{
             gameAgeTxtList[i].setText(R.string.age);
             gamePlayersTxtList[i].setText(R.string.players);
             gameTimeTxtList[i].setText(R.string.time);
+            gameGenresTxtList[i].setText(R.string.genres);
         }
     }
 

@@ -152,13 +152,14 @@ public class BookFragment extends Fragment implements FragmentEntity{
 
             booksLayout.addView(linearLayout);
 
-            bookConstraintLayoutList[i].setMinWidth(1000);
-            ConstraintSet constraintSet = new ConstraintSet();
-            constraintSet.clone(bookConstraintLayoutList[i]);
-
             DisplayMetrics displayMetrics = new DisplayMetrics();
             ((Activity)getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             int width = displayMetrics.widthPixels;
+            int height = displayMetrics.heightPixels;
+
+            bookConstraintLayoutList[i].setMinWidth(width*5/6);
+            ConstraintSet constraintSet = new ConstraintSet();
+            constraintSet.clone(bookConstraintLayoutList[i]);
 
             //IMAGE
             constraintSet.connect(bookPhotosList[i].getId(), ConstraintSet.START, bookConstraintLayoutList[i].getId(), ConstraintSet.START);

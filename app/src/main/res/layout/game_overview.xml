@@ -21,7 +21,8 @@
             app:layout_constraintTop_toTopOf="parent"
             android:adjustViewBounds="true"
             android:maxHeight="300dp"
-            android:maxWidth="250dp"/>
+            android:maxWidth="250dp"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/gameTitle"
@@ -96,6 +97,18 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/gamePhoto"
             app:layout_constraintTop_toTopOf="@+id/gamePhoto"/>
+
+        <TextView
+            android:id="@+id/gameGenresTxt"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            app:layout_constraintVertical_bias="0.2"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/gamePhoto"
+            app:layout_constraintStart_toEndOf="@id/gamePhoto"
+            app:layout_constraintTop_toTopOf="@id/gamePhoto" />
 
         <TextView
             android:id="@+id/gameGenres"

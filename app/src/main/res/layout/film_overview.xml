@@ -30,10 +30,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/filmTitle"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.01"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="@id/mainFilmPhoto"
+        app:layout_constraintStart_toStartOf="@id/mainFilmPhoto"
+        app:layout_constraintTop_toBottomOf="@id/mainFilmPhoto" />
 
 
     <TextView
@@ -125,17 +124,6 @@
         app:layout_constraintBottom_toBottomOf="@id/mainFilmPhoto"
         app:layout_constraintStart_toEndOf="@+id/mainFilmPhoto"
         app:layout_constraintTop_toBottomOf="@id/filmGenresTxt" />
-
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/filmDirectorTxt"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.05"-->
-<!--        app:layout_constraintStart_toEndOf="@id/mainFilmPhoto"-->
-<!--        app:layout_constraintTop_toTopOf="@id/mainFilmPhoto" />-->
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

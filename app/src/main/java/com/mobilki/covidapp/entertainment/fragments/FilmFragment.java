@@ -1,8 +1,10 @@
 package com.mobilki.covidapp.entertainment.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -154,7 +156,12 @@ public class FilmFragment extends Fragment implements FragmentEntity{
 
             filmsLayout.addView(linearLayout);
 
-            filmConstraintLayoutList[i].setMinWidth(1000);
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            ((Activity)getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+            int width = displayMetrics.widthPixels;
+            int height = displayMetrics.heightPixels;
+
+            filmConstraintLayoutList[i].setMinWidth(width*5/6);
             ConstraintSet constraintSet = new ConstraintSet();
             constraintSet.clone(filmConstraintLayoutList[i]);
 
@@ -170,7 +177,7 @@ public class FilmFragment extends Fragment implements FragmentEntity{
             constraintSet.connect(filmTitleList[i].getId(), ConstraintSet.END, filmConstraintLayoutList[i].getId(), ConstraintSet.END);
             constraintSet.connect(filmTitleList[i].getId(), ConstraintSet.BOTTOM, filmConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.connect(filmTitleList[i].getId(), ConstraintSet.TOP, filmConstraintLayoutList[i].getId(), ConstraintSet.TOP);
-            constraintSet.setVerticalBias(filmTitleList[i].getId(), 0.01f);
+            constraintSet.setVerticalBias(filmTitleList[i].getId(), 0.05f);
             filmTitleList[i].setTextSize(15);
             filmTitleList[i].setTypeface(Typeface.DEFAULT_BOLD);
 
