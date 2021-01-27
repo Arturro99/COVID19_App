@@ -69,11 +69,12 @@ public class NotificationHelper {
         System.out.println("Ustawiony na " + date_format.format(calendar.getTime()));
     }
 
-    public static void setNotification(Context context ,int hour, int minute, String title, String body, boolean enableSound, boolean enableVibrations) {
+    public static void setNotification(Context context ,int hour, int minute, String title, String body, boolean enableSound, boolean enableVibrations, Long day) {
         final NotificationUtils notificationUtils = new NotificationUtils(context);
         notificationUtils.createChannel(PERSONAL_CHANNEL_ID, "CovidApp", enableVibrations, enableSound);
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.DAY_OF_WEEK, day.intValue());
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
 //

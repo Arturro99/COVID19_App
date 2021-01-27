@@ -159,4 +159,8 @@
     <string name="friday">FRI</string>
     <string name="saturday">SAT</string>
     <string name="sunday">SUN</string>
+    <string name="hello">"Hello, "</string>
+    <string name="hello_unknown">Hello, unknown</string>
+    <string name="notification_entertainment_title">Chill time!</string>
+    <string name="notification_entertainment_body">Shall we watch something?</string>
 </resources>

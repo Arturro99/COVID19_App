@@ -1,12 +1,10 @@
 package com.mobilki.covidapp.api;
 
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
 import com.mobilki.covidapp.api.model.Book;
-import com.mobilki.covidapp.api.model.Film;
 import com.mobilki.covidapp.api.repository.BookRepository;
 import com.mobilki.covidapp.exceptions.emptyResponseBodyException;
 import com.mobilki.covidapp.exceptions.incorrectRequestException;
@@ -16,7 +14,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -33,7 +30,7 @@ public class GoogleBooksApi {
 
     private String jsonString;
     private static JSONObject jsonObject;
-    private BookRepository bookRepository = new BookRepository();
+    private final BookRepository bookRepository = new BookRepository();
 
     public void getByGenre(String genre, int bookDigit, String language) throws InterruptedException {
         Request request = new Request.Builder()

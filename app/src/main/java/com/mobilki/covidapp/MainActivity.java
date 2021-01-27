@@ -7,8 +7,6 @@ import androidx.appcompat.widget.SwitchCompat;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -111,13 +109,12 @@ public class MainActivity extends AppCompatActivity {
             if (compoundButton.isChecked()) {
                 //mode.put("mode", "dark");
                 settings.edit().putBoolean("darkModeOn", true).apply();
-                recreate();
             }
             else {
                 //mode.put("mode", "light");
                 settings.edit().putBoolean("darkModeOn", false).apply();
-                recreate();
             }
+            recreate();
             //modeDocumentReference.set(mode);
         });
 
@@ -172,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
         languageDocumentReference.set(locale);
     }
 
+    @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setUp() {
         healthBtn = findViewById(R.id.healthBtn);
@@ -206,9 +204,9 @@ public class MainActivity extends AppCompatActivity {
             DocumentReference documentReference = firestore.collection("users").document(user.getUid());
             documentReference.addSnapshotListener(this, (documentSnapshot, e) -> {
                 if (documentSnapshot != null)
-                    curiosities.setText("Hello, " + documentSnapshot.getString("name"));
+                    curiosities.setText(getResources().getString(R.string.hello) + documentSnapshot.getString("name"));
                 else
-                    curiosities.setText("Hello, unknown");
+                    curiosities.setText(getResources().getString(R.string.hello_unknown));
             });
         }
 
