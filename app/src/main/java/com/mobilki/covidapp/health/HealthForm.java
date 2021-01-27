@@ -68,8 +68,9 @@ public class HealthForm extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_health_form);
         SharedPreferences settings = getSharedPreferences(getResources().getString(R.string.shared_preferences), 0);
+        setTheme(!settings.getBoolean("darkModeOn", false) ? R.style.LightTheme : R.style.DarkTheme);
+        setContentView(R.layout.activity_health_form);
 
         settings.edit().putBoolean("first_time_health", false).apply();
 

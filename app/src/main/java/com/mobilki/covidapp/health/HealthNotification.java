@@ -2,6 +2,7 @@ package com.mobilki.covidapp.health;
 
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -86,6 +87,8 @@ public class HealthNotification extends AppCompatActivity implements TimePickerD
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences settings = getSharedPreferences(getResources().getString(R.string.shared_preferences), 0);
+        setTheme(!settings.getBoolean("darkModeOn", false) ? R.style.LightTheme : R.style.DarkTheme);
         setContentView(R.layout.activity_notification_health);
 
         mFirestore = FirebaseFirestore.getInstance();

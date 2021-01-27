@@ -663,7 +663,6 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         barChart.getXAxis().setDrawGridLinesBehindData(false);
         barChart.getXAxis().setDrawGridLines(false);
         barChart.getXAxis().setTextSize(11);
-//        barChart.getXAxis().getTextColor(Color.)
 
         barChart.getAxisLeft().setEnabled(false);
         barChart.getAxisRight().setEnabled(false);
