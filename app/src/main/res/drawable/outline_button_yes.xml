@@ -26,7 +26,7 @@
             <corners
                 android:bottomRightRadius="20dp"
                 android:topRightRadius="20dp" />
-            <solid android:color="@color/white"/>
+            <solid android:color="?attr/backgroundColor"/>
             <stroke android:color="@color/design_default_color_primary" android:width="2dp"/>
         </shape>
     </item>
