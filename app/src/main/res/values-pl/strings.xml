@@ -153,4 +153,8 @@
     <string name="hello_unknown">Cześć, nieznajomy</string>
     <string name="notification_entertainment_title">Czas na relaks!</string>
     <string name="notification_entertainment_body">Obejrzymy coś?</string>
+    <string name="criterias">Twoje hasło nie spełnia jednego z kryteriów:\ndługość >=8\nco najmniej jedna wielka litera\nco najmniej jedna mała litera\nco najmniej jedna cyfra</string>
+    <string name="password_match">Podane hasła są różne</string>
+    <string name="email_absent">Email wymagany</string>
+    <string name="logged_in_success">Logowanie zakończone powodzeniem</string>
 </resources>

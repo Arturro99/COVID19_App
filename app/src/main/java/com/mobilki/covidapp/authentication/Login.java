@@ -1,6 +1,5 @@
 package com.mobilki.covidapp.authentication;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.WallpaperManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -37,10 +37,14 @@ public class Login extends AppCompatActivity {
     TextView mForgotPassword, mRegister;
     ProgressBar mProgressBar;
     FirebaseAuth mFirebaseAuth;
+    SharedPreferences settings;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        settings = getSharedPreferences(getResources().getString(R.string.shared_preferences),0);
+        setTheme(!settings.getBoolean("darkModeOn", false) ? R.style.LightTheme : R.style.DarkTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -90,17 +94,12 @@ public class Login extends AppCompatActivity {
         String password = mPassword.getText().toString().trim();
 
         if (TextUtils.isEmpty(eMail)) {
-            mEmail.setError("You need to specify e-mail");
+            mEmail.setError(getResources().getString(R.string.email_absent));
             return false;
         }
 
         if (!isValid(password)) {
-            mPassword.setError("Your password does not match one of the password criteria:" +
-                    "\nlength >=8" +
-                    "\nat least one uppercase letter" +
-                    "\nat least one lowercase letter" +
-                    "\nat least one digit" +
-                    "\nat least one non-alphabetic symbol");
+            mPassword.setError(getResources().getString(R.string.password_match));
             return false;
         }
 
@@ -108,7 +107,7 @@ public class Login extends AppCompatActivity {
 
         mFirebaseAuth.signInWithEmailAndPassword(eMail, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                Toast.makeText(Login.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login.this, getResources().getString(R.string.logged_in_success), Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
             else {

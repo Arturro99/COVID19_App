@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/wallpaper"
-    tools:context=".authentication.Register">
+    tools:context=".authentication.Login">
 
     <TextView
         android:id="@+id/textView"
@@ -42,8 +41,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/email"
-        android:textColor="@android:color/white"
-        android:background="@android:color/black"
         android:textSize="15sp"
         android:padding="10dp"
         android:layout_marginStart="20sp"
@@ -51,7 +48,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:layout_constraintVertical_bias="0.05"
-        android:textColorHint="@android:color/white"
         android:fontFamily="@font/aclonica"/>
 
     <EditText
@@ -60,8 +56,6 @@
         android:layout_height="wrap_content"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:textColor="@android:color/white"
-        android:background="@android:color/black"
         android:textSize="15sp"
         android:padding="10dp"
         android:layout_marginStart="20sp"
@@ -69,7 +63,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/clientEmail"
         app:layout_constraintVertical_bias="0.05"
-        android:textColorHint="@android:color/white"
         android:fontFamily="@font/aclonica"/>
 
     <Button
@@ -81,9 +74,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/login"
-        app:layout_constraintVertical_bias="0.05"
-        android:background="@drawable/button_gradient1"
-        android:textColor="@android:color/white"/>
+        app:layout_constraintVertical_bias="0.05" />
 
     <TextView
         android:id="@+id/forgotPassword"

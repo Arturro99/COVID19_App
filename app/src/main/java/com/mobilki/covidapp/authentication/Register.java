@@ -1,10 +1,10 @@
 package com.mobilki.covidapp.authentication;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,10 +16,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -30,8 +26,6 @@ import com.mobilki.covidapp.R;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 public class Register extends AppCompatActivity {
@@ -43,10 +37,14 @@ public class Register extends AppCompatActivity {
     FirebaseFirestore mFirestore;
     String userId;
     TextView mLogIn;
+    SharedPreferences settings;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        settings = getSharedPreferences(getResources().getString(R.string.shared_preferences),0);
+        setTheme(!settings.getBoolean("darkModeOn", false) ? R.style.LightTheme : R.style.DarkTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
@@ -70,9 +68,7 @@ public class Register extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void start() {
 
-        mRegisterBtn.setOnClickListener(view -> {
-            register();
-        });
+        mRegisterBtn.setOnClickListener(view -> register());
         mLogIn.setOnClickListener(view -> startActivity(new Intent(this, Login.class)));
     }
 
@@ -85,23 +81,18 @@ public class Register extends AppCompatActivity {
         String name = mName.getText().toString();
 
         if (TextUtils.isEmpty(eMail)) {
-            mEmail.setError("You need to specify e-mail");
+            mEmail.setError(getResources().getString(R.string.email_absent));
             return false;
         }
 
 
         if (!isValid(password)) {
-            mPassword.setError("Your password does not match one of the password criteria:" +
-                    "\nlength >=8" +
-                    "\nat least one uppercase letter" +
-                    "\nat least one lowercase letter" +
-                    "\nat least one digit" +
-                    "\nat least one non-alphabetic symbol");
+            mPassword.setError(getResources().getString(R.string.criterias));
             return false;
         }
 
         if (!password.equals(passwordRepeated)) {
-            mPasswordRepeated.setError("Provided passwords do not match");
+            mPasswordRepeated.setError(getResources().getString(R.string.password_match));
             return false;
         }
 
