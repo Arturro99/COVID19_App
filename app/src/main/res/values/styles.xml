@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="LightTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="backgroundColor">@color/colorAccentLight</item>
+        <item name="backgroundColor">@color/white</item>
         <item name="myTextColor">@color/black</item>
         <item name="myDefaultColor">@color/colorAccentDark</item>
         <item name="android:windowActivityTransitions">true</item>
@@ -15,9 +15,9 @@
     </style>
 
     <style name="DarkTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="myTextColor">@color/white</item>
+        <item name="myTextColor">@color/material_on_primary_disabled</item>
         <item name="myDefaultColor">@color/colorAccentLight</item>
-<!--        <item name="android:background">@color/colorPrimaryDark</item>-->
+        <item name="backgroundColor">#303030</item>
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:windowSharedElementEnterTransition" tools:ignore="NewApi">
             @transition/grid_detail_transition
@@ -29,7 +29,7 @@
     </style>
 
 
-
+    #4DFFFFFF
     <style name="SwitchOnOff" parent="Theme.AppCompat.Light">
         <item name="colorControlActivated">#46bdbf</item>
         <item name="colorSwitchThumbNormal">#f1f1f1</item>
