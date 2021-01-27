@@ -83,11 +83,13 @@ public class HealthNotification extends AppCompatActivity implements TimePickerD
 
     LinearLayout linearLayoutExercise;
 
+    SharedPreferences settings;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences settings = getSharedPreferences(getResources().getString(R.string.shared_preferences), 0);
+        settings = getSharedPreferences(getResources().getString(R.string.shared_preferences), 0);
         setTheme(!settings.getBoolean("darkModeOn", false) ? R.style.LightTheme : R.style.DarkTheme);
         setContentView(R.layout.activity_notification_health);
 
@@ -187,9 +189,10 @@ public class HealthNotification extends AppCompatActivity implements TimePickerD
     private void setClickDayBtn(TextView dayBtn, ArrayList<Long> list, long day) {
         dayBtn.setOnClickListener(view -> {
             if (list.contains(day)) {
-                dayBtn.setTextAppearance(R.style.Widget_MaterialComponents_Button_OutlinedButton);
+                int res = !settings.getBoolean("darkModeOn", false) ? R.style.Widget_MaterialComponents_Button_OutlinedButton : R.style.Widget_MaterialComponents_Button;
+                dayBtn.setTextAppearance(res);
                 dayBtn.setBackgroundResource(R.drawable.button_not_pressed);
-                list.remove((Long) day);
+                list.remove(day);
             } else {
                 dayBtn.setTextAppearance(R.style.Widget_MaterialComponents_Button);
                 dayBtn.setBackgroundResource(R.drawable.button_pressed);
@@ -207,8 +210,9 @@ public class HealthNotification extends AppCompatActivity implements TimePickerD
         if (str.equals("water")) {
             long i = 1;
             for (TextView text: water) {
+                int res = !settings.getBoolean("darkModeOn", false) ? R.style.Widget_MaterialComponents_Button_OutlinedButton : R.style.Widget_MaterialComponents_Button;
                 text.setTextAppearance(days.contains(i) ? R.style.Widget_MaterialComponents_Button
-                        : R.style.Widget_MaterialComponents_Button_OutlinedButton);
+                        : res);
                 text.setBackgroundResource(days.contains(i) ? R.drawable.button_pressed : R.drawable.button_not_pressed);
                 i++;
             }
@@ -216,8 +220,9 @@ public class HealthNotification extends AppCompatActivity implements TimePickerD
         if (str.equals("exercise")) {
             long i = 1;
             for (TextView text: exercise) {
+                int res = !settings.getBoolean("darkModeOn", false) ? R.style.Widget_MaterialComponents_Button_OutlinedButton : R.style.Widget_MaterialComponents_Button;
                 text.setTextAppearance(days.contains(i) ? R.style.Widget_MaterialComponents_Button
-                        : R.style.Widget_MaterialComponents_Button_OutlinedButton);
+                        : res);
                 text.setBackgroundResource(days.contains(i) ? R.drawable.button_pressed : R.drawable.button_not_pressed);
                 i++;
             }

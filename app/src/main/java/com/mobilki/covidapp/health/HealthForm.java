@@ -61,18 +61,19 @@ public class HealthForm extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseUser mUser;
     CollectionReference collectionReference;
-
+    SharedPreferences settings;
     int chooseYes;
-
+    int res;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences settings = getSharedPreferences(getResources().getString(R.string.shared_preferences), 0);
+        settings = getSharedPreferences(getResources().getString(R.string.shared_preferences), 0);
         setTheme(!settings.getBoolean("darkModeOn", false) ? R.style.LightTheme : R.style.DarkTheme);
         setContentView(R.layout.activity_health_form);
 
         settings.edit().putBoolean("first_time_health", false).apply();
+        res = !settings.getBoolean("darkModeOn", false) ? R.style.Widget_MaterialComponents_Button_OutlinedButton : R.style.Widget_MaterialComponents_Button;
 
         initMap();
         initBtnsAndText();
@@ -117,7 +118,8 @@ public class HealthForm extends AppCompatActivity {
     }
 
     private void changeStyle(Button yes, Button no, LinearLayout layout, String functionalString) {
-        no.setTextAppearance(R.style.Widget_MaterialComponents_Button_OutlinedButton);
+
+        no.setTextAppearance(res);
         yes.setTextAppearance(R.style.Widget_MaterialComponents_Button);
         layout.setBackgroundResource(R.drawable.outline_button_yes);
         functional.put(functionalString, true);
@@ -188,7 +190,7 @@ public class HealthForm extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), getString(R.string.cannot_add_more_than_2),Toast.LENGTH_SHORT).show();
                 return;
             }
-            no.setTextAppearance(R.style.Widget_MaterialComponents_Button_OutlinedButton);
+            no.setTextAppearance(res);
             yes.setTextAppearance(R.style.Widget_MaterialComponents_Button);
             layout.setBackgroundResource(R.drawable.outline_button_yes);
             functional.put(functionalString, true);
@@ -199,12 +201,13 @@ public class HealthForm extends AppCompatActivity {
             if ((boolean) functional.get(functionalString)) {
                 chooseYes--;
             }
-            yes.setTextAppearance(R.style.Widget_MaterialComponents_Button_OutlinedButton);
+            yes.setTextAppearance(res);
             no.setTextAppearance(R.style.Widget_MaterialComponents_Button);
             layout.setBackgroundResource(R.drawable.outline_button_no);
             functional.put(functionalString, false);
         });
         no.setTextAppearance(R.style.Widget_MaterialComponents_Button);
+        yes.setTextAppearance(res);
     }
 
     private void initBtnsAndText() {
