@@ -142,6 +142,8 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences settings = getSharedPreferences(getResources().getString(R.string.shared_preferences), 0);
+        setTheme(!settings.getBoolean("darkModeOn", false) ? R.style.LightTheme : R.style.DarkTheme);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_health_new);
@@ -152,10 +154,11 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
 //        preferencesBtn = findViewById(R.id.healthPreferencesBtn);
 
 
-        SharedPreferences settings = getSharedPreferences(getResources().getString(R.string.shared_preferences), 0);
+
         if (settings.getBoolean("first_time_health", true)) {
             startActivity(new Intent(HealthActivity.this, HealthForm.class));
         }
+
 
         barChart = findViewById(R.id.barchart);
         labels = new String[7];
@@ -660,6 +663,7 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         barChart.getXAxis().setDrawGridLinesBehindData(false);
         barChart.getXAxis().setDrawGridLines(false);
         barChart.getXAxis().setTextSize(11);
+//        barChart.getXAxis().getTextColor(Color.)
 
         barChart.getAxisLeft().setEnabled(false);
         barChart.getAxisRight().setEnabled(false);
