@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -23,6 +24,8 @@ import com.google.android.material.timepicker.MaterialTimePicker;
 import com.mobilki.covidapp.R;
 import com.mobilki.covidapp.notification.NotificationHelper;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -36,6 +39,16 @@ public class EntertainmentNotificationsActivity extends AppCompatActivity{
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch enableVibrations;
     private Button apply;
+
+    private TextView day1;
+    private TextView day2;
+    private TextView day3;
+    private TextView day4;
+    private TextView day5;
+    private TextView day6;
+    private TextView day7;
+
+    ArrayList<Long> days;
 
     FirebaseFirestore mFirestore;
     FirebaseAuth mAuth;
@@ -78,6 +91,23 @@ public class EntertainmentNotificationsActivity extends AppCompatActivity{
         enableVibrations = findViewById(R.id.enableVibrs);
         apply = findViewById(R.id.applyEntertainmentNotifications);
 
+        day1 = findViewById(R.id.buttonEntertainmentDay1);
+        day2 = findViewById(R.id.buttonEntertainmentDay2);
+        day3 = findViewById(R.id.buttonEntertainmentDay3);
+        day4 = findViewById(R.id.buttonEntertainmentDay4);
+        day5 = findViewById(R.id.buttonEntertainmentDay5);
+        day6 = findViewById(R.id.buttonEntertainmentDay6);
+        day7 = findViewById(R.id.buttonEntertainmentDay7);
+        days = new ArrayList<>();
+
+        setClickDayBtn(day1, days, 2);
+        setClickDayBtn(day2, days, 3);
+        setClickDayBtn(day3, days, 4);
+        setClickDayBtn(day4, days, 5);
+        setClickDayBtn(day5, days, 6);
+        setClickDayBtn(day6, days, 7);
+        setClickDayBtn(day7, days, 1);
+
 
         collectionReference.document("entertainmentNotifications").get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot != null) {
@@ -88,6 +118,11 @@ public class EntertainmentNotificationsActivity extends AppCompatActivity{
                     hourPicker = (Optional.ofNullable(documentSnapshot.getLong("hour")).orElse(19L).intValue());
                     minutePicker = (Optional.ofNullable(documentSnapshot.getLong("minute")).orElse(30L).intValue());
                     chooseTimeBtn.setText(hourPicker + ":" + minutePicker);
+                    if (documentSnapshot.contains("list")) {
+                        ArrayList<Long> tmp = (ArrayList<Long>) (documentSnapshot.get("list"));
+                        days.addAll(tmp);
+                        changeAppearanceBtn(days, "water");
+                    }
                 }
             }
         });
@@ -107,6 +142,33 @@ public class EntertainmentNotificationsActivity extends AppCompatActivity{
             startActivity(intent);
         });
 
+    }
+
+    private void setClickDayBtn(TextView dayBtn, ArrayList<Long> list, long day) {
+        dayBtn.setOnClickListener(view -> {
+            if (list.contains(day)) {
+                dayBtn.setTextAppearance(R.style.Widget_MaterialComponents_Button_OutlinedButton);
+                dayBtn.setBackgroundResource(R.drawable.button_not_pressed);
+                list.remove(day);
+            } else {
+                dayBtn.setTextAppearance(R.style.Widget_MaterialComponents_Button);
+                dayBtn.setBackgroundResource(R.drawable.button_pressed);
+                list.add(day);
+            }
+            int a;
+        });
+    }
+
+    private void changeAppearanceBtn(ArrayList<Long> days, String str) {
+        ArrayList<TextView> entertainments =
+                new ArrayList<>(Arrays.asList(day7, day1, day2, day3, day4, day5, day6));
+        long i = 1;
+        for (TextView text: entertainments) {
+            text.setTextAppearance(days.contains(i) ? R.style.Widget_MaterialComponents_Button
+                    : R.style.Widget_MaterialComponents_Button_OutlinedButton);
+            text.setBackgroundResource(days.contains(i) ? R.drawable.button_pressed : R.drawable.button_not_pressed);
+            i++;
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -138,7 +200,11 @@ public class EntertainmentNotificationsActivity extends AppCompatActivity{
             notifications.put("enableSound", enableSound.isChecked());
             notifications.put("hour", hourPicker);
             notifications.put("minute", minutePicker);
-            NotificationHelper.setNotification(getApplicationContext(), hourPicker, minutePicker, "Notyfikacja o rozrywce", "Weź coś obejrz", enableSound.isChecked(), enableVibrations.isChecked());
+            notifications.put("list", days);
+            for (Long day: days) {
+                NotificationHelper.setNotification(getApplicationContext(), hourPicker, minutePicker, getResources().getString(R.string.notification_entertainment_title),
+                        getResources().getString(R.string.notification_entertainment_body), enableSound.isChecked(), enableVibrations.isChecked(), day);
+            }
         }
         documentReference.set(notifications).addOnSuccessListener(x -> Toast.makeText(this, "Settings saved", Toast.LENGTH_SHORT).show());
     }

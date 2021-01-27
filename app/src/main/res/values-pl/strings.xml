@@ -154,4 +154,8 @@
     <string name="policja">POLICJA</string>
     <string name="infolinia_glownego_inspektoratu_sanitarnego">INFOLINIA głównego inspektoratu sanitarnego</string>
     <string name="_112">112</string>
+    <string name="hello">"Cześć, "</string>
+    <string name="hello_unknown">Cześć, nieznajomy</string>
+    <string name="notification_entertainment_title">Czas na relaks!</string>
+    <string name="notification_entertainment_body">Obejrzymy coś?</string>
 </resources>

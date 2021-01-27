@@ -169,4 +169,8 @@
     <string name="number_998" translatable="false">tel:998</string>
     <string name="number_997" translatable="false">tel:997</string>
     <string name="number_sanepid" translatable="false">tel:222500115</string>
+    <string name="hello">"Hello, "</string>
+    <string name="hello_unknown">Hello, unknown</string>
+    <string name="notification_entertainment_title">Chill time!</string>
+    <string name="notification_entertainment_body">Shall we watch something?</string>
 </resources>
