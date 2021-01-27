@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="50dp">
+
+
+        <Button
+            android:id="@+id/button112"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="25dp"
+            android:text="@string/_112" />
+
+        <Button
+            android:id="@+id/button999"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="25dp"
+            android:text="@string/pogotowie_ratunkowe" />
+
+        <Button
+            android:id="@+id/button998"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="25dp"
+            android:text="@string/straz_pozarna" />
+
+        <Button
+            android:id="@+id/button997"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="25dp"
+            android:text="@string/policja" />
+
+        <Button
+            android:id="@+id/buttonSanepid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="25dp"
+            android:text="@string/infolinia_glownego_inspektoratu_sanitarnego" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
