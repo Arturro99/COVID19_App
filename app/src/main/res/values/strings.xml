@@ -159,6 +159,16 @@
     <string name="friday">FRI</string>
     <string name="saturday">SAT</string>
     <string name="sunday">SUN</string>
+    <string name="_112">911</string>
+    <string name="pogotowie_ratunkowe">Emergency medical services</string>
+    <string name="straz_pozarna">Fire department</string>
+    <string name="policja">Police</string>
+    <string name="infolinia_glownego_inspektoratu_sanitarnego">Sanitary-epidemiological station hotline</string>
+    <string name="number_112" translatable="false">tel:112</string>
+    <string name="number_999" translatable="false">tel:999</string>
+    <string name="number_998" translatable="false">tel:998</string>
+    <string name="number_997" translatable="false">tel:997</string>
+    <string name="number_sanepid" translatable="false">tel:222500115</string>
     <string name="hello">"Hello, "</string>
     <string name="hello_unknown">Hello, unknown</string>
     <string name="notification_entertainment_title">Chill time!</string>

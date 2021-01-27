@@ -42,6 +42,7 @@
         <activity android:name=".entertainment.EntertainmentSettingsActivity" />
         <activity android:name=".entertainment.FilmDetailsActivity" />
         <activity android:name=".entertainment.EntertainmentActivity" />
+        <activity android:name=".EmergencyNumber" />
         <activity android:name=".health.HealthActivity" />
         <activity android:name=".health.ExerciseSet" />
         <activity
