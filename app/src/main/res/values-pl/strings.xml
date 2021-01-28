@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CovidApp</string>
+    <string name="app_name">Fit and fun</string>
     <!--SharedPreferences-->
     <string name="shared_preferences">CovidAppPref</string>
 

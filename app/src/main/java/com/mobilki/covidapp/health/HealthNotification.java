@@ -93,50 +93,16 @@ public class HealthNotification extends AppCompatActivity implements TimePickerD
         setTheme(!settings.getBoolean("darkModeOn", false) ? R.style.LightTheme : R.style.DarkTheme);
         setContentView(R.layout.activity_notification_health);
 
-        mFirestore = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
-        collectionReference = mFirestore
-                .collection("users").document(mUser.getUid())
-                .collection("settings");
-
-        enableNotiExercises = findViewById(R.id.enableNotiExercises);
-        enableNotiWater = findViewById(R.id.enableNotiWater);
-
-        timePickerWater = findViewById(R.id.setTimeWaterBtn);
-        timePickerExer = findViewById(R.id.setTimeExercBtn);
-
-        setWaterNoti = findViewById(R.id.setWaterNoti);
-        setExerNoti = findViewById(R.id.setNotiExer);
+        initFirestore();
+        findElements();
+        setupData();
+        initNotifications();
 
 
-        collectionReference.document("waterNotifications").get().addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot != null) {
-                enableNotiWater.setChecked(Optional.ofNullable(documentSnapshot.getBoolean("enableNotifications")).orElse(false));
-                hourWater = (Optional.ofNullable(documentSnapshot.getLong("hour")).orElse(19L).intValue());
-                minuteWater = (Optional.ofNullable(documentSnapshot.getLong("minute")).orElse(30L).intValue());
-                if (documentSnapshot.contains("list")) {
-                    ArrayList<Long> tmp = (ArrayList<Long>) (documentSnapshot.get("list"));
-                    waterDays.addAll(tmp);
-                    changeAppearanceBtn(waterDays, "water");
-                }
-                timePickerWater.setText(hourWater + ":" + minuteWater);
-            }
-        });
+        start();
+    }
 
-        collectionReference.document("exerciseNotifications").get().addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot != null) {
-                enableNotiExercises.setChecked(Optional.ofNullable(documentSnapshot.getBoolean("enableNotifications")).orElse(false));
-                hourExer = (Optional.ofNullable(documentSnapshot.getLong("hour")).orElse(19L).intValue());
-                minuteExer = (Optional.ofNullable(documentSnapshot.getLong("minute")).orElse(30L).intValue());
-                if (documentSnapshot.contains("list")) {
-                    ArrayList<Long> tmp2 = (ArrayList<Long>)(documentSnapshot.get("list"));
-                    exerciseDays.addAll(tmp2);
-                    changeAppearanceBtn(exerciseDays, "exercise");
-                }
-                timePickerExer.setText(hourExer + ":" + minuteExer);
-            }
-        });
+    private void initNotifications() {
 
         linearLayoutWater = findViewById(R.id.linearLayoutWater);
         linearLayoutWater.setVisibility(enableNotiWater.isChecked()? View.VISIBLE : View.INVISIBLE);
@@ -182,9 +148,59 @@ public class HealthNotification extends AppCompatActivity implements TimePickerD
         setClickDayBtn(buttonExerciseDay5, exerciseDays, 6);
         setClickDayBtn(buttonExerciseDay6, exerciseDays, 7);
         setClickDayBtn(buttonExerciseDay7, exerciseDays, 1);
-
-        start();
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void setupData() {
+        collectionReference.document("waterNotifications").get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot != null) {
+                enableNotiWater.setChecked(Optional.ofNullable(documentSnapshot.getBoolean("enableNotifications")).orElse(false));
+                hourWater = (Optional.ofNullable(documentSnapshot.getLong("hour")).orElse(19L).intValue());
+                minuteWater = (Optional.ofNullable(documentSnapshot.getLong("minute")).orElse(30L).intValue());
+                if (documentSnapshot.contains("list")) {
+                    ArrayList<Long> tmp = (ArrayList<Long>) (documentSnapshot.get("list"));
+                    waterDays.addAll(tmp);
+                    changeAppearanceBtn(waterDays, "water");
+                }
+                timePickerWater.setText(hourWater + ":" + minuteWater);
+            }
+        });
+
+        collectionReference.document("exerciseNotifications").get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot != null) {
+                enableNotiExercises.setChecked(Optional.ofNullable(documentSnapshot.getBoolean("enableNotifications")).orElse(false));
+                hourExer = (Optional.ofNullable(documentSnapshot.getLong("hour")).orElse(19L).intValue());
+                minuteExer = (Optional.ofNullable(documentSnapshot.getLong("minute")).orElse(30L).intValue());
+                if (documentSnapshot.contains("list")) {
+                    ArrayList<Long> tmp2 = (ArrayList<Long>)(documentSnapshot.get("list"));
+                    exerciseDays.addAll(tmp2);
+                    changeAppearanceBtn(exerciseDays, "exercise");
+                }
+                timePickerExer.setText(hourExer + ":" + minuteExer);
+            }
+        });
+    }
+
+    private void findElements() {
+        enableNotiExercises = findViewById(R.id.enableNotiExercises);
+        enableNotiWater = findViewById(R.id.enableNotiWater);
+
+        timePickerWater = findViewById(R.id.setTimeWaterBtn);
+        timePickerExer = findViewById(R.id.setTimeExercBtn);
+
+        setWaterNoti = findViewById(R.id.setWaterNoti);
+        setExerNoti = findViewById(R.id.setNotiExer);
+    }
+
+    private void initFirestore() {
+        mFirestore = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        collectionReference = mFirestore
+                .collection("users").document(mUser.getUid())
+                .collection("settings");
+    }
+
 
     private void setClickDayBtn(TextView dayBtn, ArrayList<Long> list, long day) {
         dayBtn.setOnClickListener(view -> {

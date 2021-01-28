@@ -2,7 +2,6 @@ package com.mobilki.covidapp.health;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -13,7 +12,6 @@ public class ExercisesRepository {
     FirebaseFirestore mFirestore;
     FirebaseAuth mAuth;
     FirebaseUser mUser;
-    CollectionReference collectionReference;
     private List<Exercise> exercisesUpper = new ArrayList<>();
     private List<Exercise> exercisesLower = new ArrayList<>();
     private List<Exercise> exercisesCondition = new ArrayList<>();
@@ -111,12 +109,6 @@ public class ExercisesRepository {
             String repsAndTitle = reps + " x " + tmp.getName_en();
             tmpExet = new ExerciseToApp(repsAndTitle, tmp.getYt(), tmp.getDescription_en());
         }
-
-
-
-
-
-
         return tmpExet;
     }
 }

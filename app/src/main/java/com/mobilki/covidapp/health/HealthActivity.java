@@ -39,7 +39,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.mobilki.covidapp.R;
-import com.mobilki.covidapp.api.repository.ExerciseRepository;
 import com.mobilki.covidapp.pickers.DatePickerFragment;
 
 import java.text.ParseException;
@@ -74,7 +73,6 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     String[] labels;
     Hashtable<Integer, Integer> dict = new Hashtable<Integer, Integer>();
 
-    ExerciseRepository exerciseRepository;
     BottomNavigationView bottomNavigationView;
 
     EditText numberStepsSet;
@@ -148,36 +146,46 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_health_new);
 
-//        exerciseSetBtn = findViewById(R.id.exerciseSetBtn);
-//        addDataBtn = findViewById(R.id.addDataBtn);
-//        notificationsSettingsBtn = findViewById(R.id.healthNotificationsSettingsBtn);
-//        preferencesBtn = findViewById(R.id.healthPreferencesBtn);
-
-
-
         if (settings.getBoolean("first_time_health", true)) {
             startActivity(new Intent(HealthActivity.this, HealthForm.class));
         }
-
-
-        barChart = findViewById(R.id.barchart);
-        labels = new String[7];
-        InitBarChart();
-        weightEntries = new ArrayList<>();
-        stepsEntries = new ArrayList<>();
-        sleepEntries = new ArrayList<>();
-        waterEntries = new ArrayList<>();
-        entries = new ArrayList<>();
-        healthBarChartTitle = findViewById(R.id.healthBarChartTitle);
-
-        dict.put(0, R.string.steps_title_barchart);
-        dict.put(1, R.string.weight_title_barchart);
-        dict.put(2, R.string.sleep_title_barchart);
-        dict.put(3, R.string.water_title_barchart);
-        exerciseRepository = new ExerciseRepository();
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
-        gestureDetector = new GestureDetector(this);
         start();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void start() {
+        initBarchartVariables();
+        gestureDetector = new GestureDetector(this);
+        initBottomNav();
+        setEntries();
+        initAddData();
+        initBtns();
+        initFireStore();
+        getExercisesFromDB();
+    }
+
+    private void initFireStore() {
+        mFirestore = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        collectionReference = mFirestore
+                .collection("exercises");
+        repo = new ExercisesRepository();
+        repo.getSettings();
+    }
+
+    private void initBtns() {
+        notificationBtn = findViewById(R.id.notificationBtnHealth);
+        notificationBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, HealthNotification.class)));
+
+        settingsBtn = findViewById(R.id.settingBtnHealth);
+        settingsBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, HealthForm.class)));
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void initBottomNav() {
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             int itemId = item.getItemId();
@@ -197,29 +205,24 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
 
             return true;
         });
-
-
-
-        notificationBtn = findViewById(R.id.notificationBtnHealth);
-
-        notificationBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, HealthNotification.class)));
-
-        settingsBtn = findViewById(R.id.settingBtnHealth);
-
-        settingsBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, HealthForm.class)));
-
-        mFirestore = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
-        collectionReference = mFirestore
-                .collection("exercises");
-        repo = new ExercisesRepository();
-        repo.getSettings();
-        getExercisesFromDB();
-
     }
 
+    private void initBarchartVariables() {
+        barChart = findViewById(R.id.barchart);
+        labels = new String[7];
+        InitBarChart();
+        weightEntries = new ArrayList<>();
+        stepsEntries = new ArrayList<>();
+        sleepEntries = new ArrayList<>();
+        waterEntries = new ArrayList<>();
+        entries = new ArrayList<>();
+        healthBarChartTitle = findViewById(R.id.healthBarChartTitle);
 
+        dict.put(0, R.string.steps_title_barchart);
+        dict.put(1, R.string.weight_title_barchart);
+        dict.put(2, R.string.sleep_title_barchart);
+        dict.put(3, R.string.water_title_barchart);
+    }
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -298,9 +301,6 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         exerciseArrow5 = findViewById(R.id.exercise5Arrow);
         exerciseArrow6 = findViewById(R.id.exercise6Arrow);
 
-
-
-
         showDescription(exerciseTitle1, exerciseDescription1, exerciseArrow1);
         showDescription(exerciseTitle2, exerciseDescription2, exerciseArrow2);
         showDescription(exerciseTitle3, exerciseDescription3, exerciseArrow3);
@@ -337,103 +337,6 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
             startActivity(intent);
         });
     }
-
-    //adding exercises to db
-//    private void addExercises() {
-//
-//
-//
-//
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        Random rand = new Random();
-//        for (int i = 0; i< 50; i++) {
-//
-//            List<Boolean> good = new ArrayList<>();
-//            for (int j =0; j<6; j++) {
-//                good.add(false);
-//            }
-//            for (int j =0; j<2; j++) {
-//                int r = rand.nextInt(5);
-//                good.set(r, true);
-//            }
-//            String name = i + "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eget leo vehicula lorem placerat tincidunt. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc mattis tellus et vehicula lobortis. Vestibulum malesuada dolor dolor, vel lacinia nisl convallis non. Nunc elit ante, pretium quis scelerisque ac, congue at augue. Suspendisse semper imperdiet aliquet. Praesent bibendum tortor accumsan, interdum nisi dignissim, condimentum diam.";
-//            String finalName = name;
-//            int finalI = i;
-//            db.collection("exercises").document("upper "+ i).set(new HashMap<String, Object>()
-//            {
-//                {
-//                    put("type", "UPPER");
-//                    put("goodShoulders", good.get(0));
-//                    put("goodBack", good.get(1));
-//                    put("goodWrists", good.get(2));
-//                    put("goodKnees", good.get(3));
-//                    put("goodElbows", good.get(4));
-//                    put("goodHip", good.get(5));
-//                    put("name_pl", "pl upper" + finalI);
-//                    put("name_en", "en upper" + finalI);
-//                    put("minReps", rand.nextInt(10));
-//                    put("maxReps", rand.nextInt(20)+10);
-//                    put("description_pl", "pl_des upper" + finalName);
-//                    put("description_en", "en_des upper" + finalName);
-//                    put("yt", "uxPdPpi5W4o");
-//                }
-//            });
-//            db.collection("exercises").document("lower "+ i).set(new HashMap<String, Object>()
-//            {
-//                {
-//                    put("type", "LOWER");
-//                    put("goodShoulders", good.get(0));
-//                    put("goodBack", good.get(1));
-//                    put("goodWrists", good.get(2));
-//                    put("goodKnees", good.get(3));
-//                    put("goodElbows", good.get(4));
-//                    put("goodHip", good.get(5));
-//                    put("name_pl", "pl lower" + finalI);
-//                    put("name_en", "en lower" + finalI);
-//                    put("minReps", rand.nextInt(10));
-//                    put("maxReps", rand.nextInt(20)+10);
-//                    put("description_pl", "pl_des lower" + finalName);
-//                    put("description_en", "en_des lower" + finalName);
-//                    put("yt", "uxPdPpi5W4o");
-//                }
-//            });
-//            db.collection("exercises").document("condition "+ i).set(new HashMap<String, Object>()
-//            {
-//                {
-//                    put("type", "CONDITION");
-//                    put("goodShoulders", good.get(0));
-//                    put("goodBack", good.get(1));
-//                    put("goodWrists", good.get(2));
-//                    put("goodKnees", good.get(3));
-//                    put("goodElbows", good.get(4));
-//                    put("goodHip", good.get(5));
-//                    put("name_pl", "pl condition" + finalI);
-//                    put("name_en", "en condition" + finalI);
-//                    put("minReps", rand.nextInt(10));
-//                    put("maxReps", rand.nextInt(20)+10);
-//                    put("description_pl", "pl_des condition" + finalName);
-//                    put("description_en", "en_des condition" + finalName);
-//                    put("yt", "uxPdPpi5W4o");
-//                }
-//            });
-//
-//
-//        }
-//    }
-
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void start() {
-        //exerciseSetBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, ExerciseSet.class)));
-        //ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(HealthActivity.this, findViewById(R.id.textView3), HealthDataActivity.VIEW_NAME_HEADER_TITLE);
-        //addDataBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, HealthDataActivity.class)));
-        //notificationsSettingsBtn.setOnClickListener(view -> startActivity(new Intent(HealthActivity.this, HealthNotification.class)));
-        setEntries();
-        //fetchExercises();
-        initAddData();
-
-    }
-
 
 
     private void initAddData() {
@@ -644,15 +547,8 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         Legend legend = barChart.getLegend();
         legend.setEnabled(false);
 
-        //ustawienie opisu
-//        Description description = barChart.getDescription();
-//        description.setText("Liczba kroków");
-//        description.setPosition(0, 0);
-
         barDataSet.setBarBorderColor(Color.RED);
         barDataSet.setBarBorderWidth(1);
-//        barDataSet.setLabel("Liczba kroków");
-//        barDataSet.setHighLightColor(Color.BLACK);
         barDataSet.setFormSize(2);
 
         barChart.setFitBars(true);
@@ -683,40 +579,6 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         gestureDetector.onTouchEvent(event);
         return super.onTouchEvent(event);
     }
-
-
-//    @RequiresApi(api = Build.VERSION_CODES.N)
-//    public void fetchExercises() {
-//
-//        FirebaseFirestore.getInstance().collection("exercises").get().addOnCompleteListener(task -> {
-//            Log.d("TAG", "fetchExercisesFromDataBase: ");
-//            if (task.isSuccessful()) {
-//
-//                for (QueryDocumentSnapshot doc : task.getResult()) {
-//                    CollectionReference collectionReference = doc.getReference().collection("normal");
-//                    Task<QuerySnapshot> querySnapshotTask =  collectionReference.get();
-//                    querySnapshotTask.addOnSuccessListener(document -> {
-//                        for (DocumentSnapshot normalDoc : document.getDocuments()) {
-//                            Exercise exercises = normalDoc.toObject(Exercise.class);
-//                            ExerciseRepository.add(doc.getId(), "normal", exercises);
-//                        }
-//                    });
-//                    CollectionReference collectionReference2 = doc.getReference().collection("stretching");
-//                    Task<QuerySnapshot> querySnapshotTask2 =  collectionReference2.get();
-//                    querySnapshotTask2.addOnSuccessListener(document -> {
-//                        for (DocumentSnapshot normalDoc : document.getDocuments()) {
-//                            Exercise exercises = normalDoc.toObject(Exercise.class);
-//                            ExerciseRepository.add(doc.getId(), "stretching", exercises);
-//                        }
-//                    });
-//                    Log.d("TAG", "fetchExercisesFromDataBase:");
-//                }
-//            } else {
-//                Log.d("ERR", "Cannot import exercises from db");
-//            }
-//
-//        });
-//    }
 
 
     @Override
