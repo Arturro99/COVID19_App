@@ -1,6 +1,7 @@
 package com.mobilki.covidapp.health;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -19,6 +20,8 @@ public class PlayerYT extends YouTubeBaseActivity  {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences settings = getSharedPreferences(getResources().getString(R.string.shared_preferences), 0);
+        setTheme(!settings.getBoolean("darkModeOn", false) ? R.style.LightTheme : R.style.DarkTheme);
         setContentView(R.layout.youtube_activity);
         KEY = getString(R.string.ytKey);
         intent = getIntent();

@@ -23,20 +23,8 @@
         <activity android:name=".entertainment.EntertainmentNotificationsActivity" />
         <activity android:name=".health.HealthNotification" />
         <activity android:name=".health.PlayerYT" />
-        <activity android:name=".authentication.Login">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity>
-        <activity android:name=".authentication.Register">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity>
+        <activity android:name=".authentication.Login"/>
+        <activity android:name=".authentication.Register"/>
         <activity android:name=".entertainment.GameDetailsActivity" />
         <activity android:name=".entertainment.BookDetailsActivity" />
         <activity android:name=".entertainment.EntertainmentSettingsActivity" />
@@ -44,22 +32,14 @@
         <activity android:name=".entertainment.EntertainmentActivity" />
         <activity android:name=".EmergencyNumber" />
         <activity android:name=".health.HealthActivity" />
-        <activity android:name=".health.ExerciseSet" />
-        <activity
-            android:name=".MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".health.HealthForm">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity><!--android:theme="@style/AppTheme.CustomTheme"-->
+        <activity android:name=".health.HealthForm"/>
         <receiver android:name=".notification.NotificationReceiver" />
         <meta-data
             android:name="preloaded_fonts"
