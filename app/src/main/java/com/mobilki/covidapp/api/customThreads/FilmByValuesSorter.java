@@ -10,10 +10,10 @@ import com.mobilki.covidapp.api.ImdbApi;
 import lombok.SneakyThrows;
 
 public class FilmByValuesSorter extends Thread{
-    private ImdbApi imdbApi;
-    private FilmSortingType type;
-    private int numberOfFilms;
-    private String locale;
+    private final ImdbApi imdbApi;
+    private final FilmSortingType type;
+    private final int numberOfFilms;
+    private final String locale;
 
     public FilmByValuesSorter(ImdbApi imdbApi, FilmSortingType type, int numberOfFilms, String locale) {
         this.imdbApi = imdbApi;

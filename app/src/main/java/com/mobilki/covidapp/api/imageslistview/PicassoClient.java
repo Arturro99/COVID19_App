@@ -1,6 +1,5 @@
 package com.mobilki.covidapp.api.imageslistview;
 
-import android.content.Context;
 import android.widget.ImageView;
 
 import com.mobilki.covidapp.R;

@@ -121,7 +121,7 @@ public class EntertainmentNotificationsActivity extends AppCompatActivity{
                     if (documentSnapshot.contains("list")) {
                         ArrayList<Long> tmp = (ArrayList<Long>) (documentSnapshot.get("list"));
                         days.addAll(tmp);
-                        changeAppearanceBtn(days, "water");
+                        changeAppearanceBtn(days);
                     }
                 }
             }
@@ -159,7 +159,7 @@ public class EntertainmentNotificationsActivity extends AppCompatActivity{
         });
     }
 
-    private void changeAppearanceBtn(ArrayList<Long> days, String str) {
+    private void changeAppearanceBtn(ArrayList<Long> days) {
         ArrayList<TextView> entertainments =
                 new ArrayList<>(Arrays.asList(day7, day1, day2, day3, day4, day5, day6));
         long i = 1;

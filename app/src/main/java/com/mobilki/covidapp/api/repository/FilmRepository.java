@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FilmRepository implements Repository<Film> {
-    private List<Film> films = new ArrayList<>();
+    private final List<Film> films = new ArrayList<>();
 
     @Override
     public synchronized Film get(String id) {

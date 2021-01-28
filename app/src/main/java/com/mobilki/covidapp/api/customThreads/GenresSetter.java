@@ -6,7 +6,7 @@ import lombok.SneakyThrows;
 
 public class GenresSetter extends Thread {
 
-    private ImdbApi imdbApi;
+    private final ImdbApi imdbApi;
 
     public GenresSetter(ImdbApi imdbApi) {
         this.imdbApi = imdbApi;

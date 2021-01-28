@@ -24,7 +24,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class GoogleBooksApi {
-    private final String imgFirstPartUrl = "https://www.googleapis.com/books/v1";
 
     private final OkHttpClient client = new OkHttpClient();
 
@@ -33,6 +32,7 @@ public class GoogleBooksApi {
     private final BookRepository bookRepository = new BookRepository();
 
     public void getByGenre(String genre, int bookDigit, String language) throws InterruptedException {
+        String imgFirstPartUrl = "https://www.googleapis.com/books/v1";
         Request request = new Request.Builder()
                 .url(imgFirstPartUrl + "/volumes?q=subject:" + genre + "&langRestrict=" + language)
                 .get()

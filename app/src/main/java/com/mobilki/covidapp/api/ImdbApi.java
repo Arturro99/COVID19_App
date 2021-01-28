@@ -6,8 +6,6 @@ import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +19,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import com.mobilki.covidapp.BuildConfig;
 import com.mobilki.covidapp.api.model.Actor;
 import com.mobilki.covidapp.api.model.Film;
 import com.mobilki.covidapp.api.repository.FilmGenresRepository;
@@ -33,14 +32,13 @@ import org.json.JSONObject;
 
 public class ImdbApi implements EntertainmentDatabaseApi<Film, FilmSortingType> {
 
-        private final String key = "c13cb8428b25d1e30290182db543602c";
-    private final String host = "imdb8.p.rapidapi.com";
+        private final String key = BuildConfig.imdbAPIkey;
     private final String imgFirstPartUrl = "https://image.tmdb.org/t/p/w500";
     private final OkHttpClient client = new OkHttpClient();
 
     private String jsonString;
     private static JSONObject jsonObject;
-    private FilmRepository filmRepository = new FilmRepository();
+    private final FilmRepository filmRepository = new FilmRepository();
 
     @Override
     public void getSortedByValues(FilmSortingType type, int number, String locale) throws InterruptedException {

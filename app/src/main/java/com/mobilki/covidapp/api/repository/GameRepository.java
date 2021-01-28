@@ -4,7 +4,6 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.mobilki.covidapp.api.model.Book;
 import com.mobilki.covidapp.api.model.Game;
 
 import java.util.ArrayList;

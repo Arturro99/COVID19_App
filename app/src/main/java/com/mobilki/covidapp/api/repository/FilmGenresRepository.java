@@ -3,7 +3,7 @@ package com.mobilki.covidapp.api.repository;
 import java.util.HashMap;
 
 public class FilmGenresRepository {
-    private static HashMap<Integer, String> genres = new HashMap<>();
+    private static final HashMap<Integer, String> genres = new HashMap<>();
 
     public static void addGenre(int id, String name) {
         genres.put(id, name);

@@ -2,7 +2,6 @@ package com.mobilki.covidapp.api.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import lombok.Data;

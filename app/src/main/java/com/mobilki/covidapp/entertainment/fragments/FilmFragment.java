@@ -99,7 +99,6 @@ public class FilmFragment extends Fragment implements FragmentEntity{
         int filmReleaseYearTxtInitiateId = 2500;
         int filmPhotoInitiateId = 3000;
         int filmDirectorInitiateId = 4000;
-        int filmDirectorTxtInitiateId = 4500;
         int filmDurationInitiateId = 5000;
         int filmDurationTxtInitiateId = 5500;
         int filmRatingInitiateId = 6000;
@@ -126,8 +125,6 @@ public class FilmFragment extends Fragment implements FragmentEntity{
             filmGenresTxtList[i].setId(filmGenresTxtInitiateId + i);
             filmDirectorList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
             filmDirectorList[i].setId(filmDirectorInitiateId + i);
-//            filmDirectorTxtList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
-//            filmDirectorTxtList[i].setId(filmDirectorTxtInitiateId + i);
             filmRatingList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
             filmRatingList[i].setId(filmRatingInitiateId + i);
             filmRatingTxtList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
@@ -159,7 +156,6 @@ public class FilmFragment extends Fragment implements FragmentEntity{
             DisplayMetrics displayMetrics = new DisplayMetrics();
             ((Activity)getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             int width = displayMetrics.widthPixels;
-            int height = displayMetrics.heightPixels;
 
             filmConstraintLayoutList[i].setMinWidth(width*5/6);
             ConstraintSet constraintSet = new ConstraintSet();
@@ -169,7 +165,6 @@ public class FilmFragment extends Fragment implements FragmentEntity{
             constraintSet.connect(filmPhotosList[i].getId(), ConstraintSet.START, filmConstraintLayoutList[i].getId(), ConstraintSet.START);
             constraintSet.connect(filmPhotosList[i].getId(), ConstraintSet.TOP, filmDirectorList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.connect(filmPhotosList[i].getId(), ConstraintSet.BOTTOM, filmConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
-//            constraintSet.setMargin(filmPhotosList[i].getId(), ConstraintSet.TOP, 5);
             constraintSet.setVerticalBias(filmPhotosList[i].getId(), 0.1f);
 
             //TITLE
@@ -180,13 +175,6 @@ public class FilmFragment extends Fragment implements FragmentEntity{
             constraintSet.setVerticalBias(filmTitleList[i].getId(), 0.05f);
             filmTitleList[i].setTextSize(15);
             filmTitleList[i].setTypeface(Typeface.DEFAULT_BOLD);
-
-            //DIRECTOR TXT
-//            constraintSet.connect(filmDirectorTxtList[i].getId(), ConstraintSet.BOTTOM, filmConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
-//            constraintSet.connect(filmDirectorTxtList[i].getId(), ConstraintSet.END, filmConstraintLayoutList[i].getId(), ConstraintSet.END);
-//            constraintSet.connect(filmDirectorTxtList[i].getId(), ConstraintSet.START, filmPhotosList[i].getId(), ConstraintSet.END);
-//            constraintSet.connect(filmDirectorTxtList[i].getId(), ConstraintSet.TOP, filmPhotosList[i].getId(), ConstraintSet.TOP);
-//            constraintSet.setVerticalBias(filmDirectorTxtList[i].getId(), 0.15f);
 
             //DIRECTOR
             constraintSet.connect(filmDirectorList[i].getId(), ConstraintSet.BOTTOM, filmConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
@@ -201,7 +189,6 @@ public class FilmFragment extends Fragment implements FragmentEntity{
             constraintSet.connect(filmRatingTxtList[i].getId(), ConstraintSet.TOP, filmPhotosList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.setHorizontalBias(filmRatingTxtList[i].getId(), 0.2f);
             constraintSet.setVerticalBias(filmRatingTxtList[i].getId(), 0.2f);
-            //constraintSet.setMargin(filmRatingTxtList[i].getId(), ConstraintSet.TOP, 5);
 
             //RATINGS
             constraintSet.connect(filmRatingList[i].getId(), ConstraintSet.END, filmConstraintLayoutList[i].getId(), ConstraintSet.END);
@@ -209,28 +196,24 @@ public class FilmFragment extends Fragment implements FragmentEntity{
             constraintSet.connect(filmRatingList[i].getId(), ConstraintSet.TOP, filmPhotosList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.setHorizontalBias(filmRatingList[i].getId(), 0.7f);
             constraintSet.setVerticalBias(filmRatingList[i].getId(), 0.2f);
-            //constraintSet.setMargin(filmRatingList[i].getId(), ConstraintSet.TOP, 5);
 
             //RELEASE YEAR TXT
             constraintSet.connect(filmReleaseYearTxtList[i].getId(), ConstraintSet.END, filmConstraintLayoutList[i].getId(), ConstraintSet.END);
             constraintSet.connect(filmReleaseYearTxtList[i].getId(), ConstraintSet.START, filmConstraintLayoutList[i].getId(), ConstraintSet.START);
             constraintSet.connect(filmReleaseYearTxtList[i].getId(), ConstraintSet.TOP, filmRatingTxtList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.setHorizontalBias(filmReleaseYearTxtList[i].getId(), 0.2f);
-           // constraintSet.setMargin(filmReleaseYearTxtList[i].getId(), ConstraintSet.TOP, 5);
 
             //RELEASE YEAR
             constraintSet.connect(filmReleaseYearList[i].getId(), ConstraintSet.END, filmConstraintLayoutList[i].getId(), ConstraintSet.END);
             constraintSet.connect(filmReleaseYearList[i].getId(), ConstraintSet.START, filmConstraintLayoutList[i].getId(), ConstraintSet.START);
             constraintSet.connect(filmReleaseYearList[i].getId(), ConstraintSet.TOP, filmRatingList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.setHorizontalBias(filmReleaseYearList[i].getId(), 0.7f);
-          //  constraintSet.setMargin(filmReleaseYearList[i].getId(), ConstraintSet.TOP, 5);
 
             //DURATION TXT
             constraintSet.connect(filmDurationTxtList[i].getId(), ConstraintSet.END, filmConstraintLayoutList[i].getId(), ConstraintSet.END);
             constraintSet.connect(filmDurationTxtList[i].getId(), ConstraintSet.START, filmConstraintLayoutList[i].getId(), ConstraintSet.START);
             constraintSet.connect(filmDurationTxtList[i].getId(), ConstraintSet.TOP, filmReleaseYearTxtList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.setHorizontalBias(filmDurationTxtList[i].getId(), 0.2f);
-            //constraintSet.setMargin(filmDurationTxtList[i].getId(), ConstraintSet.TOP, 5);
             constraintSet.setMargin(filmDurationTxtList[i].getId(), ConstraintSet.BOTTOM, 5);
 
             //DURATION
@@ -238,7 +221,6 @@ public class FilmFragment extends Fragment implements FragmentEntity{
             constraintSet.connect(filmDurationList[i].getId(), ConstraintSet.START, filmConstraintLayoutList[i].getId(), ConstraintSet.START);
             constraintSet.connect(filmDurationList[i].getId(), ConstraintSet.TOP, filmReleaseYearList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.setHorizontalBias(filmDurationList[i].getId(), 0.7f);
-          //  constraintSet.setMargin(filmDurationList[i].getId(), ConstraintSet.TOP, 5);
             constraintSet.setMargin(filmDurationList[i].getId(), ConstraintSet.BOTTOM, 5);
 
             //GENRES TXT
@@ -277,7 +259,6 @@ public class FilmFragment extends Fragment implements FragmentEntity{
                     .replace("]", ""));
             Picasso.get().load(imdbApi.getAll().get(i).getImageUrl()).placeholder(R.drawable.placeholder).into(filmPhotosList[i]);
 
-//            filmDirectorTxtList[i].setText(R.string.director);
             filmRatingTxtList[i].setText(R.string.ratings);
             filmReleaseYearTxtList[i].setText(R.string.released);
             filmDurationTxtList[i].setText(R.string.duration);

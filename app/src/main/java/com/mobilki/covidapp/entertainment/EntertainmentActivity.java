@@ -235,7 +235,6 @@ public class EntertainmentActivity extends AppCompatActivity {
         fetchGames();
         bottomNavigationView.setSelectedItemId(R.id.filmPage);
         switchFragment(filmFragment, R.id.filmsLinearLayout);
-//        Log.d("TAG", "onNavigationItemSelected: FILM");
         setPhotosClickable(R.id.filmPage);
         mProgressBar.setVisibility(View.GONE);
     }

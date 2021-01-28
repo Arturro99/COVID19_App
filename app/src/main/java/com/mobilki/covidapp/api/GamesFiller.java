@@ -1,5 +1,6 @@
 package com.mobilki.covidapp.api;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -15,8 +16,9 @@ import static android.content.ContentValues.TAG;
 
 public class GamesFiller {
     static FirebaseAuth firebaseAuth;
+    @SuppressLint("StaticFieldLeak")
     static FirebaseFirestore firebaseFirestore;
-    static Game games[] = {
+    static Game[] games = {
             new Game(UUID.randomUUID(),
                     "Monopoly",
                     "Monopoly",

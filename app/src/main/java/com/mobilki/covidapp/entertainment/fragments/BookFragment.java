@@ -96,7 +96,6 @@ public class BookFragment extends Fragment implements FragmentEntity{
         int bookPublicationDateTxtInitiateId = 12500;
         int bookPhotoInitiateId = 13000;
         int bookAuthorInitiateId = 14000;
-        //int bookAuthorTxtInitiateId = 14500;
         int bookPagesInitiateId = 15000;
         int bookPagesTxtInitiateId = 15500;
         int bookRatingInitiateId = 16000;
@@ -126,8 +125,6 @@ public class BookFragment extends Fragment implements FragmentEntity{
             bookPublicationDateTxtList[i].setId(bookPublicationDateTxtInitiateId + i);
             bookAuthorList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
             bookAuthorList[i].setId(bookAuthorInitiateId + i);
-            //bookAuthorTxtList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
-            //bookAuthorTxtList[i].setId(bookAuthorTxtInitiateId + i);
             bookPagesList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
             bookPagesList[i].setId(bookPagesInitiateId + i);
             bookPagesTxtList[i] = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.text, null);
@@ -155,7 +152,6 @@ public class BookFragment extends Fragment implements FragmentEntity{
             DisplayMetrics displayMetrics = new DisplayMetrics();
             ((Activity)getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             int width = displayMetrics.widthPixels;
-            int height = displayMetrics.heightPixels;
 
             bookConstraintLayoutList[i].setMinWidth(width*5/6);
             ConstraintSet constraintSet = new ConstraintSet();
@@ -178,15 +174,6 @@ public class BookFragment extends Fragment implements FragmentEntity{
             constraintSet.setVerticalBias(bookTitleList[i].getId(), 0.01f);
             bookTitleList[i].setTextSize(15);
             bookTitleList[i].setTypeface(Typeface.DEFAULT_BOLD);
-
-
-            //AUTHOR TXT
-//            constraintSet.connect(bookAuthorTxtList[i].getId(), ConstraintSet.BOTTOM, bookConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
-//            constraintSet.connect(bookAuthorTxtList[i].getId(), ConstraintSet.END, bookConstraintLayoutList[i].getId(), ConstraintSet.END);
-//            constraintSet.connect(bookAuthorTxtList[i].getId(), ConstraintSet.START, bookPhotosList[i].getId(), ConstraintSet.END);
-//            constraintSet.connect(bookAuthorTxtList[i].getId(), ConstraintSet.TOP, bookPhotosList[i].getId(), ConstraintSet.TOP);
-//            constraintSet.setVerticalBias(bookAuthorTxtList[i].getId(), 0.15f);
-//            constraintSet.setHorizontalBias(bookAuthorTxtList[i].getId(), 0.1f);
 
             //AUTHOR
             constraintSet.connect(bookAuthorList[i].getId(), ConstraintSet.BOTTOM, bookConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
@@ -270,7 +257,6 @@ public class BookFragment extends Fragment implements FragmentEntity{
                     .replace("]", ""));
             Glide.with(this).load(googleBooksApi.getAll().get(i).getImageUrl()).placeholder(R.drawable.placeholder).into(bookPhotosList[i]);
 
-            //bookAuthorTxtList[i].setText(R.string.author);
             bookPublicationDateTxtList[i].setText(R.string.released);
             bookPagesTxtList[i].setText(R.string.pages);
             bookRatingTxtList[i].setText(R.string.ratings);
