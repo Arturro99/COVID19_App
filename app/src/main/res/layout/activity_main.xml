@@ -105,49 +105,54 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageButton
-        android:id="@+id/english"
-        android:layout_width="24pt"
-        android:layout_height="15pt"
-        android:background="@drawable/flag_britishjpg"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.05" />
 
     <ImageButton
         android:id="@+id/polish"
         android:layout_width="24pt"
         android:layout_height="15pt"
+        android:layout_marginStart="12dp"
         android:background="@drawable/flag_poland"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintVertical_bias="0.063" />
+
+    <ImageButton
+        android:id="@+id/english"
+        android:layout_width="24pt"
+        android:layout_height="15pt"
+        android:layout_marginStart="12dp"
+        android:background="@drawable/flag_britishjpg"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.064" />
 
     <ImageButton
         android:id="@+id/sun"
         android:layout_width="30pt"
         android:layout_height="25pt"
+        android:layout_marginEnd="12dp"
         android:background="@drawable/sun"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.05" />
-
 
     <ImageButton
         android:id="@+id/moon"
         android:layout_width="25pt"
         android:layout_height="25pt"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/moon"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.05" />
 
-<!--    <androidx.appcompat.widget.SwitchCompat-->
+    <!--    <androidx.appcompat.widget.SwitchCompat-->
 <!--        android:id="@+id/darkMode"-->
 <!--        android:layout_width="wrap_content"-->
 <!--        android:layout_height="wrap_content"-->

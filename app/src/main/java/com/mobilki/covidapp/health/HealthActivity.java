@@ -17,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -134,13 +135,13 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     ImageView dot4;
     ArrayList<ImageView> dots;
 
-
+    SharedPreferences settings;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences settings = getSharedPreferences(getResources().getString(R.string.shared_preferences), 0);
+        settings = getSharedPreferences(getResources().getString(R.string.shared_preferences), 0);
         setTheme(!settings.getBoolean("darkModeOn", false) ? R.style.LightTheme : R.style.DarkTheme);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -370,20 +371,28 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         pickDateWaterBtn.setText(currentDate);
 
         setStepsBtn.setOnClickListener(view -> {
-            if (Integer.parseInt(numberStepsSet.getText().toString()) > 0)
+            if (Integer.parseInt(numberStepsSet.getText().toString()) > 0) {
                 addToDb(pickDateStepsBtn.getText().toString(), getString(R.string.firebase_steps), Integer.parseInt(numberStepsSet.getText().toString()));
+                Toast.makeText(getApplicationContext(), getString(R.string.steps_data_added), Toast.LENGTH_SHORT).show();
+            }
         });
         setWeightBtn.setOnClickListener(view -> {
-            if (Integer.parseInt(numberWeightSet.getText().toString()) > 0)
+            if (Integer.parseInt(numberWeightSet.getText().toString()) > 0) {
                 addToDb(pickDateWeightBtn.getText().toString(), getString(R.string.firebase_weight), Integer.parseInt(numberWeightSet.getText().toString()));
+                Toast.makeText(getApplicationContext(), getString(R.string.weight_data_added), Toast.LENGTH_SHORT).show();
+            }
         });
         setSleepBtn.setOnClickListener(view -> {
-            if (Integer.parseInt(numberSleepSet.getText().toString()) > 0)
+            if (Integer.parseInt(numberSleepSet.getText().toString()) > 0) {
                 addToDb(pickDateSleepBtn.getText().toString(), getString(R.string.firebase_sleep), Integer.parseInt(numberSleepSet.getText().toString()));
+                Toast.makeText(getApplicationContext(), getString(R.string.sleep_data_added), Toast.LENGTH_SHORT).show();
+            }
         });
         setWaterBtn.setOnClickListener(view -> {
-            if (Integer.parseInt(numberWaterSet.getText().toString()) > 0)
+            if (Integer.parseInt(numberWaterSet.getText().toString()) > 0) {
                 addToDb(pickDateWaterBtn.getText().toString(), getString(R.string.firebase_water), Integer.parseInt(numberWaterSet.getText().toString()));
+                Toast.makeText(getApplicationContext(), getString(R.string.water_data_added), Toast.LENGTH_SHORT).show();
+            }
         });
 
         pickDateStepsBtn.setOnClickListener(view -> pickDate(pickDateStepsBtn));
@@ -530,7 +539,7 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
     public void setBarChart(ArrayList<BarEntry> entries, String[] labels) {
         barDataSet.setValues(entries);
         barData = new BarData(barDataSet);
-
+        barData.setValueTextColor(getResources().getColor(!settings.getBoolean("darkModeOn", false) ? R.color.black : R.color.white));
         barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
 
         barChart.setData(barData);
@@ -538,6 +547,7 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         barChart.invalidate();
     }
 
+    @SuppressLint("ResourceType")
     private void InitBarChart() {
         barDataSet = new BarDataSet(new ArrayList<>(),null);
         barDataSet.setValueTextSize(14);
@@ -550,6 +560,8 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         barDataSet.setBarBorderColor(Color.RED);
         barDataSet.setBarBorderWidth(1);
         barDataSet.setFormSize(2);
+//        barDataSet.setColor(Color.rgb(170,102,204));
+
 
         barChart.setFitBars(true);
         barChart.getDescription().setText("");
@@ -559,6 +571,7 @@ public class HealthActivity extends AppCompatActivity implements GestureDetector
         barChart.getXAxis().setDrawGridLinesBehindData(false);
         barChart.getXAxis().setDrawGridLines(false);
         barChart.getXAxis().setTextSize(11);
+        barChart.getXAxis().setTextColor(getResources().getColor(!settings.getBoolean("darkModeOn", false) ? R.color.black : R.color.white));
 
         barChart.getAxisLeft().setEnabled(false);
         barChart.getAxisRight().setEnabled(false);

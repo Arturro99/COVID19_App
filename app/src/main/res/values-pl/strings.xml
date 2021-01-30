@@ -162,4 +162,9 @@
     <string name="password_match">Podane hasła są różne</string>
     <string name="email_absent">Email wymagany</string>
     <string name="logged_in_success">Logowanie zakończone powodzeniem</string>
+    <string name="steps_data_added">Dodano ilość kroków</string>
+    <string name="weight_data_added">Dodano wagę</string>
+    <string name="sleep_data_added">Dodano ilość snu</string>
+    <string name="water_data_added">Dodano ilość wypitej wody</string>
+    <string name="settings_saved">Zapisano ustawienia</string>
 </resources>

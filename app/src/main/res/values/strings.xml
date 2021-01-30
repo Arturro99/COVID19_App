@@ -177,4 +177,9 @@
     <string name="password_match">Provided passwords do not match</string>
     <string name="email_absent">You need to specify email</string>
     <string name="logged_in_success">Logged in successfully</string>
+    <string name="steps_data_added">Steps data added</string>
+    <string name="weight_data_added">Weight data added</string>
+    <string name="sleep_data_added">Sleep data added</string>
+    <string name="water_data_added">Water data added</string>
+    <string name="settings_saved">Settings saved</string>
 </resources>

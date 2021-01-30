@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -59,8 +58,9 @@ public class MainActivity extends AppCompatActivity {
         setTheme(!settings.getBoolean("darkModeOn", false) ? R.style.LightTheme : R.style.DarkTheme);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        firestore = FirebaseFirestore.getInstance();
         user = firebaseAuth.getCurrentUser();
+        firestore = FirebaseFirestore.getInstance();
+
         if (user == null) {
             super.onCreate(savedInstanceState);
             finish();
