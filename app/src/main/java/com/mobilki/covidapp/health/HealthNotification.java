@@ -307,6 +307,6 @@ public class HealthNotification extends AppCompatActivity implements TimePickerD
                 NotificationHelper.setNotification(getApplicationContext(), hour, minute, title, body, day);
             }
         }
-        documentReference.set(notifications, SetOptions.merge()).addOnSuccessListener(x -> Toast.makeText(this, "Settings saved", Toast.LENGTH_SHORT).show());
+        documentReference.set(notifications, SetOptions.merge()).addOnSuccessListener(x -> Toast.makeText(this, getString(R.string.settings_saved), Toast.LENGTH_SHORT).show());
     }
 }

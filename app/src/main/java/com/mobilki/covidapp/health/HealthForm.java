@@ -179,7 +179,7 @@ public class HealthForm extends AppCompatActivity {
         settings.put("targetSteps", targetSteps);
         settings.put("targetWater", targetWater);
 
-        documentReference.set(settings).addOnSuccessListener(x -> Toast.makeText(this, "Settings saved", Toast.LENGTH_SHORT).show());
+        documentReference.set(settings).addOnSuccessListener(x -> Toast.makeText(this, getString(R.string.settings_saved), Toast.LENGTH_SHORT).show());
         HealthForm.this.finish();
     }
 
