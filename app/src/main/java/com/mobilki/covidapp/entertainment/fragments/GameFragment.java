@@ -158,6 +158,7 @@ public class GameFragment extends Fragment implements FragmentEntity{
             constraintSet.connect(gamePhotosList[i].getId(), ConstraintSet.START, gameConstraintLayoutList[i].getId(), ConstraintSet.START);
             constraintSet.connect(gamePhotosList[i].getId(), ConstraintSet.TOP, gameTitleList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.connect(gamePhotosList[i].getId(), ConstraintSet.BOTTOM, gameConstraintLayoutList[i].getId(), ConstraintSet.BOTTOM);
+            constraintSet.connect(gamePhotosList[i].getId(), ConstraintSet.END, gameConstraintLayoutList[i].getId(), ConstraintSet.END);
             constraintSet.setVerticalBias(gamePhotosList[i].getId(), 0.1f);
 
 
@@ -217,14 +218,12 @@ public class GameFragment extends Fragment implements FragmentEntity{
             constraintSet.connect(gameGenresTxtList[i].getId(), ConstraintSet.END, gameConstraintLayoutList[i].getId(), ConstraintSet.END);
             constraintSet.connect(gameGenresTxtList[i].getId(), ConstraintSet.START, gameConstraintLayoutList[i].getId(), ConstraintSet.START);
             constraintSet.connect(gameGenresTxtList[i].getId(), ConstraintSet.TOP, gameTimeTxtList[i].getId(), ConstraintSet.BOTTOM);
-            constraintSet.setHorizontalBias(gameGenresTxtList[i].getId(), 0.1f);
-            constraintSet.setMargin(gameGenresTxtList[i].getId(), ConstraintSet.TOP, 5);
+            constraintSet.setMargin(gameGenresTxtList[i].getId(), ConstraintSet.TOP, 15);
 
             //GENRES
             constraintSet.connect(gameGenresList[i].getId(), ConstraintSet.END, gameConstraintLayoutList[i].getId(), ConstraintSet.END);
             constraintSet.connect(gameGenresList[i].getId(), ConstraintSet.START, gameConstraintLayoutList[i].getId(), ConstraintSet.START);
             constraintSet.connect(gameGenresList[i].getId(), ConstraintSet.TOP, gameGenresTxtList[i].getId(), ConstraintSet.BOTTOM);
-            constraintSet.setHorizontalBias(gameGenresList[i].getId(), 0.1f);
 
             constraintSet.applyTo(gameConstraintLayoutList[i]);
         }
