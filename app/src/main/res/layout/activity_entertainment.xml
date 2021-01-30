@@ -91,7 +91,7 @@
         <HorizontalScrollView
             android:id="@+id/gameScrollView"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="wrap_content"
             android:fillViewport="true"
             android:measureAllChildren="false"
             android:layout_below="@id/gameTextView"

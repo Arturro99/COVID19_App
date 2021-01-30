@@ -188,6 +188,7 @@ public class BookFragment extends Fragment implements FragmentEntity{
             constraintSet.connect(bookRatingTxtList[i].getId(), ConstraintSet.TOP, bookPhotosList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.setHorizontalBias(bookRatingTxtList[i].getId(), 0.2f);
             constraintSet.setVerticalBias(bookRatingTxtList[i].getId(), 0.2f);
+            constraintSet.setMargin(bookRatingTxtList[i].getId(), ConstraintSet.TOP, 5);
 
             //RATINGS
             constraintSet.connect(bookRatingList[i].getId(), ConstraintSet.END, bookConstraintLayoutList[i].getId(), ConstraintSet.END);
@@ -195,6 +196,7 @@ public class BookFragment extends Fragment implements FragmentEntity{
             constraintSet.connect(bookRatingList[i].getId(), ConstraintSet.TOP, bookPhotosList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.setHorizontalBias(bookRatingList[i].getId(), 0.6f);
             constraintSet.setVerticalBias(bookRatingList[i].getId(), 0.2f);
+            constraintSet.setMargin(bookRatingTxtList[i].getId(), ConstraintSet.TOP, 5);
 
             //PUBLICATION DATE TXT
             constraintSet.connect(bookPublicationDateTxtList[i].getId(), ConstraintSet.END, bookConstraintLayoutList[i].getId(), ConstraintSet.END);

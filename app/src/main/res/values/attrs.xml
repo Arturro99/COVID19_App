@@ -2,5 +2,6 @@
 <resources>
     <attr name="myBackgroundColor" format="reference"/>
     <attr name="myTextColor" format="reference"/>
+    <attr name="myTextColorList">format="reference"</attr>
     <attr name="myDefaultColor" format="reference"/>
 </resources>

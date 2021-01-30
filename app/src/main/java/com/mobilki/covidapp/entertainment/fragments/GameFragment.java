@@ -149,6 +149,8 @@ public class GameFragment extends Fragment implements FragmentEntity{
             int height = displayMetrics.heightPixels;
 
             gameConstraintLayoutList[i].setMinWidth(width*5/6);
+            gameConstraintLayoutList[i].setMinHeight(height);
+            constraintSet.constrainMinHeight(gameConstraintLayoutList[i].getId(), height);
 
             //IMAGE
             gamePhotosList[i].setMaxWidth(width/2);
@@ -175,6 +177,7 @@ public class GameFragment extends Fragment implements FragmentEntity{
             constraintSet.connect(gameAgeTxtList[i].getId(), ConstraintSet.TOP, gamePhotosList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.setHorizontalBias(gameAgeTxtList[i].getId(), 0.2f);
             constraintSet.setVerticalBias(gameAgeTxtList[i].getId(), 0.2f);
+            constraintSet.setMargin(gameAgeTxtList[i].getId(), ConstraintSet.TOP, 5);
 
             //AGE
             constraintSet.connect(gameAgeList[i].getId(), ConstraintSet.END, gameConstraintLayoutList[i].getId(), ConstraintSet.END);
@@ -182,6 +185,7 @@ public class GameFragment extends Fragment implements FragmentEntity{
             constraintSet.connect(gameAgeList[i].getId(), ConstraintSet.TOP, gamePhotosList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.setHorizontalBias(gameAgeList[i].getId(), 0.7f);
             constraintSet.setVerticalBias(gameAgeList[i].getId(), 0.2f);
+            constraintSet.setMargin(gameAgeList[i].getId(), ConstraintSet.TOP, 5);
 
             //Players TXT
             constraintSet.connect(gamePlayersTxtList[i].getId(), ConstraintSet.END, gameConstraintLayoutList[i].getId(), ConstraintSet.END);
@@ -200,30 +204,27 @@ public class GameFragment extends Fragment implements FragmentEntity{
             constraintSet.connect(gameTimeTxtList[i].getId(), ConstraintSet.START, gameConstraintLayoutList[i].getId(), ConstraintSet.START);
             constraintSet.connect(gameTimeTxtList[i].getId(), ConstraintSet.TOP, gamePlayersTxtList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.setHorizontalBias(gameTimeTxtList[i].getId(), 0.2f);
-            constraintSet.setMargin(gameTimeTxtList[i].getId(), ConstraintSet.BOTTOM, 5);
+//            constraintSet.setMargin(gameTimeTxtList[i].getId(), ConstraintSet.BOTTOM, 5);
 
             //TIME
             constraintSet.connect(gameTimeList[i].getId(), ConstraintSet.END, gameConstraintLayoutList[i].getId(), ConstraintSet.END);
             constraintSet.connect(gameTimeList[i].getId(), ConstraintSet.START, gameConstraintLayoutList[i].getId(), ConstraintSet.START);
             constraintSet.connect(gameTimeList[i].getId(), ConstraintSet.TOP, gamePlayersList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.setHorizontalBias(gameTimeList[i].getId(), 0.7f);
-            constraintSet.setMargin(gameTimeList[i].getId(), ConstraintSet.BOTTOM, 5);
+//            constraintSet.setMargin(gameTimeList[i].getId(), ConstraintSet.BOTTOM, 5);
 
             //GENRES TXT
             constraintSet.connect(gameGenresTxtList[i].getId(), ConstraintSet.END, gameConstraintLayoutList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(gameGenresTxtList[i].getId(), ConstraintSet.START, gamePhotosList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(gameGenresTxtList[i].getId(), ConstraintSet.BOTTOM, gamePhotosList[i].getId(), ConstraintSet.BOTTOM);
-            constraintSet.connect(gameGenresTxtList[i].getId(), ConstraintSet.TOP, gamePhotosList[i].getId(), ConstraintSet.TOP);
+            constraintSet.connect(gameGenresTxtList[i].getId(), ConstraintSet.START, gameConstraintLayoutList[i].getId(), ConstraintSet.START);
+            constraintSet.connect(gameGenresTxtList[i].getId(), ConstraintSet.TOP, gameTimeTxtList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.setHorizontalBias(gameGenresTxtList[i].getId(), 0.1f);
-            constraintSet.setVerticalBias(gameGenresTxtList[i].getId(), 0.2f);
+            constraintSet.setMargin(gameGenresTxtList[i].getId(), ConstraintSet.TOP, 5);
 
-            //Genres
+            //GENRES
             constraintSet.connect(gameGenresList[i].getId(), ConstraintSet.END, gameConstraintLayoutList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(gameGenresList[i].getId(), ConstraintSet.START, gamePhotosList[i].getId(), ConstraintSet.END);
-            constraintSet.connect(gameGenresList[i].getId(), ConstraintSet.BOTTOM, gamePhotosList[i].getId(), ConstraintSet.BOTTOM);
+            constraintSet.connect(gameGenresList[i].getId(), ConstraintSet.START, gameConstraintLayoutList[i].getId(), ConstraintSet.START);
             constraintSet.connect(gameGenresList[i].getId(), ConstraintSet.TOP, gameGenresTxtList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.setHorizontalBias(gameGenresList[i].getId(), 0.1f);
-            constraintSet.setVerticalBias(gameGenresList[i].getId(), 0.2f);
 
             constraintSet.applyTo(gameConstraintLayoutList[i]);
         }

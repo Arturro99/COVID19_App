@@ -1,6 +1,7 @@
 package com.mobilki.covidapp.api.imageslistview;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ public class CustomAdapter extends BaseAdapter {
     Context c;
     ArrayList<Actor> actors;
     LayoutInflater inflater;
+    SharedPreferences settings;
 
     public CustomAdapter(Context c, ArrayList<Actor> actors) {
         this.c = c;
@@ -47,6 +49,8 @@ public class CustomAdapter extends BaseAdapter {
 
         MyHolder holder = new MyHolder(view);
         holder.actorName.setText(actors.get(i).getName());
+        settings = c.getSharedPreferences(c.getResources().getString(R.string.shared_preferences),0);
+        holder.actorName.setTextColor(settings.getBoolean("darkModeOn", false) ? c.getResources().getColor(R.color.white) : c.getResources().getColor(R.color.black));
 
         PicassoClient.downloadImage(actors.get(i).getImgUrl(), holder.actorImg);
 

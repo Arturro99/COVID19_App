@@ -189,6 +189,7 @@ public class FilmFragment extends Fragment implements FragmentEntity{
             constraintSet.connect(filmRatingTxtList[i].getId(), ConstraintSet.TOP, filmPhotosList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.setHorizontalBias(filmRatingTxtList[i].getId(), 0.2f);
             constraintSet.setVerticalBias(filmRatingTxtList[i].getId(), 0.2f);
+            constraintSet.setMargin(filmRatingTxtList[i].getId(), ConstraintSet.TOP, 5);
 
             //RATINGS
             constraintSet.connect(filmRatingList[i].getId(), ConstraintSet.END, filmConstraintLayoutList[i].getId(), ConstraintSet.END);
@@ -196,6 +197,7 @@ public class FilmFragment extends Fragment implements FragmentEntity{
             constraintSet.connect(filmRatingList[i].getId(), ConstraintSet.TOP, filmPhotosList[i].getId(), ConstraintSet.BOTTOM);
             constraintSet.setHorizontalBias(filmRatingList[i].getId(), 0.7f);
             constraintSet.setVerticalBias(filmRatingList[i].getId(), 0.2f);
+            constraintSet.setMargin(filmRatingList[i].getId(), ConstraintSet.TOP, 5);
 
             //RELEASE YEAR TXT
             constraintSet.connect(filmReleaseYearTxtList[i].getId(), ConstraintSet.END, filmConstraintLayoutList[i].getId(), ConstraintSet.END);

@@ -4,6 +4,7 @@
         <!-- Customize your theme here. -->
         <item name="backgroundColor">@color/white</item>
         <item name="myTextColor">@color/black</item>
+        <item name="myTextColorList">@color/black</item>
         <item name="myDefaultColor">@color/colorAccentDark</item>
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:windowSharedElementEnterTransition" tools:ignore="NewApi">
@@ -16,6 +17,7 @@
 
     <style name="DarkTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="myTextColor">@color/material_on_primary_disabled</item>
+        <item name="myTextColorList">@color/grey</item>
         <item name="myDefaultColor">@color/colorAccentLight</item>
         <item name="backgroundColor">#303030</item>
         <item name="android:windowActivityTransitions">true</item>
